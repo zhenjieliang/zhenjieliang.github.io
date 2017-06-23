@@ -5,8 +5,8 @@
     <description></description>
     <link>http://zhenjieliang.github.io/</link>
     <atom:link href="http://zhenjieliang.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 23 Jun 2017 18:32:24 +0800</pubDate>
-    <lastBuildDate>Fri, 23 Jun 2017 18:32:24 +0800</lastBuildDate>
+    <pubDate>Fri, 23 Jun 2017 20:49:01 +0800</pubDate>
+    <lastBuildDate>Fri, 23 Jun 2017 20:49:01 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -24,6 +24,14 @@
   &lt;li&gt;最好使用 ssh 密钥来传送文件到 Github，不然每次输入密码是很麻烦的事情。&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;未完成的工作：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;域名绑定&lt;/li&gt;
+  &lt;li&gt;jekyll 的默认网址问题&lt;/li&gt;
+  &lt;li&gt;主题和格式细节需要修改&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;p&gt;参考资料如下：&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/88c9e72978b4&quot;&gt;用Jekyll搭建的Github Pages个人博客&lt;/a&gt;&lt;/p&gt;
@@ -31,6 +39,8 @@
 &lt;p&gt;&lt;a href=&quot;https://jekyllrb.com/docs/quickstart/&quot;&gt;Quick-start guide&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/ayseeing/p/3572582.html&quot;&gt;github设置添加SSH&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/setting-up-an-apex-domain/&quot;&gt;域名绑定&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 23 Jun 2017 17:40:33 +0800</pubDate>
