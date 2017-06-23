@@ -1,0 +1,20 @@
+---
+layout: post
+title:  "使用 jekyll 编写 Github 博客"
+date:   2017-06-23 17:40:33 +0800
+categories: jekyll update
+---
+前提：了解Git命令。
+操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6
+
+要点：
+
+* 使用 `jekyll 3.5.0` 来生成新博客模板时会报错，而 `jekyll 3.5.0` 则不会。
+* `git push` 时应该只在 `master` 下，不应该到其他的 branch。
+* 记得修改文件 `_config.yml` 中的 url。
+
+参考资料如下：
+[用Jekyll搭建的Github Pages个人博客](http://www.jianshu.com/p/88c9e72978b4)
+[Quick-start guide](https://jekyllrb.com/docs/quickstart/)
+
+

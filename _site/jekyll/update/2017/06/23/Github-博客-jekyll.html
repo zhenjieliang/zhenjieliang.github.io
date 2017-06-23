@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Welcome to Jekyll!</title>
-  <meta name="description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...">
+  <title>使用 jekyll 编写 Github 博客</title>
+  <meta name="description" content="前提：了解Git命令。操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://zhenjieliang.github.io/jekyll/update/2017/06/23/welcome-to-jekyll.html">
+  <link rel="canonical" href="http://zhenjieliang.github.io/jekyll/update/2017/06/23/Github-%E5%8D%9A%E5%AE%A2-jekyll.html">
   <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://zhenjieliang.github.io/feed.xml">
 </head>
 
@@ -57,24 +57,25 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Welcome to Jekyll!</h1>
-    <p class="post-meta"><time datetime="2017-06-23T15:40:33+08:00" itemprop="datePublished">Jun 23, 2017</time></p>
+    <h1 class="post-title" itemprop="name headline">使用 jekyll 编写 Github 博客</h1>
+    <p class="post-meta"><time datetime="2017-06-23T17:40:33+08:00" itemprop="datePublished">Jun 23, 2017</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+    <p>前提：了解Git命令。
+操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6</p>
 
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<p>要点：</p>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<ul>
+  <li>使用 <code class="highlighter-rouge">jekyll 3.5.0</code> 来生成新博客模板时会报错，而 <code class="highlighter-rouge">jekyll 3.5.0</code> 则不会。</li>
+  <li><code class="highlighter-rouge">git push</code> 时应该只在 <code class="highlighter-rouge">master</code> 下，不应该到其他的 branch。</li>
+  <li>记得修改文件 <code class="highlighter-rouge">_config.yml</code> 中的 url。</li>
+</ul>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
-
-<p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+<p>参考资料如下：
+<a href="http://www.jianshu.com/p/88c9e72978b4">用Jekyll搭建的Github Pages个人博客</a>
+<a href="https://jekyllrb.com/docs/quickstart/">Quick-start guide</a></p>
 
 
   </div>

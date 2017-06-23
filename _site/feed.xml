@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Your awesome title</title>
-    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-</description>
-    <link>http://yourdomain.com/</link>
-    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 23 Jun 2017 16:04:27 +0800</pubDate>
-    <lastBuildDate>Fri, 23 Jun 2017 16:04:27 +0800</lastBuildDate>
+    <title>Zhenjie Liang</title>
+    <description></description>
+    <link>http://zhenjieliang.github.io/</link>
+    <atom:link href="http://zhenjieliang.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 23 Jun 2017 18:05:05 +0800</pubDate>
+    <lastBuildDate>Fri, 23 Jun 2017 18:05:05 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
-        <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+        <title>使用 jekyll 编写 Github 博客</title>
+        <description>&lt;p&gt;前提：了解Git命令。
+操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6&lt;/p&gt;
 
-&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;p&gt;要点：&lt;/p&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll 3.5.0&lt;/code&gt; 来生成新博客模板时会报错，而 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll 3.5.0&lt;/code&gt; 则不会。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git push&lt;/code&gt; 时应该只在 &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; 下，不应该到其他的 branch。&lt;/li&gt;
+  &lt;li&gt;记得修改文件 &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 中的 url。&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;Tom&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &#39;Hi, Tom&#39; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;参考资料如下：
+&lt;a href=&quot;http://www.jianshu.com/p/88c9e72978b4&quot;&gt;用Jekyll搭建的Github Pages个人博客&lt;/a&gt;
+&lt;a href=&quot;https://jekyllrb.com/docs/quickstart/&quot;&gt;Quick-start guide&lt;/a&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Fri, 23 Jun 2017 15:40:33 +0800</pubDate>
-        <link>http://yourdomain.com/jekyll/update/2017/06/23/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/jekyll/update/2017/06/23/welcome-to-jekyll.html</guid>
+        <pubDate>Fri, 23 Jun 2017 17:40:33 +0800</pubDate>
+        <link>http://zhenjieliang.github.io/jekyll/update/2017/06/23/Github-%E5%8D%9A%E5%AE%A2-jekyll.html</link>
+        <guid isPermaLink="true">http://zhenjieliang.github.io/jekyll/update/2017/06/23/Github-%E5%8D%9A%E5%AE%A2-jekyll.html</guid>
         
         
         <category>jekyll</category>
