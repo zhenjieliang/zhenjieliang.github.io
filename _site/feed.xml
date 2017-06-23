@@ -5,8 +5,8 @@
     <description></description>
     <link>http://zhenjieliang.github.io/</link>
     <atom:link href="http://zhenjieliang.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 23 Jun 2017 18:05:05 +0800</pubDate>
-    <lastBuildDate>Fri, 23 Jun 2017 18:05:05 +0800</lastBuildDate>
+    <pubDate>Fri, 23 Jun 2017 18:16:41 +0800</pubDate>
+    <lastBuildDate>Fri, 23 Jun 2017 18:16:41 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -17,14 +17,17 @@
 &lt;p&gt;要点：&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll 3.5.0&lt;/code&gt; 来生成新博客模板时会报错，而 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll 3.5.0&lt;/code&gt; 则不会。&lt;/li&gt;
+  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll 3.5.0&lt;/code&gt; 来生成新博客模板时会报错，而 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll 3.1.6&lt;/code&gt; 则不会。&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git push&lt;/code&gt; 时应该只在 &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; 下，不应该到其他的 branch。&lt;/li&gt;
   &lt;li&gt;记得修改文件 &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 中的 url。&lt;/li&gt;
+  &lt;li&gt;每次修改后应该在本地使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt; 再 &lt;code class=&quot;highlighter-rouge&quot;&gt;commit&lt;/code&gt;，然后再上传到 Github 上。否则网页无法更新。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;参考资料如下：
-&lt;a href=&quot;http://www.jianshu.com/p/88c9e72978b4&quot;&gt;用Jekyll搭建的Github Pages个人博客&lt;/a&gt;
-&lt;a href=&quot;https://jekyllrb.com/docs/quickstart/&quot;&gt;Quick-start guide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/88c9e72978b4&quot;&gt;用Jekyll搭建的Github Pages个人博客&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://jekyllrb.com/docs/quickstart/&quot;&gt;Quick-start guide&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 23 Jun 2017 17:40:33 +0800</pubDate>

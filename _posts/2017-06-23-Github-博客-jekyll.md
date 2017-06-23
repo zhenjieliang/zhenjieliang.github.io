@@ -12,6 +12,7 @@ categories: jekyll update
 * 使用 `jekyll 3.5.0` 来生成新博客模板时会报错，而 `jekyll 3.1.6` 则不会。
 * `git push` 时应该只在 `master` 下，不应该到其他的 branch。
 * 记得修改文件 `_config.yml` 中的 url。
+* 每次修改后应该在本地使用 `jekyll serve` 再 `commit`，然后再上传到 Github 上。否则网页无法更新。
 
 参考资料如下：
 
