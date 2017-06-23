@@ -13,11 +13,14 @@ categories: jekyll update
 * `git push` 时应该只在 `master` 下，不应该到其他的 branch。
 * 记得修改文件 `_config.yml` 中的 url。
 * 每次修改后应该在本地使用 `jekyll serve` 再 `commit`，然后再上传到 Github 上。否则网页无法更新。
+* 最好使用 ssh 密钥来传送文件到 Github，不然每次输入密码是很麻烦的事情。
 
 参考资料如下：
 
 [用Jekyll搭建的Github Pages个人博客](http://www.jianshu.com/p/88c9e72978b4)
 
 [Quick-start guide](https://jekyllrb.com/docs/quickstart/)
+
+[github设置添加SSH](https://www.cnblogs.com/ayseeing/p/3572582.html)
 
 
