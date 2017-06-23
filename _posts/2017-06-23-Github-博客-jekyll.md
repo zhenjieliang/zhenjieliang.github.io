@@ -9,12 +9,14 @@ categories: jekyll update
 
 要点：
 
-* 使用 `jekyll 3.5.0` 来生成新博客模板时会报错，而 `jekyll 3.5.0` 则不会。
+* 使用 `jekyll 3.5.0` 来生成新博客模板时会报错，而 `jekyll 3.1.6` 则不会。
 * `git push` 时应该只在 `master` 下，不应该到其他的 branch。
 * 记得修改文件 `_config.yml` 中的 url。
 
 参考资料如下：
+
 [用Jekyll搭建的Github Pages个人博客](http://www.jianshu.com/p/88c9e72978b4)
+
 [Quick-start guide](https://jekyllrb.com/docs/quickstart/)
 
 
