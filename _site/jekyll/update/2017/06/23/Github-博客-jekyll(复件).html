@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>使用 jekyll 编写 Github 博客</title>
+  <meta name="description" content="前提：了解Git命令。操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://zhenjieliang.github.io/jekyll/update/2017/06/23/Github-%E5%8D%9A%E5%AE%A2-jekyll(%E5%A4%8D%E4%BB%B6).html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://zhenjieliang.github.io/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">使用 jekyll 编写 Github 博客</h1>
+    <p class="post-meta"><time datetime="2017-06-23T17:40:33+08:00" itemprop="datePublished">Jun 23, 2017</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>前提：了解Git命令。
+操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6</p>
+
+<p>要点：</p>
+
+<ul>
+  <li>使用 <code class="highlighter-rouge">jekyll 3.5.0</code> 来生成新博客模板时会报错，而 <code class="highlighter-rouge">jekyll 3.1.6</code> 则不会。</li>
+  <li><code class="highlighter-rouge">git push</code> 时应该只在 <code class="highlighter-rouge">master</code> 下，不应该到其他的 branch。</li>
+  <li>记得修改文件 <code class="highlighter-rouge">_config.yml</code> 中的 url。</li>
+  <li>每次修改后应该在本地使用 <code class="highlighter-rouge">jekyll serve</code> 再 <code class="highlighter-rouge">commit</code>，然后再上传到 Github 上。否则网页无法更新。</li>
+  <li>最好使用 ssh 密钥来传送文件到 Github，不然每次输入密码是很麻烦的事情。</li>
+</ul>
+
+<p>未完成的工作：</p>
+
+<ul>
+  <li>域名绑定</li>
+  <li>jekyll 的默认网址问题</li>
+  <li>主题和格式细节需要修改</li>
+</ul>
+
+<p>参考资料如下：</p>
+
+<p><a href="http://www.jianshu.com/p/88c9e72978b4">用Jekyll搭建的Github Pages个人博客</a></p>
+
+<p><a href="https://jekyllrb.com/docs/quickstart/">Quick-start guide</a></p>
+
+<p><a href="https://www.cnblogs.com/ayseeing/p/3572582.html">github设置添加SSH</a></p>
+
+<p><a href="https://help.github.com/articles/setting-up-an-apex-domain/">域名绑定</a></p>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Zhenjie Liang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
