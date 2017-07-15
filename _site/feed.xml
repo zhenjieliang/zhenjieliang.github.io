@@ -5,9 +5,81 @@
     <description></description>
     <link>http://zhenjieliang.github.io/</link>
     <atom:link href="http://zhenjieliang.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 25 Jun 2017 10:51:26 +0800</pubDate>
-    <lastBuildDate>Sun, 25 Jun 2017 10:51:26 +0800</lastBuildDate>
+    <pubDate>Sat, 15 Jul 2017 09:13:41 +0800</pubDate>
+    <lastBuildDate>Sat, 15 Jul 2017 09:13:41 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>VPS的挑选和设置</title>
+        <description>&lt;h1 id=&quot;如何挑选vps&quot;&gt;如何挑选VPS&lt;/h1&gt;
+
+&lt;p&gt;站长工具测试延迟，挑选在本地电信（或者移动等其他运营商）延迟最低的服务器&lt;/p&gt;
+
+&lt;h1 id=&quot;ssh连接vps&quot;&gt;ssh连接VPS&lt;/h1&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   ssh root@VPS.ip #在VPS的manager里可以看到相应的服务器ip和密码
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;搭建shadowsocks服务端&quot;&gt;搭建&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;服务端&lt;/h1&gt;
+
+&lt;p&gt;首先安装&lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   sudo apt-get install python-pip
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其次安装&lt;code class=&quot;highlighter-rouge&quot;&gt;setuptools&lt;/code&gt;，再安装&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   sudo pip install -U setuptools
+$   sudo pip install shadowsocks
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;然后配置&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   sudo vim /etc/shadowsocks.json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;写入以下配置&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_ip&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;server_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8388&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#可变&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;local_address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;local_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;timeout&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;aes-256-cfb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#可变&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;fast_open&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;注意，&lt;code class=&quot;highlighter-rouge&quot;&gt;vim&lt;/code&gt;编辑先按&lt;code class=&quot;highlighter-rouge&quot;&gt;insert&lt;/code&gt;（在笔记本键盘中是&lt;code class=&quot;highlighter-rouge&quot;&gt;ins&lt;/code&gt;键），将上述配置根据&lt;code class=&quot;highlighter-rouge&quot;&gt;VPS&lt;/code&gt;的服务器&lt;code class=&quot;highlighter-rouge&quot;&gt;ip&lt;/code&gt;来设置；然后按两次&lt;code class=&quot;highlighter-rouge&quot;&gt;Esc&lt;/code&gt;键，为了进入预保存模式，最后输入&lt;code class=&quot;highlighter-rouge&quot;&gt;:x&lt;/code&gt;保存离开。&lt;/p&gt;
+
+&lt;p&gt;启动&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   sudo ssserver -c /etc/shadowsocks.json -d start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;配置shadowsocks客户端&quot;&gt;配置&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;客户端&lt;/h1&gt;
+
+&lt;p&gt;按照服务端的设置在客户端中手动添加即可。&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 25 Jun 2017 10:40:33 +0800</pubDate>
+        <link>http://zhenjieliang.github.io/life/update/2017/06/25/vps.html</link>
+        <guid isPermaLink="true">http://zhenjieliang.github.io/life/update/2017/06/25/vps.html</guid>
+        
+        
+        <category>life</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>学术论文语言规范及学习建议</title>
