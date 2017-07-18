@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Zhenjie Liang</title>
-  <meta name="description" content="">
+  <title>noip hostname 30天就过期 </title>
+  <meta name="description" content="noip hostname 30天就过期">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://zhenjieliang.github.io/">
+  <link rel="canonical" href="http://zhenjieliang.github.io/life/update/2017/07/19/noip.html">
   <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://zhenjieliang.github.io/feed.xml">
 </head>
 
@@ -54,49 +54,33 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">noip hostname 30天就过期 </h1>
+    <p class="post-meta"><time datetime="2017-07-19T07:45:33+08:00" itemprop="datePublished">Jul 19, 2017</time></p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Jul 19, 2017</span>
+  <div class="post-content" itemprop="articleBody">
+    <h1 id="noip-hostname-30天就过期">noip hostname 30天就过期</h1>
 
-        <h2>
-          <a class="post-link" href="/life/update/2017/07/19/noip.html">noip hostname 30天就过期 </a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jun 25, 2017</span>
+<p>no-ip家DDNS的free host name每隔30天就要过期，届时相关的服务都无法连接。解决办法就是登陆官网，重新添加一个host name，然后按照<a href="https://www.noip.com/support/knowledgebase/installing-the-linux-dynamic-update-client-on-ubuntu/">DUC设置</a>重新走一遍流程（安装部分省略）。</p>
 
-        <h2>
-          <a class="post-link" href="/life/update/2017/06/25/vps.html">VPS的挑选和设置</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jun 25, 2017</span>
-
-        <h2>
-          <a class="post-link" href="/jekyll/update/2017/06/25/Article-writing-process.html">学术论文语言规范及学习建议</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jun 23, 2017</span>
-
-        <h2>
-          <a class="post-link" href="/jekyll/update/2017/06/23/Github-%E5%8D%9A%E5%AE%A2-jekyll.html">使用 jekyll 编写 Github 博客</a>
-        </h2>
-      </li>
-    
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
-
+<div class="highlighter-rouge"><pre class="highlight"><code>/usr/local/bin/noip2 -C
+</code></pre>
 </div>
+
+<p>运行这一行代码时会报错，告知该进程已经在运行，需要使用</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo kill "noip2pid"
+</code></pre>
+</div>
+
+<p>然后继续流程，输入登陆邮箱和密码，选择好更新时间间隔即可。</p>
+
+  </div>
+
+</article>
 
       </div>
     </div>

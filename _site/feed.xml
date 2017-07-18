@@ -5,9 +5,38 @@
     <description></description>
     <link>http://zhenjieliang.github.io/</link>
     <atom:link href="http://zhenjieliang.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 15 Jul 2017 09:13:41 +0800</pubDate>
-    <lastBuildDate>Sat, 15 Jul 2017 09:13:41 +0800</lastBuildDate>
+    <pubDate>Wed, 19 Jul 2017 07:45:48 +0800</pubDate>
+    <lastBuildDate>Wed, 19 Jul 2017 07:45:48 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>noip hostname 30天就过期 </title>
+        <description>&lt;h1 id=&quot;noip-hostname-30天就过期&quot;&gt;noip hostname 30天就过期&lt;/h1&gt;
+
+&lt;p&gt;no-ip家DDNS的free host name每隔30天就要过期，届时相关的服务都无法连接。解决办法就是登陆官网，重新添加一个host name，然后按照&lt;a href=&quot;https://www.noip.com/support/knowledgebase/installing-the-linux-dynamic-update-client-on-ubuntu/&quot;&gt;DUC设置&lt;/a&gt;重新走一遍流程（安装部分省略）。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/usr/local/bin/noip2 -C
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;运行这一行代码时会报错，告知该进程已经在运行，需要使用&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo kill &quot;noip2pid&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;然后继续流程，输入登陆邮箱和密码，选择好更新时间间隔即可。&lt;/p&gt;
+</description>
+        <pubDate>Wed, 19 Jul 2017 07:45:33 +0800</pubDate>
+        <link>http://zhenjieliang.github.io/life/update/2017/07/19/noip.html</link>
+        <guid isPermaLink="true">http://zhenjieliang.github.io/life/update/2017/07/19/noip.html</guid>
+        
+        
+        <category>life</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>VPS的挑选和设置</title>
