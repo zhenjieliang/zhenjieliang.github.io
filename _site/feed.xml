@@ -5,9 +5,35 @@
     <description></description>
     <link>http://zhenjieliang.github.io/</link>
     <atom:link href="http://zhenjieliang.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 19 Jul 2017 07:48:48 +0800</pubDate>
-    <lastBuildDate>Wed, 19 Jul 2017 07:48:48 +0800</lastBuildDate>
+    <pubDate>Sat, 22 Jul 2017 10:50:02 +0800</pubDate>
+    <lastBuildDate>Sat, 22 Jul 2017 10:50:02 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>华硕路由器端口转发无法使用 </title>
+        <description>&lt;p&gt;为了能在外网使用中心的主机，需要在中心的华硕RT AC66U路由器上设置端口转发。它的端口转发设置很简单，但就是&lt;strong&gt;无法使用&lt;/strong&gt;。搜索了各种关于华硕路由器端口转发问题解决的方法，包括更新固件和关掉防火墙，统统没有用。有一篇英文帖子说，&lt;strong&gt;华硕的端口转发无法实现NAT reflection，所以不可能实现端口转发，不要白费功夫了&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;退而求其次，使用DMZ。原本想这个是最容易实现的了（成本就是网络安全性下降），没成想这个也无法使用。&lt;/p&gt;
+
+&lt;p&gt;宿舍里那个用了许多年的华为低端光猫，这些功能实现起来轻轻松松。真是佩服售价高几倍的华硕－&lt;strong&gt;我不抱怨你不能实现这些普通家庭用户用不到的功能，但是实现不了的功能，拜托你行行好不要把它们写进设置里面&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;网上这么多人为了解决你搞出来的解决不了的问题，花费了无数精力去排除其他可能的原因：网络问题、浏览器问题、端口描述问题、防火墙问题等等，这些排除起来少说也要一个小时。等都排除后确认是你路由器的问题，就到处找解决方案，好死不死你还提了好几种貌似可以解决的方案，结果尝试之后才发现全是骗人的。&lt;/p&gt;
+
+&lt;p&gt;耗费了这么多花大价钱支持你的忠实用户的许多时间，&lt;strong&gt;心情从一开始的纳闷，到排除其他原因的心塞，再到尝试你家的解决方案的抓狂，最后徒留深深的被愚弄感&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;以后再也不会买华硕的路由器了。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 19 Jul 2017 07:45:33 +0800</pubDate>
+        <link>http://zhenjieliang.github.io/life/update/2017/07/19/%E5%8D%8E%E7%A1%95%E8%B7%AF%E7%94%B1%E5%99%A8%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8.html</link>
+        <guid isPermaLink="true">http://zhenjieliang.github.io/life/update/2017/07/19/%E5%8D%8E%E7%A1%95%E8%B7%AF%E7%94%B1%E5%99%A8%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8.html</guid>
+        
+        
+        <category>life</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>noip hostname 30天就过期 </title>
