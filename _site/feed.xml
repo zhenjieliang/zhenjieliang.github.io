@@ -5,8 +5,8 @@
     <description></description>
     <link>http://zhenjieliang.github.io/</link>
     <atom:link href="http://zhenjieliang.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 31 Jul 2017 10:58:32 +0800</pubDate>
-    <lastBuildDate>Mon, 31 Jul 2017 10:58:32 +0800</lastBuildDate>
+    <pubDate>Mon, 31 Jul 2017 23:10:05 +0800</pubDate>
+    <lastBuildDate>Mon, 31 Jul 2017 23:10:05 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -15,6 +15,7 @@
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install git
 apt-get install python
+apt-get install vim
 git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
 cd shadowsocksr
 bash initcfg.sh
@@ -47,7 +48,8 @@ vim ~/shadowsocksr/user-config.json
 
 &lt;p&gt;运行&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python ~/shadowsocksr/shadowsocks/server.py -d start
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd ~/shadowsocksr/shadowsocks
+python server.py -d start
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 

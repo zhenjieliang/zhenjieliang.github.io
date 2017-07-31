@@ -12,6 +12,7 @@ categories: life update
 ```
 apt-get install git
 apt-get install python
+apt-get install vim
 git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
 cd shadowsocksr
 bash initcfg.sh
@@ -44,7 +45,8 @@ vim ~/shadowsocksr/user-config.json
 运行
 
 ```
-python ~/shadowsocksr/shadowsocks/server.py -d start
+cd ~/shadowsocksr/shadowsocks
+python server.py -d start
 ```
 
 
