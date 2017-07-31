@@ -13,6 +13,8 @@ categories: life update
 apt-get install git
 apt-get install python
 git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
+cd shadowsocksr
+bash initcfg.sh
 vim ~/shadowsocksr/user-config.json
 ```
 
