@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Shadowsocksr </title>
+  <meta name="description" content="服务端">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://zhenjieliang.github.io/life/update/2017/07/31/shadowsockr.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://zhenjieliang.github.io/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Shadowsocksr </h1>
+    <p class="post-meta"><time datetime="2017-07-31T07:45:33+08:00" itemprop="datePublished">Jul 31, 2017</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="服务端">服务端</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install git
+apt-get install python
+git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
+vim ~/shadowsocksr/user-config.json
+</code></pre>
+</div>
+
+<p>单用户设置</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"server_ipv6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"::"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"server_port"</span><span class="p">:</span><span class="w"> </span><span class="p">,</span><span class="err">#修改</span><span class="w">
+    </span><span class="nt">"local_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"local_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">1080</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="err">#修改</span><span class="w">
+    </span><span class="nt">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="err">#可以修改成其他加密</span><span class="w">
+    </span><span class="nt">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"auth_chain_a"</span><span class="p">,</span><span class="err">#可以修改成auth_chain_b</span><span class="w">
+    </span><span class="nt">"protocol_param"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"obfs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tls1.2_ticket_auth"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"obfs_param"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="err">#可以修改</span><span class="w">
+    </span><span class="nt">"redirect"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"dns_ipv6"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"fast_open"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"workers"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>运行</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python ~/shadowsocksr/shadowsocks/server.py -d start
+</code></pre>
+</div>
+
+<h2 id="客户端">客户端</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
+sudo vim /etc/younameit.json
+</code></pre>
+</div>
+
+<p>younameit.json 设置</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"server"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="err">#查服务器ip，填上</span><span class="w">
+    </span><span class="nt">"server_ipv6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"::"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"server_port"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
+    </span><span class="nt">"local_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"local_port"</span><span class="p">:</span><span class="mi">1080</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"password"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
+    </span><span class="nt">"timeout"</span><span class="p">:</span><span class="mi">600</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"udp_timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"method"</span><span class="p">:</span><span class="s2">"none"</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
+    </span><span class="nt">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"auth_chain_a"</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
+    </span><span class="nt">"obfs"</span><span class="p">:</span><span class="s2">"tls1.2_ticket_auth"</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
+    </span><span class="nt">"obfs_param"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="err">#同服务端单用户设置</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>保存之后。设置启动脚本</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>vim younameit.sh
+</code></pre>
+</div>
+
+<p>younameit.sh 只有一行代码</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#! /bin/sh</span>
+
+sudo python ~/shadowsocksr/shadowsocks/local.py -c /etc/younameit.json -d start
+</code></pre>
+</div>
+
+<p>至此服务端与客户端都已设置完毕。</p>
+
+<h2 id="启动与关闭">启动与关闭</h2>
+
+<p>开机后客户端启动</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sh younameit.sh
+</code></pre>
+</div>
+
+<p>关闭则再运行一次上述命令，得到已经在运行的报错信息，再根据信息中的pid，关闭客户端。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo kill pid
+</code></pre>
+</div>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Zhenjie Liang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
