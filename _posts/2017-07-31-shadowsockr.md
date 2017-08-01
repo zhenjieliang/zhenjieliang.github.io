@@ -88,7 +88,8 @@ younameit.sh 只有一行代码
 ```
 #! /bin/sh
 
-sudo python ~/shadowsocksr/shadowsocks/local.py -c /etc/younameit.json -d start
+sudo python ~/shadowsocksr/shadowsocks/local.py \
+-c /etc/younameit.json -d start
 ```
 
 

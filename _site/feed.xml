@@ -5,8 +5,8 @@
     <description></description>
     <link>http://zhenjieliang.github.io/</link>
     <atom:link href="http://zhenjieliang.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 31 Jul 2017 23:10:05 +0800</pubDate>
-    <lastBuildDate>Mon, 31 Jul 2017 23:10:05 +0800</lastBuildDate>
+    <pubDate>Tue, 01 Aug 2017 09:05:47 +0800</pubDate>
+    <lastBuildDate>Tue, 01 Aug 2017 09:05:47 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -89,7 +89,8 @@ sudo vim /etc/younameit.json
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#! /bin/sh&lt;/span&gt;
 
-sudo python ~/shadowsocksr/shadowsocks/local.py -c /etc/younameit.json -d start
+sudo python ~/shadowsocksr/shadowsocks/local.py &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+-c /etc/younameit.json -d start
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
