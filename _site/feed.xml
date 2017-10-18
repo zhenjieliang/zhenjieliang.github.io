@@ -5,13 +5,25 @@
     <description></description>
     <link>http://zhenjieliang.github.io/</link>
     <atom:link href="http://zhenjieliang.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 01 Aug 2017 15:01:40 +0800</pubDate>
-    <lastBuildDate>Tue, 01 Aug 2017 15:01:40 +0800</lastBuildDate>
+    <pubDate>Wed, 18 Oct 2017 11:40:52 +0800</pubDate>
+    <lastBuildDate>Wed, 18 Oct 2017 11:40:52 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
         <title>Shadowsocksr </title>
-        <description>&lt;h2 id=&quot;服务端&quot;&gt;服务端&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;安装serverspeeder&quot;&gt;安装serverspeeder&lt;/h2&gt;
+
+&lt;p&gt;选择ubuntu 14.04的镜像&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install linux-image-4.2.0-35-generic
+uname -r
+update-grub
+reboot
+wget -N --no-check-certificate https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh &amp;amp;&amp;amp; bash serverspeeder.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;服务端&quot;&gt;服务端&lt;/h2&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install git
 apt-get install python

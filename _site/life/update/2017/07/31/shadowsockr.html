@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Shadowsocksr </title>
-  <meta name="description" content="服务端">
+  <meta name="description" content="安装serverspeeder">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://zhenjieliang.github.io/life/update/2017/07/31/shadowsockr.html">
@@ -62,7 +62,19 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <h2 id="服务端">服务端</h2>
+    <h2 id="安装serverspeeder">安装serverspeeder</h2>
+
+<p>选择ubuntu 14.04的镜像</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install linux-image-4.2.0-35-generic
+uname -r
+update-grub
+reboot
+wget -N --no-check-certificate https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh &amp;&amp; bash serverspeeder.sh
+</code></pre>
+</div>
+
+<h2 id="服务端">服务端</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>apt-get install git
 apt-get install python
