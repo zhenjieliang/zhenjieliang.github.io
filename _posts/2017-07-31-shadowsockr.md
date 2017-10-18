@@ -5,6 +5,19 @@ date:   2017-07-31 07:45:33 +0800
 categories: life update
 ---
 
+## 安装serverspeeder
+
+选择ubuntu 14.04的镜像
+
+```
+apt-get install linux-image-4.2.0-35-generic
+uname -r
+update-grub
+reboot
+wget -N --no-check-certificate https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh && bash serverspeeder.sh
+```
+
+
 
 ## 服务端
 
