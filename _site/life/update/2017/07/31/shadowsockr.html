@@ -10,8 +10,8 @@
   <meta name="description" content="安装serverspeeder">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://zhenjieliang.github.io/life/update/2017/07/31/shadowsockr.html">
-  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://zhenjieliang.github.io/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/life/update/2017/07/31/shadowsockr.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
 </head>
 
 
@@ -66,96 +66,88 @@
 
 <p>选择ubuntu 14.04的镜像</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install linux-image-4.2.0-35-generic
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install linux-image-4.2.0-35-generic
 uname -r
 update-grub
 reboot
 wget -N --no-check-certificate https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh &amp;&amp; bash serverspeeder.sh
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="服务端">服务端</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>apt-get install git
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install git
 apt-get install python
 apt-get install vim
 git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
 cd shadowsocksr
 bash initcfg.sh
 vim ~/shadowsocksr/user-config.json
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>单用户设置</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"server_ipv6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"::"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"server_port"</span><span class="p">:</span><span class="w"> </span><span class="p">,</span><span class="err">#修改</span><span class="w">
-    </span><span class="nt">"local_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"local_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">1080</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="err">#修改</span><span class="w">
-    </span><span class="nt">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="err">#可以修改成其他加密</span><span class="w">
-    </span><span class="nt">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"auth_chain_a"</span><span class="p">,</span><span class="err">#可以修改成auth_chain_b</span><span class="w">
-    </span><span class="nt">"protocol_param"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"obfs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tls1.2_ticket_auth"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"obfs_param"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="err">#可以修改</span><span class="w">
-    </span><span class="nt">"redirect"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"dns_ipv6"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fast_open"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"workers"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "server": "0.0.0.0",
+    "server_ipv6": "::",
+    "server_port": ,#修改
+    "local_address": "127.0.0.1",
+    "local_port": 1080,
+    "password": "",#修改
+    "timeout": 600,
+    "method": "none",#可以修改成其他加密
+    "protocol": "auth_chain_a",#可以修改成auth_chain_b
+    "protocol_param": "",
+    "obfs": "tls1.2_ticket_auth",
+    "obfs_param": "",#可以修改
+    "redirect": "",
+    "dns_ipv6": false,
+    "fast_open": false,
+    "workers": 1
+}
+</code></pre></div></div>
 
 <p>运行</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>cd ~/shadowsocksr/shadowsocks
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/shadowsocksr/shadowsocks
 python server.py -d start
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="客户端">客户端</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
 sudo vim /etc/younameit.json
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>younameit.json 设置</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"server"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="err">#查服务器ip，填上</span><span class="w">
-    </span><span class="nt">"server_ipv6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"::"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"server_port"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
-    </span><span class="nt">"local_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"local_port"</span><span class="p">:</span><span class="mi">1080</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"password"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
-    </span><span class="nt">"timeout"</span><span class="p">:</span><span class="mi">600</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"udp_timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"method"</span><span class="p">:</span><span class="s2">"none"</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
-    </span><span class="nt">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"auth_chain_a"</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
-    </span><span class="nt">"obfs"</span><span class="p">:</span><span class="s2">"tls1.2_ticket_auth"</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
-    </span><span class="nt">"obfs_param"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="err">#同服务端单用户设置</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "server":"",#查服务器ip，填上
+    "server_ipv6": "::",
+    "server_port":"",#同服务端单用户设置
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "password":"",#同服务端单用户设置
+    "timeout":600,
+    "udp_timeout": 600,
+    "method":"none",#同服务端单用户设置
+    "protocol": "auth_chain_a",#同服务端单用户设置
+    "obfs":"tls1.2_ticket_auth",#同服务端单用户设置
+    "obfs_param": ""#同服务端单用户设置
+}
+</code></pre></div></div>
 
 <p>保存之后。设置启动脚本</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>vim younameit.sh
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim younameit.sh
+</code></pre></div></div>
 
 <p>younameit.sh 只有一行代码</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#! /bin/sh</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#! /bin/sh</span>
 
-sudo python ~/shadowsocksr/shadowsocks/local.py <span class="se">\</span>
--c /etc/younameit.json -d start
-</code></pre>
-</div>
+<span class="nb">sudo </span>python ~/shadowsocksr/shadowsocks/local.py <span class="se">\</span>
+<span class="nt">-c</span> /etc/younameit.json <span class="nt">-d</span> start
+</code></pre></div></div>
 
 <p>至此服务端与客户端都已设置完毕。</p>
 
@@ -163,15 +155,13 @@ sudo python ~/shadowsocksr/shadowsocks/local.py <span class="se">\</span>
 
 <p>开机后客户端启动</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>sh younameit.sh
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh younameit.sh
+</code></pre></div></div>
 
 <p>关闭则再运行一次上述命令，得到已经在运行的报错信息，再根据信息中的pid，关闭客户端。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>sudo kill pid
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo kill pid
+</code></pre></div></div>
 
 
   </div>

@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Welcome to Jekyll!</title>
-  <meta name="description" content="前提">
+  <title>Git</title>
+  <meta name="description" content="回退">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://zhenjieliang.github.io/jekyll/update/2017/06/23/welcome-to-jekyll2.html">
-  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://zhenjieliang.github.io/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/cs/tools/2017/12/24/git.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
 </head>
 
 
@@ -57,22 +57,36 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Welcome to Jekyll!</h1>
-    <p class="post-meta"><time datetime="2017-06-23T15:40:33+08:00" itemprop="datePublished">Jun 23, 2017</time></p>
+    <h1 class="post-title" itemprop="name headline">Git</h1>
+    <p class="post-meta"><time datetime="2017-12-24T14:07:36+08:00" itemprop="datePublished">Dec 24, 2017</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>前提</p>
+    <h2 id="回退">回退</h2>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<p>回退到某个版本并且将该版本设为master</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;commit id&gt;            # Checkout previous commit on master, the id is the first 7 digits, or simply Tab to select.
+git checkout -b new_master       # Create branch for new master
+git branch -D master             # Delete old master
+git branch -mv new_master master # Make new_master master
+</code></pre></div></div>
 
-<p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+<p>或者</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset --hard &lt;commit id&gt;        # Reset current branch to one commit ago on master
+</code></pre></div></div>
+
+<h2 id="其他常见">其他常见</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
+git status
+git add .
+git commit -m ""
+git branch
+git log
+git diff &lt;commit id1&gt; &lt;commit id2&gt;
+</code></pre></div></div>
 
 
   </div>

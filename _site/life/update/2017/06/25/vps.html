@@ -10,8 +10,8 @@
   <meta name="description" content="如何挑选VPS">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://zhenjieliang.github.io/life/update/2017/06/25/vps.html">
-  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://zhenjieliang.github.io/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/life/update/2017/06/25/vps.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
 </head>
 
 
@@ -68,53 +68,47 @@
 
 <h1 id="ssh连接vps">ssh连接VPS</h1>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$   ssh root@VPS.ip #在VPS的manager里可以看到相应的服务器ip和密码
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$   ssh root@VPS.ip #在VPS的manager里可以看到相应的服务器ip和密码
+</code></pre></div></div>
 
 <h1 id="搭建shadowsocks服务端">搭建<code class="highlighter-rouge">shadowsocks</code>服务端</h1>
 
 <p>首先安装<code class="highlighter-rouge">pip</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$   sudo apt-get install python-pip
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$   sudo apt-get install python-pip
+</code></pre></div></div>
 
 <p>其次安装<code class="highlighter-rouge">setuptools</code>，再安装<code class="highlighter-rouge">shadowsocks</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$   sudo pip install -U setuptools
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$   sudo pip install -U setuptools
 $   sudo pip install shadowsocks
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>然后配置<code class="highlighter-rouge">shadowsocks</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$   sudo vim /etc/shadowsocks.json
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$   sudo vim /etc/shadowsocks.json
+</code></pre></div></div>
 
 <p>写入以下配置</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"server"</span><span class="p">:</span><span class="s2">"server_ip"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"server_port"</span><span class="p">:</span><span class="mi">8388</span><span class="p">,</span><span class="w"> </span><span class="err">#可变</span><span class="w">
-    </span><span class="nt">"local_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"local_port"</span><span class="p">:</span><span class="mi">1080</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"password"</span><span class="p">:</span><span class="s2">"password"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"timeout"</span><span class="p">:</span><span class="mi">600</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"method"</span><span class="p">:</span><span class="s2">"aes-256-cfb"</span><span class="p">,</span><span class="w"> </span><span class="err">#可变</span><span class="w">
-    </span><span class="nt">"fast_open"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "server":"server_ip",
+    "server_port":8388, #可变
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "password":"password",
+    "timeout":600,
+    "method":"aes-256-cfb", #可变
+    "fast_open": false
+}
+</code></pre></div></div>
 
 <p>注意，<code class="highlighter-rouge">vim</code>编辑先按<code class="highlighter-rouge">insert</code>（在笔记本键盘中是<code class="highlighter-rouge">ins</code>键），将上述配置根据<code class="highlighter-rouge">VPS</code>的服务器<code class="highlighter-rouge">ip</code>来设置；然后按两次<code class="highlighter-rouge">Esc</code>键，为了进入预保存模式，最后输入<code class="highlighter-rouge">:x</code>保存离开。</p>
 
 <p>启动<code class="highlighter-rouge">shadowsocks</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$   sudo ssserver -c /etc/shadowsocks.json -d start
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$   sudo ssserver -c /etc/shadowsocks.json -d start
+</code></pre></div></div>
 
 <h1 id="配置shadowsocks客户端">配置<code class="highlighter-rouge">shadowsocks</code>客户端</h1>
 
