@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Git</title>
-  <meta name="description" content="回退">
+  <meta name="description" content="Git 分为工作区，暂存区和仓库区。">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://localhost:4000/cs/tools/2017/12/24/git.html">
@@ -62,7 +62,9 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <h2 id="回退">回退</h2>
+    <p>Git 分为工作区，暂存区和仓库区。</p>
+
+<h2 id="回退">回退</h2>
 
 <p>回退到某个版本并且将该版本设为master</p>
 
@@ -87,6 +89,10 @@ git branch
 git log
 git diff &lt;commit id1&gt; &lt;commit id2&gt;
 </code></pre></div></div>
+
+<h2 id="忽略">忽略</h2>
+
+<p>在当前工作区内新建一个名为”.gitignore”的文件，参考<a href="https://github.com/github/gitignore">git ignore</a>和<a href="https://www.jianshu.com/p/a09a9b40ad20">简书</a>填写需要忽略的文件。另外，如需忽略名为”bin”的文件夹或者名字中包含”bin”的文件夹，则加入”bin/”或者”<em>bin</em>/”。</p>
 
 
   </div>
