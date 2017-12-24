@@ -79,6 +79,15 @@ git branch -mv new_master master # Make new_master master
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset --hard &lt;commit id&gt;        # Reset current branch to one commit ago on master
 </code></pre></div></div>
 
+<p>使用tag来标注版本号，并且使用上述命令进行分支回退操作，避免了输入commit id的繁琐操作（虽然在zsh里可以使用tab命令来选取，但终究在意义直观上不够便捷）。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag
+git tag v0.1
+git checkout v0.1
+git checkout master
+git reset --hard v0.1
+</code></pre></div></div>
+
 <h2 id="其他常见">其他常见</h2>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
@@ -92,7 +101,7 @@ git diff &lt;commit id1&gt; &lt;commit id2&gt;
 
 <h2 id="忽略">忽略</h2>
 
-<p>在当前工作区内新建一个名为”.gitignore”的文件，参考<a href="https://github.com/github/gitignore">git ignore</a>和<a href="https://www.jianshu.com/p/a09a9b40ad20">简书</a>填写需要忽略的文件。另外，如需忽略名为”bin”的文件夹或者名字中包含”bin”的文件夹，则加入”bin/”或者”<em>bin</em>/”。</p>
+<p>在当前工作区内新建一个名为”.gitignore”的文件，参考<a href="https://github.com/github/gitignore">git ignore</a>和<a href="https://www.jianshu.com/p/a09a9b40ad20">简书</a>填写需要忽略的文件。另外，如需忽略名为”bin”的文件夹或者名字中包含”bin”的文件夹，则加入”bin/”或者”*bin*/”。</p>
 
 
   </div>
