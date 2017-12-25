@@ -64,7 +64,7 @@
   <div class="post-content" itemprop="articleBody">
     <p>Git 分为工作区，暂存区和仓库区。</p>
 
-<h2 id="回退">回退</h2>
+<h2 id="回退和分支">回退和分支</h2>
 
 <p>回退到某个版本并且将该版本设为master</p>
 
@@ -77,6 +77,19 @@ git branch -mv new_master master # Make new_master master
 <p>或者</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset --hard &lt;commit id&gt;        # Reset current branch to one commit ago on master
+</code></pre></div></div>
+
+<p>这样回退会导致损失掉某个commit id的版本，版本控制应该慎重使用。其实更好的办法是破除喜欢在master分支上修改代码的不良习惯，多使用branch。</p>
+
+<p>以下是使用branch的一些常用语句。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b &lt;new branch name&gt;
+#create and switch to new branch
+#revised the code in workplace and then
+git commit -a -m "some note"
+#if you want to merge the new branch to master
+git checkout master
+git merge &lt;the new branch name before&gt;
 </code></pre></div></div>
 
 <p>使用tag来标注版本号，并且使用上述命令进行分支回退操作，避免了输入commit id的繁琐操作（虽然在zsh里可以使用tab命令来选取，但终究在意义直观上不够便捷）。</p>
@@ -103,6 +116,10 @@ git diff &lt;commit id1&gt; &lt;commit id2&gt;
 
 <p>在当前工作区内新建一个名为”.gitignore”的文件，参考<a href="https://github.com/github/gitignore">git ignore</a>和<a href="https://www.jianshu.com/p/a09a9b40ad20">简书</a>填写需要忽略的文件。另外，如需忽略名为”bin”的文件夹或者名字中包含”bin”的文件夹，则加入”bin/”或者”*bin*/”。</p>
 
+<p>全局设定要忽略的文件：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config --global core.excludesfile '~/.gitignore'
+</code></pre></div></div>
 
   </div>
 
