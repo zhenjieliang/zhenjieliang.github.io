@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 25 Dec 2017 09:24:06 +0800</pubDate>
-    <lastBuildDate>Mon, 25 Dec 2017 09:24:06 +0800</lastBuildDate>
+    <pubDate>Mon, 25 Dec 2017 11:38:56 +0800</pubDate>
+    <lastBuildDate>Mon, 25 Dec 2017 11:38:56 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
@@ -40,6 +40,20 @@ git commit -a -m &quot;some note&quot;
 git checkout master
 git merge &amp;lt;the new branch name before&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;为了使得不同branch的log的信息图能显示得更加美观，可以采用以下两个命令中的任意一个：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log --graph --abbrev-commit --decorate --date=relative --all
+git log --all --decorate --oneline --graph
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;长命令缩减为短命令可以使用alias功能：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config --global alias.adog &quot;log --all --decorate --oneline --graph&quot;
+git config --global alias.adog2 &quot;log --graph --abbrev-commit --decorate --date=relative --all&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如此则只需&lt;code class=&quot;highlighter-rouge&quot;&gt;git adog2&lt;/code&gt;或者&lt;code class=&quot;highlighter-rouge&quot;&gt;git adog&lt;/code&gt;即可实现上述两个长命令。&lt;/p&gt;
 
 &lt;p&gt;使用tag来标注版本号，并且使用上述命令进行分支回退操作，避免了输入commit id的繁琐操作（虽然在zsh里可以使用tab命令来选取，但终究在意义直观上不够便捷）。&lt;/p&gt;
 

@@ -92,6 +92,20 @@ git checkout master
 git merge &lt;the new branch name before&gt;
 </code></pre></div></div>
 
+<p>为了使得不同branch的log的信息图能显示得更加美观，可以采用以下两个命令中的任意一个：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log --graph --abbrev-commit --decorate --date=relative --all
+git log --all --decorate --oneline --graph
+</code></pre></div></div>
+
+<p>长命令缩减为短命令可以使用alias功能：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config --global alias.adog "log --all --decorate --oneline --graph"
+git config --global alias.adog2 "log --graph --abbrev-commit --decorate --date=relative --all"
+</code></pre></div></div>
+
+<p>如此则只需<code class="highlighter-rouge">git adog2</code>或者<code class="highlighter-rouge">git adog</code>即可实现上述两个长命令。</p>
+
 <p>使用tag来标注版本号，并且使用上述命令进行分支回退操作，避免了输入commit id的繁琐操作（虽然在zsh里可以使用tab命令来选取，但终究在意义直观上不够便捷）。</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag
