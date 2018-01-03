@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Pangu Spacing</title>
+  <meta name="description" content="为了排版版式美观，中文、英文、数字、特殊符号等混拍需要满足一定要求。常见的要求有中文和英文、中文和数字之间用半角空格隔开，更为具体的要求可以参考 中文文案排版指北。">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cs/tools/markdown/2018/01/03/pangu.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Pangu Spacing</h1>
+    <p class="post-meta"><time datetime="2018-01-03T21:15:07+08:00" itemprop="datePublished">Jan 3, 2018</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>为了排版版式美观，中文、英文、数字、特殊符号等混拍需要满足一定要求。常见的要求有中文和英文、中文和数字之间用半角空格隔开，更为具体的要求可以参考 <a href="https://github.com/sparanoid/chinese-copywriting-guidelines">中文文案排版指北</a>。</p>
+
+<p>为了满足这些要求，可以在切换输入法时手动加入半角空格（搜狗输入法具有这一自动功能），也可以使用其他工具来自动筛选并添加空格。对于 Latex 的使用者来说，无论 tex 文档是否满足中英文之间空格的要求，其生成的 pdf 文件都会自动满足这些要求。而对于 markdown 的使用者而言，为了保证自己写的文档符合版式要求，可以在文档完成之后使用 <a href="https://github.com/vinta/pangu.js">pangu</a> （又名 “盘古之白”）来自动添加。</p>
+
+<p>经过使用比较几款 markdown 编辑器，Typora 目前是我的首选。很遗憾 CSS 无法实现对字符语言的识别 <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>，因此无法在 Typora 里实现在无空格的情况下显示有空格的功能。因此可以在写完 markdown 之后使用 pangu 的 <a href="https://github.com/vinta/pangu.py">python</a> 版本来处理。使用 <code class="highlighter-rouge">sudo pip install pangu</code> 安装完成后，具体的 python 文本处理代码如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pangu</span>
+
+<span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"a.txt"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">textafter</span> <span class="o">=</span> <span class="n">pangu</span><span class="o">.</span><span class="n">spacing</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"b.txt"</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span>
+<span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">textafter</span><span class="p">)</span>
+<span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>另外，对于网页来说，可以使用 pangu 的油猴脚本（ <a href="https://github.com/vinta/pangu.js/raw/master/browser_extensions/firefox/paranoid-auto-spacing.user.js">Firefox</a> <a href="https://chrome.google.com/webstore/detail/paphcfdffjnbcgkokihcdjliihicmbpd">Chrome</a> ）实现网页自动重排。</p>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="https://wordpress.stackexchange.com/questions/82456/add-whitespace-between-chinese-and-other-letters">StackExchange</a> 里提到这一点，并指出 PHP 下的一种实现方案。而 <a href="https://codepen.io/flanker/pen/HcItG">CodePen</a> 给出了一种在 HTML 下的 CSS 实现，但在 Typora 的 CSS 里使用却没成功。 <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Zhenjie Liang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

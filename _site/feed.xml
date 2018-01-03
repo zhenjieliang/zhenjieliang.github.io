@@ -5,9 +5,49 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 25 Dec 2017 11:38:56 +0800</pubDate>
-    <lastBuildDate>Mon, 25 Dec 2017 11:38:56 +0800</lastBuildDate>
+    <pubDate>Wed, 03 Jan 2018 22:19:23 +0800</pubDate>
+    <lastBuildDate>Wed, 03 Jan 2018 22:19:23 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
+    
+      <item>
+        <title>Pangu Spacing</title>
+        <description>&lt;p&gt;为了排版版式美观，中文、英文、数字、特殊符号等混拍需要满足一定要求。常见的要求有中文和英文、中文和数字之间用半角空格隔开，更为具体的要求可以参考 &lt;a href=&quot;https://github.com/sparanoid/chinese-copywriting-guidelines&quot;&gt;中文文案排版指北&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;为了满足这些要求，可以在切换输入法时手动加入半角空格（搜狗输入法具有这一自动功能），也可以使用其他工具来自动筛选并添加空格。对于 Latex 的使用者来说，无论 tex 文档是否满足中英文之间空格的要求，其生成的 pdf 文件都会自动满足这些要求。而对于 markdown 的使用者而言，为了保证自己写的文档符合版式要求，可以在文档完成之后使用 &lt;a href=&quot;https://github.com/vinta/pangu.js&quot;&gt;pangu&lt;/a&gt; （又名 “盘古之白”）来自动添加。&lt;/p&gt;
+
+&lt;p&gt;经过使用比较几款 markdown 编辑器，Typora 目前是我的首选。很遗憾 CSS 无法实现对字符语言的识别 &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;，因此无法在 Typora 里实现在无空格的情况下显示有空格的功能。因此可以在写完 markdown 之后使用 pangu 的 &lt;a href=&quot;https://github.com/vinta/pangu.py&quot;&gt;python&lt;/a&gt; 版本来处理。使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo pip install pangu&lt;/code&gt; 安装完成后，具体的 python 文本处理代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pangu&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;a.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;r&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;textafter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pangu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spacing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;b.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;w&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fh&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;textafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fh&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;另外，对于网页来说，可以使用 pangu 的油猴脚本（ &lt;a href=&quot;https://github.com/vinta/pangu.js/raw/master/browser_extensions/firefox/paranoid-auto-spacing.user.js&quot;&gt;Firefox&lt;/a&gt; &lt;a href=&quot;https://chrome.google.com/webstore/detail/paphcfdffjnbcgkokihcdjliihicmbpd&quot;&gt;Chrome&lt;/a&gt; ）实现网页自动重排。&lt;/p&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://wordpress.stackexchange.com/questions/82456/add-whitespace-between-chinese-and-other-letters&quot;&gt;StackExchange&lt;/a&gt; 里提到这一点，并指出 PHP 下的一种实现方案。而 &lt;a href=&quot;https://codepen.io/flanker/pen/HcItG&quot;&gt;CodePen&lt;/a&gt; 给出了一种在 HTML 下的 CSS 实现，但在 Typora 的 CSS 里使用却没成功。 &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 03 Jan 2018 21:15:07 +0800</pubDate>
+        <link>http://localhost:4000/cs/tools/markdown/2018/01/03/pangu.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cs/tools/markdown/2018/01/03/pangu.html</guid>
+        
+        
+        <category>CS</category>
+        
+        <category>Tools</category>
+        
+        <category>Markdown</category>
+        
+      </item>
     
       <item>
         <title>Git</title>
@@ -15,61 +55,61 @@
 
 &lt;h2 id=&quot;回退和分支&quot;&gt;回退和分支&lt;/h2&gt;
 
-&lt;p&gt;回退到某个版本并且将该版本设为master&lt;/p&gt;
+&lt;p&gt;回退到某个版本并且将该版本设为 master&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &amp;lt;commit id&amp;gt;            # Checkout previous commit on master, the id is the first 7 digits, or simply Tab to select.
-git checkout -b new_master       # Create branch for new master
-git branch -D master             # Delete old master
-git branch -mv new_master master # Make new_master master
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &amp;lt;commit id&amp;gt;            &lt;span class=&quot;c&quot;&gt;# Checkout previous commit on master, the id is the first 7 digits, or simply Tab to select.&lt;/span&gt;
+git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; new_master       &lt;span class=&quot;c&quot;&gt;# Create branch for new master&lt;/span&gt;
+git branch &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; master             &lt;span class=&quot;c&quot;&gt;# Delete old master&lt;/span&gt;
+git branch &lt;span class=&quot;nt&quot;&gt;-mv&lt;/span&gt; new_master master &lt;span class=&quot;c&quot;&gt;# Make new_master master&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;或者&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset --hard &amp;lt;commit id&amp;gt;        # Reset current branch to one commit ago on master
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset &lt;span class=&quot;nt&quot;&gt;--hard&lt;/span&gt; &amp;lt;commit id&amp;gt;        &lt;span class=&quot;c&quot;&gt;# Reset current branch to one commit ago on master&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;这样回退会导致损失掉某个commit id的版本，版本控制应该慎重使用。其实更好的办法是破除喜欢在master分支上修改代码的不良习惯，多使用branch。&lt;/p&gt;
+&lt;p&gt;这样回退会导致损失掉某个 commit id 的版本，版本控制应该慎重使用。其实更好的办法是破除喜欢在 master 分支上修改代码的不良习惯，多使用 branch。&lt;/p&gt;
 
-&lt;p&gt;以下是使用branch的一些常用语句。&lt;/p&gt;
+&lt;p&gt;以下是使用 branch 的一些常用语句。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout -b &amp;lt;new branch name&amp;gt;
-#create and switch to new branch
-#revised the code in workplace and then
-git commit -a -m &quot;some note&quot;
-#if you want to merge the new branch to master
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; &amp;lt;new branch name&amp;gt;
+&lt;span class=&quot;c&quot;&gt;#create and switch to new branch&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#revised the code in workplace and then&lt;/span&gt;
+git commit &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;some note&quot;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#if you want to merge the new branch to master&lt;/span&gt;
 git checkout master
 git merge &amp;lt;the new branch name before&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;为了使得不同branch的log的信息图能显示得更加美观，可以采用以下两个命令中的任意一个：&lt;/p&gt;
+&lt;p&gt;为了使得不同 branch 的 log 的信息图能显示得更加美观，可以采用以下两个命令中的任意一个：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log --graph --abbrev-commit --decorate --date=relative --all
-git log --all --decorate --oneline --graph
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log &lt;span class=&quot;nt&quot;&gt;--graph&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--abbrev-commit&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--decorate&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--date&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;relative &lt;span class=&quot;nt&quot;&gt;--all&lt;/span&gt;
+git log &lt;span class=&quot;nt&quot;&gt;--all&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--decorate&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--oneline&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--graph&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;长命令缩减为短命令可以使用alias功能：&lt;/p&gt;
+&lt;p&gt;长命令缩减为短命令可以使用 alias 功能：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config --global alias.adog &quot;log --all --decorate --oneline --graph&quot;
-git config --global alias.adog2 &quot;log --graph --abbrev-commit --decorate --date=relative --all&quot;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; alias.adog &lt;span class=&quot;s2&quot;&gt;&quot;log --all --decorate --oneline --graph&quot;&lt;/span&gt;
+git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; alias.adog2 &lt;span class=&quot;s2&quot;&gt;&quot;log --graph --abbrev-commit --decorate --date=relative --all&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;如此则只需&lt;code class=&quot;highlighter-rouge&quot;&gt;git adog2&lt;/code&gt;或者&lt;code class=&quot;highlighter-rouge&quot;&gt;git adog&lt;/code&gt;即可实现上述两个长命令。&lt;/p&gt;
+&lt;p&gt;如此则只需 &lt;code class=&quot;highlighter-rouge&quot;&gt;git adog2&lt;/code&gt; 或者 &lt;code class=&quot;highlighter-rouge&quot;&gt;git adog&lt;/code&gt; 即可实现上述两个长命令。&lt;/p&gt;
 
-&lt;p&gt;使用tag来标注版本号，并且使用上述命令进行分支回退操作，避免了输入commit id的繁琐操作（虽然在zsh里可以使用tab命令来选取，但终究在意义直观上不够便捷）。&lt;/p&gt;
+&lt;p&gt;使用 tag 来标注版本号，并且使用上述命令进行分支回退操作，避免了输入 commit id 的繁琐操作（虽然在 zsh 里可以使用 tab 命令来选取，但终究在意义直观上不够便捷）。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git tag
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git tag
 git tag v0.1
 git checkout v0.1
 git checkout master
-git reset --hard v0.1
+git reset &lt;span class=&quot;nt&quot;&gt;--hard&lt;/span&gt; v0.1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;其他常见&quot;&gt;其他常见&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git init
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git init
 git status
-git add .
-git commit -m &quot;&quot;
+git add &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
 git branch
 git log
 git diff &amp;lt;commit id1&amp;gt; &amp;lt;commit id2&amp;gt;
@@ -77,12 +117,15 @@ git diff &amp;lt;commit id1&amp;gt; &amp;lt;commit id2&amp;gt;
 
 &lt;h2 id=&quot;忽略&quot;&gt;忽略&lt;/h2&gt;
 
-&lt;p&gt;在当前工作区内新建一个名为”.gitignore”的文件，参考&lt;a href=&quot;https://github.com/github/gitignore&quot;&gt;git ignore&lt;/a&gt;和&lt;a href=&quot;https://www.jianshu.com/p/a09a9b40ad20&quot;&gt;简书&lt;/a&gt;填写需要忽略的文件。另外，如需忽略名为”bin”的文件夹或者名字中包含”bin”的文件夹，则加入”bin/”或者”*bin*/”。&lt;/p&gt;
+&lt;p&gt;在当前工作区内新建一个名为 “.gitignore” 的文件，参考 &lt;a href=&quot;https://github.com/github/gitignore&quot;&gt;git ignore&lt;/a&gt; 和&lt;a href=&quot;https://www.jianshu.com/p/a09a9b40ad20&quot;&gt;简书&lt;/a&gt;填写需要忽略的文件。另外，如需忽略名为 “bin” 的文件夹或者名字中包含 “bin” 的文件夹，则加入 “bin/” 或者 “*bin*/”。&lt;/p&gt;
 
 &lt;p&gt;全局设定要忽略的文件：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config --global core.excludesfile '~/.gitignore'
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; core.excludesfile &lt;span class=&quot;s1&quot;&gt;'~/.gitignore'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;##&lt;/p&gt;
+
 </description>
         <pubDate>Sun, 24 Dec 2017 14:07:36 +0800</pubDate>
         <link>http://localhost:4000/cs/tools/2017/12/24/git.html</link>
@@ -96,89 +139,88 @@ git diff &amp;lt;commit id1&amp;gt; &amp;lt;commit id2&amp;gt;
       </item>
     
       <item>
-        <title>Shadowsocksr </title>
-        <description>&lt;h2 id=&quot;安装serverspeeder&quot;&gt;安装serverspeeder&lt;/h2&gt;
+        <title>Shadowsocksr</title>
+        <description>&lt;h2 id=&quot;安装-serverspeeder&quot;&gt;安装 serverspeeder&lt;/h2&gt;
 
-&lt;p&gt;选择ubuntu 14.04的镜像&lt;/p&gt;
+&lt;p&gt;选择 ubuntu 14.04 的镜像&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install linux-image-4.2.0-35-generic
-uname -r
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install linux-image-4.2.0-35-generic
+uname &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;
 update-grub
 reboot
-wget -N --no-check-certificate https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh &amp;amp;&amp;amp; bash serverspeeder.sh
+wget &lt;span class=&quot;nt&quot;&gt;-N&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--no-check-certificate&lt;/span&gt; https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; bash serverspeeder.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;服务端&quot;&gt;服务端&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install git
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install git
 apt-get install python
 apt-get install vim
-git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
-cd shadowsocksr
+git clone &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;shadowsocksr
 bash initcfg.sh
 vim ~/shadowsocksr/user-config.json
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;单用户设置&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-    &quot;server&quot;: &quot;0.0.0.0&quot;,
-    &quot;server_ipv6&quot;: &quot;::&quot;,
-    &quot;server_port&quot;: ,#修改
-    &quot;local_address&quot;: &quot;127.0.0.1&quot;,
-    &quot;local_port&quot;: 1080,
-    &quot;password&quot;: &quot;&quot;,#修改
-    &quot;timeout&quot;: 600,
-    &quot;method&quot;: &quot;none&quot;,#可以修改成其他加密
-    &quot;protocol&quot;: &quot;auth_chain_a&quot;,#可以修改成auth_chain_b
-    &quot;protocol_param&quot;: &quot;&quot;,
-    &quot;obfs&quot;: &quot;tls1.2_ticket_auth&quot;,
-    &quot;obfs_param&quot;: &quot;&quot;,#可以修改
-    &quot;redirect&quot;: &quot;&quot;,
-    &quot;dns_ipv6&quot;: false,
-    &quot;fast_open&quot;: false,
-    &quot;workers&quot;: 1
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.0.0.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_ipv6&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;::&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;修改&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;修改&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;timeout&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;none&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#可以修改成其他加密&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;auth_chain_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;可以修改成&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;auth_chain_b&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;protocol_param&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;obfs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;tls1.2_ticket_auth&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;obfs_param&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;可以修改&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;redirect&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;dns_ipv6&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;fast_open&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;workers&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;运行&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd ~/shadowsocksr/shadowsocks
-python server.py -d start
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/shadowsocksr/shadowsocks
+python server.py &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; start
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;客户端&quot;&gt;客户端&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone -b manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
-sudo vim /etc/younameit.json
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/younameit.json
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;younameit.json 设置&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-    &quot;server&quot;:&quot;&quot;,#查服务器ip，填上
-    &quot;server_ipv6&quot;: &quot;::&quot;,
-    &quot;server_port&quot;:&quot;&quot;,#同服务端单用户设置
-    &quot;local_address&quot;: &quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:1080,
-    &quot;password&quot;:&quot;&quot;,#同服务端单用户设置
-    &quot;timeout&quot;:600,
-    &quot;udp_timeout&quot;: 600,
-    &quot;method&quot;:&quot;none&quot;,#同服务端单用户设置
-    &quot;protocol&quot;: &quot;auth_chain_a&quot;,#同服务端单用户设置
-    &quot;obfs&quot;:&quot;tls1.2_ticket_auth&quot;,#同服务端单用户设置
-    &quot;obfs_param&quot;: &quot;&quot;#同服务端单用户设置
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#查服务器&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;ip，填上&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_ipv6&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;::&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;timeout&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;udp_timeout&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;none&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;auth_chain_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;obfs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;tls1.2_ticket_auth&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;obfs_param&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;保存之后。设置启动脚本&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim younameit.sh
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim younameit.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;younameit.sh 只有一行代码&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#! /bin/sh&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#! /bin/sh&lt;/span&gt;
 
 &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;python ~/shadowsocksr/shadowsocks/local.py &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; /etc/younameit.json &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; start
@@ -190,12 +232,12 @@ sudo vim /etc/younameit.json
 
 &lt;p&gt;开机后客户端启动&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sh younameit.sh
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sh younameit.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;关闭则再运行一次上述命令，得到已经在运行的报错信息，再根据信息中的pid，关闭客户端。&lt;/p&gt;
+&lt;p&gt;关闭则再运行一次上述命令，得到已经在运行的报错信息，再根据信息中的 pid，关闭客户端。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo kill pid
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo kill &lt;/span&gt;pid
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 </description>
@@ -211,10 +253,10 @@ sudo vim /etc/younameit.json
       </item>
     
       <item>
-        <title>华硕路由器端口转发无法使用 </title>
-        <description>&lt;p&gt;为了能在外网使用中心的主机，需要在中心的华硕RT AC66U路由器上设置端口转发。它的端口转发设置很简单，但就是&lt;strong&gt;无法使用&lt;/strong&gt;。搜索了各种关于华硕路由器端口转发问题解决的方法，包括更新固件和关掉防火墙，统统没有用。有一篇英文帖子说，&lt;strong&gt;华硕的端口转发无法实现NAT reflection，所以不可能实现端口转发，不要白费功夫了&lt;/strong&gt;。&lt;/p&gt;
+        <title>华硕路由器端口转发无法使用</title>
+        <description>&lt;p&gt;为了能在外网使用中心的主机，需要在中心的华硕 RT AC66U 路由器上设置端口转发。它的端口转发设置很简单，但就是 &lt;strong&gt;无法使用 **。搜索了各种关于华硕路由器端口转发问题解决的方法，包括更新固件和关掉防火墙，统统没有用。有一篇英文帖子说，&lt;/strong&gt;华硕的端口转发无法实现 NAT reflection，所以不可能实现端口转发，不要白费功夫了**。&lt;/p&gt;
 
-&lt;p&gt;退而求其次，使用DMZ。原本想这个是最容易实现的了（成本就是网络安全性下降），没成想这个也无法使用。&lt;/p&gt;
+&lt;p&gt;退而求其次，使用 DMZ。原本想这个是最容易实现的了（成本就是网络安全性下降），没成想这个也无法使用。&lt;/p&gt;
 
 &lt;p&gt;宿舍里那个用了许多年的华为低端光猫，这些功能实现起来轻轻松松。真是佩服售价高几倍的华硕－&lt;strong&gt;我不抱怨你不能实现这些普通家庭用户用不到的功能，但是实现不了的功能，拜托你行行好不要把它们写进设置里面&lt;/strong&gt;。&lt;/p&gt;
 
@@ -223,6 +265,8 @@ sudo vim /etc/younameit.json
 &lt;p&gt;耗费了这么多花大价钱支持你的忠实用户的许多时间，&lt;strong&gt;心情从一开始的纳闷，到排除其他原因的心塞，再到尝试你家的解决方案的抓狂，最后徒留深深的被愚弄感&lt;/strong&gt;。&lt;/p&gt;
 
 &lt;p&gt;以后再也不会买华硕的路由器了。&lt;/p&gt;
+
+&lt;p&gt;后记：后面发现是厦大校园网对办公区域的网络安全策略进行专门的配置，从而无法实现端口转发。&lt;strong&gt;有可能&lt;/strong&gt;错怪了华硕（毕竟还没有在正常的网络环境下使用华硕路由器实现端口转发），抱歉。&lt;/p&gt;
 
 </description>
         <pubDate>Wed, 19 Jul 2017 07:45:33 +0800</pubDate>
@@ -237,17 +281,17 @@ sudo vim /etc/younameit.json
       </item>
     
       <item>
-        <title>noip hostname 30天就过期 </title>
-        <description>&lt;h1 id=&quot;noip-hostname-30天就过期&quot;&gt;noip hostname 30天就过期&lt;/h1&gt;
+        <title>noip hostname 30 天就过期</title>
+        <description>&lt;h1 id=&quot;noip-hostname-30-天就过期&quot;&gt;noip hostname 30 天就过期&lt;/h1&gt;
 
-&lt;p&gt;no-ip家DDNS的free host name每隔30天就要过期，届时相关的服务都无法连接。解决办法就是登陆官网，重新添加一个host name，然后按照&lt;a href=&quot;https://www.noip.com/support/knowledgebase/installing-the-linux-dynamic-update-client-on-ubuntu/&quot;&gt;DUC设置&lt;/a&gt;重新走一遍流程（安装部分省略）。&lt;/p&gt;
+&lt;p&gt;no-ip 家 DDNS 的 free host name 每隔 30 天就要过期，届时相关的服务都无法连接。解决办法就是登陆官网，重新添加一个 host name，然后按照 &lt;a href=&quot;https://www.noip.com/support/knowledgebase/installing-the-linux-dynamic-update-client-on-ubuntu/&quot;&gt;DUC 设置&lt;/a&gt; 重新走一遍流程（安装部分省略）。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/usr/local/bin/noip2 -C
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/usr/local/bin/noip2 &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;运行这一行代码时会报错，告知该进程已经在运行，需要使用&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo kill &quot;noip2pid&quot;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo kill&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;noip2pid&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;然后继续流程，输入登陆邮箱和密码，选择好更新时间间隔即可。&lt;/p&gt;
@@ -264,56 +308,56 @@ sudo vim /etc/younameit.json
       </item>
     
       <item>
-        <title>VPS的挑选和设置</title>
-        <description>&lt;h1 id=&quot;如何挑选vps&quot;&gt;如何挑选VPS&lt;/h1&gt;
+        <title>VPS 的挑选和设置</title>
+        <description>&lt;h1 id=&quot;如何挑选-vps&quot;&gt;如何挑选 VPS&lt;/h1&gt;
 
 &lt;p&gt;站长工具测试延迟，挑选在本地电信（或者移动等其他运营商）延迟最低的服务器&lt;/p&gt;
 
-&lt;h1 id=&quot;ssh连接vps&quot;&gt;ssh连接VPS&lt;/h1&gt;
+&lt;h1 id=&quot;ssh-连接-vps&quot;&gt;ssh 连接 VPS&lt;/h1&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   ssh root@VPS.ip #在VPS的manager里可以看到相应的服务器ip和密码
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh root@VPS.ip &lt;span class=&quot;c&quot;&gt;#在 VPS 的 manager 里可以看到相应的服务器 ip 和密码&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h1 id=&quot;搭建shadowsocks服务端&quot;&gt;搭建&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;服务端&lt;/h1&gt;
+&lt;h1 id=&quot;搭建-shadowsocks-服务端&quot;&gt;搭建 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt; 服务端&lt;/h1&gt;
 
-&lt;p&gt;首先安装&lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;首先安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   sudo apt-get install python-pip
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get install python-pip
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;其次安装&lt;code class=&quot;highlighter-rouge&quot;&gt;setuptools&lt;/code&gt;，再安装&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其次安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;setuptools&lt;/code&gt;，再安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   sudo pip install -U setuptools
-$   sudo pip install shadowsocks
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pip install &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; setuptools
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pip install shadowsocks
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;然后配置&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;然后配置 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   sudo vim /etc/shadowsocks.json
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/shadowsocks.json
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;写入以下配置&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-    &quot;server&quot;:&quot;server_ip&quot;,
-    &quot;server_port&quot;:8388, #可变
-    &quot;local_address&quot;: &quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:1080,
-    &quot;password&quot;:&quot;password&quot;,
-    &quot;timeout&quot;:600,
-    &quot;method&quot;:&quot;aes-256-cfb&quot;, #可变
-    &quot;fast_open&quot;: false
-}
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_ip&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8388&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#可变&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;timeout&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;aes-256-cfb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#可变&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;fast_open&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;注意，&lt;code class=&quot;highlighter-rouge&quot;&gt;vim&lt;/code&gt; 编辑先按 &lt;code class=&quot;highlighter-rouge&quot;&gt;insert&lt;/code&gt;（在笔记本键盘中是 &lt;code class=&quot;highlighter-rouge&quot;&gt;ins&lt;/code&gt; 键），将上述配置根据 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPS&lt;/code&gt; 的服务器 &lt;code class=&quot;highlighter-rouge&quot;&gt;ip&lt;/code&gt; 来设置；然后按两次 &lt;code class=&quot;highlighter-rouge&quot;&gt;Esc&lt;/code&gt; 键，为了进入预保存模式，最后输入 &lt;code class=&quot;highlighter-rouge&quot;&gt;:x&lt;/code&gt; 保存离开。&lt;/p&gt;
+
+&lt;p&gt;启动 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;ssserver &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; /etc/shadowsocks.json &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; start
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;注意，&lt;code class=&quot;highlighter-rouge&quot;&gt;vim&lt;/code&gt;编辑先按&lt;code class=&quot;highlighter-rouge&quot;&gt;insert&lt;/code&gt;（在笔记本键盘中是&lt;code class=&quot;highlighter-rouge&quot;&gt;ins&lt;/code&gt;键），将上述配置根据&lt;code class=&quot;highlighter-rouge&quot;&gt;VPS&lt;/code&gt;的服务器&lt;code class=&quot;highlighter-rouge&quot;&gt;ip&lt;/code&gt;来设置；然后按两次&lt;code class=&quot;highlighter-rouge&quot;&gt;Esc&lt;/code&gt;键，为了进入预保存模式，最后输入&lt;code class=&quot;highlighter-rouge&quot;&gt;:x&lt;/code&gt;保存离开。&lt;/p&gt;
-
-&lt;p&gt;启动&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$   sudo ssserver -c /etc/shadowsocks.json -d start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;配置shadowsocks客户端&quot;&gt;配置&lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;客户端&lt;/h1&gt;
+&lt;h1 id=&quot;配置-shadowsocks-客户端&quot;&gt;配置 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt; 客户端&lt;/h1&gt;
 
 &lt;p&gt;按照服务端的设置在客户端中手动添加即可。&lt;/p&gt;
 
@@ -344,19 +388,19 @@ $   sudo pip install shadowsocks
 &lt;p&gt;学术新手应该如何锻炼符合学术语言规范的写作能力呢？或者说，在尚未具备学术语言表达能力时，新手应该如何开始论文写作？结合自身的经历，笔者尝试提出一些不成熟的建议，以供批判。抛砖引玉，期待大家不吝赐教。&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;草稿 version 0.1可随心所欲，无需满足规范。为了快速将研究成果准确记录下来，任何语言，短语甚至符号都是可以接受的。同时应该将论文的大纲拟出来。&lt;/li&gt;
+  &lt;li&gt;草稿 version 0.1 可随心所欲，无需满足规范。为了快速将研究成果准确记录下来，任何语言，短语甚至符号都是可以接受的。同时应该将论文的大纲拟出来。&lt;/li&gt;
   &lt;li&gt;草稿 version 0.2 将大纲分细，每段使用较为粗糙的中心句表达出来。&lt;/li&gt;
   &lt;li&gt;草稿 version 0.3 填充每段的内容。需要搜索查阅资料方可确定的统计数字、事实案例、文献出处等均可以代号在此处代替，留白。&lt;/li&gt;
   &lt;li&gt;草稿 version 0.4 填写留白处，并每处以脚注或者参考文献的形式给出相应出处。&lt;/li&gt;
   &lt;li&gt;草稿 version 0.5 上述部分完成的主要是研究背景和文献综述。理论模型、实证以及总结部分仍是大片空白。这一阶段则需要将模型原理、模型改进、实证模型、实证假设、统计变量、数据来源、数据处理、参数估计、假设检验结果、结果解读和总结等部分完成。这个阶段也是研究主要阶段。&lt;/li&gt;
-  &lt;li&gt;初稿 version 0.6 目前仍是一篇非常粗糙的初稿，需要进行大量的文字润色使其满足学术语言规范。在没有能力的情况下如何进行文字润色？最简单的工作就是&lt;strong&gt;替换改写&lt;/strong&gt;。首先需要将不满足学术语言的部分标记出来。然后在较为权威的参考文献中找到相同或者相近含义的句子，将其替换改写。&lt;/li&gt;
+  &lt;li&gt;初稿 version 0.6 目前仍是一篇非常粗糙的初稿，需要进行大量的文字润色使其满足学术语言规范。在没有能力的情况下如何进行文字润色？最简单的工作就是 ** 替换改写 **。首先需要将不满足学术语言的部分标记出来。然后在较为权威的参考文献中找到相同或者相近含义的句子，将其替换改写。&lt;/li&gt;
   &lt;li&gt;初稿 version 0.7 这一阶段需要通读全文，将存在冗余的部分删去，存在逻辑缺口的部分补写。这一阶段需要结合上一阶段的替换改写来交替进行，直到整篇文章达到意思清晰逻辑完整的程度。&lt;/li&gt;
   &lt;li&gt;初稿 version 0.8 校对检查。工作包括出处确认，避免引用理解偏差的错误出现；逻辑结构推演，避免行文出现逻辑错误。&lt;/li&gt;
   &lt;li&gt;初稿 version 0.9 排版。字体，样式，色彩（图的配色挑选模板）；图片应尽量使用 svg 格式，表格应该满足相应投稿规范。图片大小、表格大小及其位置应根据文章内容具体设计。&lt;/li&gt;
   &lt;li&gt;初稿 version 1.0 投稿。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;后注：本文或许应该改名为“面向新手的学术论文写作流程设计”。&lt;/p&gt;
+&lt;p&gt;后注：本文或许应该改名为 “面向新手的学术论文写作流程设计”。&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 25 Jun 2017 10:40:33 +0800</pubDate>
@@ -372,7 +416,7 @@ $   sudo pip install shadowsocks
     
       <item>
         <title>使用 jekyll 编写 Github 博客</title>
-        <description>&lt;p&gt;前提：了解Git命令。
+        <description>&lt;p&gt;前提：了解 Git 命令。
 操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6&lt;/p&gt;
 
 &lt;p&gt;要点：&lt;/p&gt;
@@ -395,11 +439,11 @@ $   sudo pip install shadowsocks
 
 &lt;p&gt;参考资料如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/88c9e72978b4&quot;&gt;用Jekyll搭建的Github Pages个人博客&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/88c9e72978b4&quot;&gt;用 Jekyll 搭建的 Github Pages 个人博客&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://jekyllrb.com/docs/quickstart/&quot;&gt;Quick-start guide&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/ayseeing/p/3572582.html&quot;&gt;github设置添加SSH&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/ayseeing/p/3572582.html&quot;&gt;github 设置添加 SSH&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/setting-up-an-apex-domain/&quot;&gt;域名绑定&lt;/a&gt;&lt;/p&gt;
 

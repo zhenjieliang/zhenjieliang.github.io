@@ -4,7 +4,7 @@ title:  "使用 jekyll 编写 Github 博客"
 date:   2017-06-23 17:40:33 +0800
 categories: jekyll update
 ---
-前提：了解Git命令。
+前提：了解 Git 命令。
 操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6
 
 要点：
@@ -23,11 +23,11 @@ categories: jekyll update
 
 参考资料如下：
 
-[用Jekyll搭建的Github Pages个人博客](http://www.jianshu.com/p/88c9e72978b4)
+[用 Jekyll 搭建的 Github Pages 个人博客](http://www.jianshu.com/p/88c9e72978b4)
 
 [Quick-start guide](https://jekyllrb.com/docs/quickstart/)
 
-[github设置添加SSH](https://www.cnblogs.com/ayseeing/p/3572582.html)
+[github 设置添加 SSH](https://www.cnblogs.com/ayseeing/p/3572582.html)
 
 [域名绑定](https://help.github.com/articles/setting-up-an-apex-domain/)
 
