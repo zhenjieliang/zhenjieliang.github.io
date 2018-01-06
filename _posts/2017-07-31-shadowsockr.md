@@ -123,3 +123,29 @@ sudo kill pid
 
 
 
+## ssh 免密远程登陆
+
+在本地使用命令：
+
+```shell
+scp ~/.ssh/id_rsa.pub root@ip:/root
+```
+
+输入远程主机密码之后即可将密钥传输过去。然后在 ssh 连接远程主机，再输入以下命令：
+
+```shell
+mkdir ~/.ssh
+cat ~/id_rsa.pub >> ~/.ssh/authorized_keys
+rm ~/id_rsa.pub
+```
+
+至此，使用 `ssh root@ip` 将无需输入密码。但这样仍需要记住 ip，可以使用其他代号（例如 slave）来取代 ip。具体做法如下：
+
+```shell
+sudo vim /etc/hosts
+# edit hosts
+ip slave
+```
+
+完成之后，`ping slave` 即可得到远程主机的网络延迟，而 `ssh root@slave` 即可连接到远程主机。
+

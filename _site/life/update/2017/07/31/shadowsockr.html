@@ -162,6 +162,29 @@ python server.py <span class="nt">-d</span> start
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo kill </span>pid
 </code></pre></div></div>
 
+<h2 id="ssh-免密远程登陆">ssh 免密远程登陆</h2>
+
+<p>在本地使用命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp ~/.ssh/id_rsa.pub root@ip:/root
+</code></pre></div></div>
+
+<p>输入远程主机密码之后即可将密钥传输过去。然后在 ssh 连接远程主机，再输入以下命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/.ssh
+<span class="nb">cat</span> ~/id_rsa.pub <span class="o">&gt;&gt;</span> ~/.ssh/authorized_keys
+rm ~/id_rsa.pub
+</code></pre></div></div>
+
+<p>至此，使用 <code class="highlighter-rouge">ssh root@ip</code> 将无需输入密码。但这样仍需要记住 ip，可以使用其他代号（例如 slave）来取代 ip。具体做法如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/hosts
+<span class="c"># edit hosts</span>
+ip slave
+</code></pre></div></div>
+
+<p>完成之后，<code class="highlighter-rouge">ping slave</code> 即可得到远程主机的网络延迟，而 <code class="highlighter-rouge">ssh root@slave</code> 即可连接到远程主机。</p>
+
 
   </div>
 

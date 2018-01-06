@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>V2Ray</title>
+  <meta name="description" content="基础环境">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cs/tools/2018/01/06/v2ray.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">V2Ray</h1>
+    <p class="post-meta"><time datetime="2018-01-06T14:08:12+08:00" itemprop="datePublished">Jan 6, 2018</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="基础环境">基础环境</h2>
+
+<h3 id="替换-ubuntu-1404-内核--安装锐速">替换 Ubuntu 14.04 内核 &amp; 安装锐速</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install linux-image-4.2.0-35-generic
+uname <span class="nt">-r</span>
+update-grub
+reboot
+wget <span class="nt">-N</span> <span class="nt">--no-check-certificate</span> https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh <span class="o">&amp;&amp;</span> bash serverspeeder.sh
+apt-get update
+apt-get install git python vim systemd
+</code></pre></div></div>
+
+<h3 id="安装-go-191">安装 Go 1.9.1</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-O</span> https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz
+<span class="nb">tar</span> <span class="nt">-xvf</span> go1.9.1.linux-amd64.tar.gz
+cp <span class="nt">-r</span> go /usr/local
+vim ~/.profile
+<span class="c"># add the line below and save and quit.</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/go/bin
+<span class="c"># make it work</span>
+<span class="nb">source</span> ~/.profile
+</code></pre></div></div>
+
+<h3 id="安装-v2ray">安装 V2Ray</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/v2ray/v2ray-core/archive/v3.5.tar.gz
+<span class="nb">tar</span> <span class="nt">-xvf</span> v3.5.tar.gz
+bash ~/v2ray-core-3.5/release/install-release.sh
+</code></pre></div></div>
+
+<h2 id="配置">配置</h2>
+
+<h3 id="服务端配置">服务端配置</h3>
+
+<p><code class="highlighter-rouge">vim  /etc/v2ray/config.json</code></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"inbound"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">10086</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">same</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">client</span><span class="w">
+    </span><span class="s2">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vmess"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"clients"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b831381d-6324-4d53-ad4f-8cda48b30811"</span><span class="w"> </span><span class="p">}]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"outbound"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"freedom"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>设置之后，仍需要 <code class="highlighter-rouge">vim ~/.profile</code> 并加入 <code class="highlighter-rouge">export PATH=$PATH:/usr/bin/v2ray</code> 以及 <code class="highlighter-rouge">source ~/.profile</code>。然后启动服务端 <code class="highlighter-rouge">service v2ray start</code>。</p>
+
+<h3 id="客户端配置">客户端配置</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"inbound"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">1080</span><span class="p">,</span><span class="w"> 
+    </span><span class="s2">"listen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"socks"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"udp"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"outbound"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vmess"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"vnext"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"server"</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">10086</span><span class="p">,</span><span class="w">  
+        </span><span class="s2">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b831381d-6324-4d53-ad4f-8cda48b30811"</span><span class="w"> </span><span class="p">}]</span><span class="w">
+      </span><span class="p">}]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"outboundDetour"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+    </span><span class="s2">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"freedom"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"direct"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="p">}],</span><span class="w">
+  </span><span class="s2">"routing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"strategy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rules"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"domainStrategy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IPOnDemand"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rules"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"field"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"0.0.0.0/8"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"10.0.0.0/8"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"100.64.0.0/10"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"127.0.0.0/8"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"169.254.0.0/16"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"172.16.0.0/12"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"192.0.0.0/24"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"192.0.2.0/24"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"192.168.0.0/16"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"198.18.0.0/15"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"198.51.100.0/24"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"203.0.113.0/24"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"::1/128"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"fc00::/7"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"fe80::/10"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"outboundTag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"direct"</span><span class="w">
+      </span><span class="p">}]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>客户端运行 <code class="highlighter-rouge">sudo service v2ray start</code> 或者 <code class="highlighter-rouge">v2ray --config=/etc/v2ray/config.json</code> 都无法正常启动。通过使用 <code class="highlighter-rouge">service v2ray status</code> 得到相关报错信息 <code class="highlighter-rouge">Unit v2ray service entered failed state</code> 和 <code class="highlighter-rouge">Main: failed to execute v2ctl to convert config file</code>。因此尝试 V2Ray 暂时告一段落。</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Zhenjie Liang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
