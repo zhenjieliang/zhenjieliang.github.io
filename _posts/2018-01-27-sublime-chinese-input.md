@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Ubuntu系统下sublime text的中文输入"
+title:  "Ubuntu系统下 sublime text 的中文输入"
 date:   2018-01-27 09：01：10 +0800
 categories: CS Tools Linux
 ---
