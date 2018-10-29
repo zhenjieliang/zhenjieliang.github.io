@@ -66,20 +66,20 @@
 
 <h3 id="替换-ubuntu-1404-内核--安装锐速">替换 Ubuntu 14.04 内核 &amp; 安装锐速</h3>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install linux-image-4.2.0-35-generic
-uname <span class="nt">-r</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>linux-image-4.2.0-35-generic
+<span class="nb">uname</span> <span class="nt">-r</span>
 update-grub
 reboot
 wget <span class="nt">-N</span> <span class="nt">--no-check-certificate</span> https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh <span class="o">&amp;&amp;</span> bash serverspeeder.sh
 apt-get update
-apt-get install git python vim systemd
+apt-get <span class="nb">install </span>git python vim systemd
 </code></pre></div></div>
 
 <h3 id="安装-go-191">安装 Go 1.9.1</h3>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-O</span> https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz
 <span class="nb">tar</span> <span class="nt">-xvf</span> go1.9.1.linux-amd64.tar.gz
-cp <span class="nt">-r</span> go /usr/local
+<span class="nb">cp</span> <span class="nt">-r</span> go /usr/local
 vim ~/.profile
 <span class="c"># add the line below and save and quit.</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/go/bin

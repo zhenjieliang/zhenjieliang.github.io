@@ -5,9 +5,422 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 06 Jan 2018 16:28:32 +0800</pubDate>
-    <lastBuildDate>Sat, 06 Jan 2018 16:28:32 +0800</lastBuildDate>
-    <generator>Jekyll v3.6.2</generator>
+    <pubDate>Mon, 29 Oct 2018 15:10:28 +0800</pubDate>
+    <lastBuildDate>Mon, 29 Oct 2018 15:10:28 +0800</lastBuildDate>
+    <generator>Jekyll v3.8.4</generator>
+    
+      <item>
+        <title>使用 ipv6 地址设置 ssh 连接和 scp 传输</title>
+        <description>&lt;p&gt;因为私人没有公网的 ipv4 ip 地址，而且家庭网络可能会因各种运营商的奇葩服务导致网络环境异常复杂，从而使得通过 noip 域名绑定动态 ip - 端口转发 这条路走不通。&lt;/p&gt;
+
+&lt;p&gt;为了解决远程连接指定电脑的问题，有两种思路：（1）构建家庭 VPN。这种方法优点是速度快，缺点是需要有特定功能的路由器（必须满足 DD-WRT）。（2）通过 ipv6 地址连接。优点是无需硬件支持，缺点则是速度较慢。&lt;/p&gt;
+
+&lt;p&gt;下面在 linux 环境下介绍通过 ipv6 地址联接远程服务器的办法。&lt;/p&gt;
+
+&lt;p&gt;首先，如果运营商提供了 ipv6 服务，通过 test-ipv6.com 这个网站就可以测试是否有提供，或者在命令行中输入&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ping6 ipv6.google.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如果 ping 得通，说明有 ipv6 的公网地址。此时只要再输入 &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt; 即可查看到 ipv6 的地址。注意，公网的 ipv6 的地址是以 2001 为开头的。&lt;/p&gt;
+
+&lt;p&gt;在没有 ping 通时，linux 系统下可以安装 miredo 进行 ipv4 转 ipv6，进而得到 ipv6 公网地址。相关的命令如下。&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;miredo
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;miredo
+systemctl status miredo.service
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/miredo.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;安装成功即可通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt; 看到 ipv6 公网地址。注意即使 miredo 的 status 显示为 fail，只要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;ping6 ipv6.google.com&lt;/code&gt; 可以发送接收包，即可。&lt;/p&gt;
+
+&lt;p&gt;如若 ping 不通，则可以修改 miredo.conf 的 teredo 公共服务器地址列表。可以参考 &lt;a href=&quot;https://wiki.klniu.com/zh-hans/Teredo&quot;&gt;网址&lt;/a&gt; 来修改。&lt;/p&gt;
+
+&lt;p&gt;使用 ssh 和 scp 连接 ipv6 地址的命令有&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; port_num &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; user@ipv6
+scp &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; port_num &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; user@ipv6:~/ ~/Downloads/files
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;注意可以在. zshrc 里修改 alias，将 &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh -p port_num -v&lt;/code&gt; 等缩写为 &lt;code class=&quot;highlighter-rouge&quot;&gt;sshr&lt;/code&gt;。此外，ipv6 的地址很长，可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo vim /etc/hosts&lt;/code&gt; 将地址加入。&lt;/p&gt;
+
+&lt;p&gt;scp 时需要注意，由于 IPv6 地址中的冒号和指定路径之前的冒号有冲突，需要用中括号加转义字符的方式把 IPv6 的地址括起来。（不过在修改 /etc/hosts 以后，则使用和 ssh 中的 host 相同的代号即可。）&lt;/p&gt;
+
+&lt;p&gt;https://beanocean.github.io/tech/2014/10/17/scp_ipv6/&lt;/p&gt;
+
+&lt;p&gt;当远程服务器重启之后，则 miredo 不会自动重启，不再有 ipv6 地址。解决方法分为两个步骤：（1）将需要 sudo 权限才能启动的 miredo 放入 &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/rc.local&lt;/code&gt; 执行，开机自启动；（2）在 &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/network/if-up.d/&lt;/code&gt; 建立脚本 &lt;code class=&quot;highlighter-rouge&quot;&gt;iplog&lt;/code&gt;，用 &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig &amp;gt; iplog.txt&lt;/code&gt; 来生成 ip 记录；（3）使用定时任务，每分钟定时向中继的有公网 ip 的 vps 发送该 ip 记录文件。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/rc.local&lt;/code&gt; 文件如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh -e&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# rc.local&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# This script is executed at the end of each multiuser runlevel.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Make sure that the script will &quot;exit 0&quot; on success or any other&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# value on error.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# In order to enable or disable this script just change the execution&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# bits.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# By default this script does nothing.&lt;/span&gt;
+
+sh /home/liangzhenjie/miredoAutoStart.sh &amp;amp;
+ &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;而其中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;miredoAutoStart.sh&lt;/code&gt; 如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+
+miredo
+
+&lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;5
+
+ifconfig &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /home/liangzhenjie/ip6.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;chmod +x miredoAutoStart.sh&lt;/code&gt; 来赋予权限。&lt;/p&gt;
+
+&lt;p&gt;第一个步骤至此完成。每次重启都会启动 miredo，并将 ip 记录添加到指定文件中。&lt;/p&gt;
+
+&lt;p&gt;第二个步骤是在网络环境稳定后，将 ip 记录添加到指定文件中。之所以需要这样做，是因为将这个功能整合进第一个步骤时容易造成生成的 iplog 不准确，因为第一步中的网络环境还未准备好。具体做法:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/network/if-up.d/iplog
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/network/if-up.d/iplog&lt;/code&gt; 具体如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+
+ifconfig &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /home/liangzhenjie/ip6.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo chmod +x /etc/network/if-up.d/iplog&lt;/code&gt; 对其赋予权限。&lt;/p&gt;
+
+&lt;p&gt;第三个步骤则是将指定文件发送给指定的中继 vps 添加到定时任务，每分钟发送一次。&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;crontab &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; /path/to/uploadip.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;uploadip.sh 如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+
+scp /home/liangzhenjie/ip6.txt root@ip:/root
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;chmod +x uploadip.sh&lt;/code&gt; 来赋予权限。&lt;/p&gt;
+
+&lt;p&gt;注意，远程服务器应该能够无密码 ssh 连接到中继 vps 才可。具体做法请参考 shadowsocksr 一文。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 06 Oct 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/cs/network/2018/10/06/ssh_and_scp_through_ipv6.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cs/network/2018/10/06/ssh_and_scp_through_ipv6.html</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>network</category>
+        
+      </item>
+    
+      <item>
+        <title>在超算上搭建 R 环境</title>
+        <description>&lt;p&gt;在深圳超算上安装 R、R 包以及其对系统的依赖文件时，学到了一些如何在没有 sudo 权限以及没有联网的 linux 系统的安装程序和设置的经验。R 及 R 包更为具体的安装指南可见于~/Desktop/HPC 文件夹下 R 的两个 pdf 文档。&lt;/p&gt;
+
+&lt;h2 id=&quot;安装-r&quot;&gt;安装 R&lt;/h2&gt;
+
+&lt;p&gt;首先，从源码安装时，可以先使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;./configure --prefix=/path/where/you/want/to/install/at&lt;/code&gt;，避免默认安装路径下没有写入权限的问题。（在全部超算中，用户都不会有在 usr 或者 etc 等路径下写入的权限）然后再 make 或者是 make install 安装。&lt;/p&gt;
+
+&lt;p&gt;安装好之后需要在用户的 $HOME 路径下编辑 .bashrc 文件将这些指定的安装路径加入，例句如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/lib:&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;LD_LIBRARY_PATH
+
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/bzip2-
+
+1.0.6/lib:&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;LD_LIBRARY_PATH
+
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/xz-
+
+5.2.2/lib:&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;LD_LIBRARY_PATH
+
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/pcre-
+
+8.38/lib:&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;LD_LIBRARY_PATH
+
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-
+
+7.47.1/lib:&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;LD_LIBRARY_PATH
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;其次，可能有些软件需要某些系统依赖或者其他文件的依赖，例如在安装 R 时，则使用以下语句指定 R 的安装路径以及这些依赖文件的查找路径：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./configure &lt;span class=&quot;nt&quot;&gt;--prefix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw231_GJY/R-3.5.0/install &lt;span class=&quot;nt&quot;&gt;--enable-R-shlib&lt;/span&gt; 
+
+&lt;span class=&quot;nv&quot;&gt;LDFLAGS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;-L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/lib -
+
+L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/bzip2-1.0.6/lib -L/home-
+
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/xz-5.2.2/lib -L/home-
+
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/pcre-8.38/lib -L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/lib&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPPFLAGS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;-I/home-
+
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/include -I/home-
+
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/bzip2-1.0.6/nclude -I/home-
+
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/xz-5.2.2/include -I/home-
+
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/pcre-8.38/include -I/home-
+
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/include&quot;&lt;/span&gt; 
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;其中重要的是 LDFLAGS 和 CPPFLAGS，需要分别指定 lib 和 include 的路径。&lt;/p&gt;
+
+&lt;p&gt;make install 之后也需要把 R 的 bin 路径加入 .bashrc 文件中：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw211_LZ/soft/R-3.5.0/R-3.5.0/install /bin:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;至此，安装 R 成功。下面需要看如何安装 R 包。&lt;/p&gt;
+
+&lt;h2 id=&quot;安装-r-包&quot;&gt;安装 R 包&lt;/h2&gt;
+
+&lt;p&gt;安装 R 包首先需要下载包和依赖包的源码，生成包的索引以及源码安装。在不考虑系统依赖的情况下，可以在 R 中使用以下语句安装完成。&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;getPackages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tools&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package_dependencies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;available.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                                &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;which&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Depends&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Imports&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recursive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;union&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw_packages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;packages&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;you&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;want&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;to&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;download&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getPackages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw_packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;download.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;destdir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/path/you/want/to/store/in/&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;source&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;把源码全部下载之后，使用以下函数建立该路径下全部源码安装包的索引&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tools&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write_PACKAGES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/path/to/packages/&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;最后，使用以下函数将全部源码安装包安装好&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;install.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw_packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contriburl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;file:///path/to/packages/&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;注意，file: 后面是三个 /&lt;/p&gt;
+
+&lt;p&gt;参考网页：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/6281322/only-download-sources-of-a-package-and-all-dependencies&quot;&gt;only download sources of a package and all dependencies&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/10807804/offline-install-of-r-package-and-dependencies&quot;&gt;offline install of r package and dependencies&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;当某个 R 包需要系统依赖，例如头文件时（安装 nloptr 包时，需要用到系统中的 nlopt.h 文件），则需要首先安装依赖，并将该依赖文件安装的路径写入 R 的配置中，否则按照 R 的默认查找路径将出现没有找到头文件的错误。&lt;/p&gt;
+
+&lt;p&gt;通过生成 $HOME/.R/Makevars 文件，即可修改 R 的默认查找路径。该 Makevars 文件可以加入相关的 LDFLAGS 和 CPPFLAGS 等路径信息。关于 Makevars 更详细的信息可以查阅 &lt;a href=&quot;https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Using-Makevars&quot;&gt;网页&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装是可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;configure --prefix=&lt;/code&gt; 来指定安装路径&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;可以通过 configure LDFLAGS 和 CPPFLAGS 来指定依赖的查找路径&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;某个程序下包的安装的依赖的查找顺序，可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;$HOME/.X/configurefile&lt;/code&gt; 来指定 LDFLAGS 和 CPPFLAGS 等路径&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;某个 x 程序具体的配置文件一般在 &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/x&lt;/code&gt; 路径下，或者针对当前用户也可以在 &lt;code class=&quot;highlighter-rouge&quot;&gt;$HOME/.x/&lt;/code&gt; 路径下进行配置设置。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Mon, 17 Sep 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/cs/r/2018/09/17/linux-config-problems.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cs/r/2018/09/17/linux-config-problems.html</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>R</category>
+        
+      </item>
+    
+      <item>
+        <title>zathura tabbed</title>
+        <description>&lt;p&gt;zathura-tabbed 分为分为两个步骤：安装、系统设置。其中主要脚本和说明可见于&lt;a href=&quot;https://github.com/mtikekar/zathura-tabbed&quot;&gt;Github guide&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;需要安装的程序有 zathura, zathura-pdf-mupdf, libgirara-dev, mupdf, tabbed。这些均可从 apt repository 或者源码编译安装，并不需要设置任何路径。&lt;/p&gt;
+
+&lt;p&gt;需要安装的脚本是&lt;a href=&quot;https://raw.githubusercontent.com/mtikekar/zathura-tabbed/master/zathura-tabbed&quot;&gt;zathura-tabbed&lt;/a&gt;，将无后缀名的该文件保存于 “/usr/bin” 文件夹，并使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo chmod 777 zathura-tabbed&lt;/code&gt; 来赋予权限。至此，在 zsh 中使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;zathura-tabbed 1.pdf 2.pdf 3.pdf&lt;/code&gt; 即可同时打开三个 pdf 文件，并且都以 tabbed 的形式在一个 zathura 中。需要切换 tab 和搜索选择 tab 可以使用诸如 “ctrl+shift-H”,”ctrl+t” 或者 “ctrl+[0,1,…,9]” 的快捷键来做到。除了原有的 zathura 操作以外，更多快捷键操作可见于 &lt;code class=&quot;highlighter-rouge&quot;&gt;man tabbed&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;设置 zathura-tabbed 为 pdf 在 xdg 下的默认打开程序的方法是，编辑出一个 zathura-tabbed 的 desktop，将其保存于 “/usr/share/applications” 路径下。注意需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo chmod +x zathura-tabbed&lt;/code&gt; 命令来赋权。然后使用命令行 &lt;code class=&quot;highlighter-rouge&quot;&gt;xdg-mime default zathura-tabbed.desktop application/pdf&lt;/code&gt; 来将其设置为 pdf 的默认打开文件。至此，在打开多个 pdf 的情况下，打开其他任意一个 pdf，该 pdf 文件仍将在 zathura-tabbed 中显示。&lt;/p&gt;
+
+&lt;p&gt;美中不足：打开相同的 pdf 文件两次，则在 zathura-tabbed 中有两个 tab，仍不具备 filter duplicate files 的功能。根据 &lt;a href=&quot;https://github.com/mtikekar/zathura-tabbed/issues/1&quot;&gt;Avoid duplicate tabs&lt;/a&gt; 的说明，改动 zathura-tabbed，但并未能如该帖子所述实现该功能。&lt;/p&gt;
+</description>
+        <pubDate>Fri, 18 May 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/cs/tools/2018/05/18/zathura-tabbed.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cs/tools/2018/05/18/zathura-tabbed.html</guid>
+        
+        
+        <category>cs</category>
+        
+        <category>tools</category>
+        
+      </item>
+    
+      <item>
+        <title>Encrypt files with RSA algorithm in linux</title>
+        <description>&lt;p&gt;在看完李永乐老师在 youtube 上的讲解 &lt;a href=&quot;https://www.youtube.com/watch?v=D_kMadCtKp8&amp;amp;t=13s&quot;&gt;RSA 非对称加密算法&lt;/a&gt; 的原理 &lt;sup id=&quot;fnref:0&quot;&gt;&lt;a href=&quot;#fn:0&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; 之后，对于非对称加密通信的实现非常感兴趣。根据视频以加密数字为例以及 stackexchange 上 penguin359 的 &lt;a href=&quot;https://unix.stackexchange.com/questions/12260/how-to-encrypt-messages-text-with-rsa-openssl&quot;&gt;回答&lt;/a&gt; 可知，该算法并非设计来加密任意文件如 string 的，而是加密某个整数。因此使用该算法来加密通讯并不合适。根据 penguin359 的推荐，使用 &lt;a href=&quot;https://www.gnupg.org/gph/en/manual.html&quot;&gt;GnuPG&lt;/a&gt; 来进行加密通信是不错的选择 &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;。顺着这个思路，可以搜索到 chrome 浏览器下使用&lt;a href=&quot;https://chrome.google.com/webstore/detail/flowcrypt-encrypt-gmail-w/bnjglocicdkmhmoohhfkfkbbkejdhdgc&quot;&gt;FlowCrypt&lt;/a&gt; 在 Gmail 中通信，在 Firefox 浏览器下则是&lt;a href=&quot;https://addons.mozilla.org/en-US/firefox/addon/mailvelope/&quot;&gt;mailvelope&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;关于公钥和私钥：任何人发信给甲，可以使用甲广播的自己的公钥 e1 和加密算法进行加密，然后把密文发给甲。甲通过自己的私钥 d1 和解密算法进行解密，得到明文。另外，为了确保甲能够验证收到的信息确系乙而非中间人发出的，则首先需要乙用自己的私钥 d2 加密由该信息计算而得的散列值（Message digest），并将加密后的散列值 “署名” 在信息的后面。甲使用乙广播的公钥 e2, 来解密“署名”（加密后的散列值），然后 &lt;strong&gt;将解密后的这个署名数据与他自己为这个信息计算的散列值相比较&lt;/strong&gt;，若两者相符，则甲可知发信人持有乙的私钥，并且该信息在传播路径上没有被篡改过。&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;下面介绍 GnuPG 的各项命令及其用途。原文可参考&lt;a href=&quot;https://www.gnupg.org/gph/en/manual.html&quot;&gt;GnuPG&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:0&quot;&gt;
+      &lt;p&gt;极大数的质因数分解是个非常困难的问题。 &lt;a href=&quot;#fnref:0&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;因 linux 自带的 GnuPG 版本通常比较低，如需要更新到最新版本可到 &lt;a href=&quot;https://www.gnupg.org/download/index.html&quot;&gt;官网&lt;/a&gt; 下载包括 GnuPG 在内的数个源码包安装。 &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;具体可见 &lt;a href=&quot;https://www.wikiwand.com/zh-hans/RSA%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95&quot;&gt;RSA 加密演算法&lt;/a&gt; 的签名信息一段。 &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sat, 12 May 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/cs/tools/linux/2018/05/12/RSA-linux.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cs/tools/linux/2018/05/12/RSA-linux.html</guid>
+        
+        
+        <category>CS</category>
+        
+        <category>Tools</category>
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu系统下sublime text的中文输入</title>
+        <description>&lt;p&gt;能输入中文：先安装并配置好 &lt;code class=&quot;highlighter-rouge&quot;&gt;fcitx&lt;/code&gt; 环境，然后使用 &lt;a href=&quot;https://github.com/lyfeyaj/sublime-text-imfix&quot;&gt;github sublime-text-imfix&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;中英文对齐：在 &lt;code class=&quot;highlighter-rouge&quot;&gt;preference&lt;/code&gt; -&amp;gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;setting&lt;/code&gt; 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;user&lt;/code&gt; 里输入以下设置&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;bold_folder_labels&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;color_scheme&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Packages/User/SublimeLinter/Monokai Extended (SL).tmTheme&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;font_face&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;FZLTH&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;font_size&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;19&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;highlight_line&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;highlight_modified_tabs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ignored_packages&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+		&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Vintage&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;line_padding_bottom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;line_padding_top&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;mdpopups.sublime_user_lang_map&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;mdpopups.use_sublime_highlighter&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;theme&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Default.sublime-theme&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;update_check&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+	&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;word_wrap&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;中文输入光标不跟随：&lt;/p&gt;
+
+&lt;p&gt;这个问题只有在使用 sublime text 使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;academicmarkdown&lt;/code&gt; 环境下编辑 markdown 文件时出现，其他环境如 latex 和无指定环境下都没有这个问题。因此，在编写 markdown 文件时，在 sublime text 的最右下角指定环境为 latex 或者 &lt;code class=&quot;highlighter-rouge&quot;&gt;markdown&lt;/code&gt; 即可解决此问题。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 27 Jan 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/cs/tools/linux/2018/01/27/sublime-chinese-input.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cs/tools/linux/2018/01/27/sublime-chinese-input.html</guid>
+        
+        
+        <category>CS</category>
+        
+        <category>Tools</category>
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Reproducible Python</title>
+        <description>&lt;p&gt;轻便版：python + markdown&lt;/p&gt;
+
+&lt;p&gt;专业版：python + latex&lt;/p&gt;
+
+&lt;p&gt;轻便版的实现方法有使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;md&lt;/code&gt;、 &lt;code class=&quot;highlighter-rouge&quot;&gt;rmd&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;pmd&lt;/code&gt; 三种。其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;rmd&lt;/code&gt; 的设置示例如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;​``&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;`{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(engine.path = list(python = '/usr/bin/python2.7'))
+​`&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;`
+
+​`&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;`{python}
+print(1 &amp;gt; 2)
+​`&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;``&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rmd&lt;/code&gt; 可以使用 Typora 编辑，然后在 Rstudio 里运行。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pmd&lt;/code&gt; 则使用 pweave，在 Atom 编辑并运行。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;md&lt;/code&gt; 则是使用 stitch 来运行并保存为 HTML 格式。命令 &lt;code class=&quot;highlighter-rouge&quot;&gt;stitch tidy.md -o output4.html&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;专业版同样使用 Rnw 和其他版本。&lt;/p&gt;
+
+&lt;p&gt;Rnw 的设置示例如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;knitr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# set global chunk options&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opts_chunk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;formatR.arrow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;90&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;python&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;engine.path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/home/liangzhenjie/anaconda3/bin/python&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'hello, python world!'&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;写完 Rnw，可以先在 Rstudio 里生成 pdf，这一过程将附带生成 tex 文件。再使用 latex2html 或者 htlatex 来将 tex 转化为 html。&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;htlatex source.tex
+latex2html source.tex
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Tue, 09 Jan 2018 22:25:37 +0800</pubDate>
+        <link>http://localhost:4000/cs/tools/2018/01/09/reproduceble_python.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cs/tools/2018/01/09/reproduceble_python.html</guid>
+        
+        
+        <category>CS</category>
+        
+        <category>Tools</category>
+        
+      </item>
     
       <item>
         <title>V2Ray</title>
@@ -15,20 +428,20 @@
 
 &lt;h3 id=&quot;替换-ubuntu-1404-内核--安装锐速&quot;&gt;替换 Ubuntu 14.04 内核 &amp;amp; 安装锐速&lt;/h3&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install linux-image-4.2.0-35-generic
-uname &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;linux-image-4.2.0-35-generic
+&lt;span class=&quot;nb&quot;&gt;uname&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;
 update-grub
 reboot
 wget &lt;span class=&quot;nt&quot;&gt;-N&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--no-check-certificate&lt;/span&gt; https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; bash serverspeeder.sh
 apt-get update
-apt-get install git python vim systemd
+apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;git python vim systemd
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;安装-go-191&quot;&gt;安装 Go 1.9.1&lt;/h3&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz
 &lt;span class=&quot;nb&quot;&gt;tar&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-xvf&lt;/span&gt; go1.9.1.linux-amd64.tar.gz
-cp &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; go /usr/local
+&lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; go /usr/local
 vim ~/.profile
 &lt;span class=&quot;c&quot;&gt;# add the line below and save and quit.&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;:/usr/local/go/bin
@@ -176,6 +589,23 @@ bash ~/v2ray-core-3.5/release/install-release.sh
       </item>
     
       <item>
+        <title>使用键盘移动鼠标</title>
+        <description>&lt;p&gt;使用键盘移动光标和模拟左键右键滚轮键点击的主要工具包括：xdotool 和 xkbset。&lt;/p&gt;
+
+&lt;p&gt;在 ubuntu 中通过 system settings - Universal Access - pointing and clicking 打开数字键盘操控鼠标的功能。xkbset 是加速光标移动的工具。其中 xkbset 的主要设置可参考此 &lt;a href=&quot;https://ubuntuforums.org/showthread.php?t=1977588&quot;&gt;网页&lt;/a&gt;。&lt;/p&gt;
+</description>
+        <pubDate>Sun, 24 Dec 2017 14:07:36 +0800</pubDate>
+        <link>http://localhost:4000/cs/tools/2017/12/24/keyboard.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cs/tools/2017/12/24/keyboard.html</guid>
+        
+        
+        <category>CS</category>
+        
+        <category>Tools</category>
+        
+      </item>
+    
+      <item>
         <title>Git</title>
         <description>&lt;p&gt;Git 分为工作区，暂存区和仓库区。&lt;/p&gt;
 
@@ -183,7 +613,7 @@ bash ~/v2ray-core-3.5/release/install-release.sh
 
 &lt;p&gt;回退到某个版本并且将该版本设为 master&lt;/p&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &amp;lt;commit id&amp;gt;            &lt;span class=&quot;c&quot;&gt;# Checkout previous commit on master, the id is the first 7 digits, or simply Tab to select.&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &amp;lt;commit &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;            &lt;span class=&quot;c&quot;&gt;# Checkout previous commit on master, the id is the first 7 digits, or simply Tab to select.&lt;/span&gt;
 git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; new_master       &lt;span class=&quot;c&quot;&gt;# Create branch for new master&lt;/span&gt;
 git branch &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; master             &lt;span class=&quot;c&quot;&gt;# Delete old master&lt;/span&gt;
 git branch &lt;span class=&quot;nt&quot;&gt;-mv&lt;/span&gt; new_master master &lt;span class=&quot;c&quot;&gt;# Make new_master master&lt;/span&gt;
@@ -191,7 +621,7 @@ git branch &lt;span class=&quot;nt&quot;&gt;-mv&lt;/span&gt; new_master master &
 
 &lt;p&gt;或者&lt;/p&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset &lt;span class=&quot;nt&quot;&gt;--hard&lt;/span&gt; &amp;lt;commit id&amp;gt;        &lt;span class=&quot;c&quot;&gt;# Reset current branch to one commit ago on master&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset &lt;span class=&quot;nt&quot;&gt;--hard&lt;/span&gt; &amp;lt;commit &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;# Reset current branch to one commit ago on master&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;这样回退会导致损失掉某个 commit id 的版本，版本控制应该慎重使用。其实更好的办法是破除喜欢在 master 分支上修改代码的不良习惯，多使用 branch。&lt;/p&gt;
@@ -261,350 +691,6 @@ git diff &amp;lt;commit id1&amp;gt; &amp;lt;commit id2&amp;gt;
         <category>CS</category>
         
         <category>Tools</category>
-        
-      </item>
-    
-      <item>
-        <title>Shadowsocksr</title>
-        <description>&lt;h2 id=&quot;安装-serverspeeder&quot;&gt;安装 serverspeeder&lt;/h2&gt;
-
-&lt;p&gt;选择 ubuntu 14.04 的镜像&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install linux-image-4.2.0-35-generic
-uname &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;
-update-grub
-reboot
-wget &lt;span class=&quot;nt&quot;&gt;-N&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--no-check-certificate&lt;/span&gt; https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; bash serverspeeder.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;服务端&quot;&gt;服务端&lt;/h2&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install git
-apt-get install python
-apt-get install vim
-git clone &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
-&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;shadowsocksr
-bash initcfg.sh
-vim ~/shadowsocksr/user-config.json
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;单用户设置&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.0.0.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_ipv6&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;::&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;修改&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;修改&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;timeout&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;none&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#可以修改成其他加密&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;auth_chain_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;可以修改成&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;auth_chain_b&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;protocol_param&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;obfs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;tls1.2_ticket_auth&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;obfs_param&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;可以修改&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;redirect&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;dns_ipv6&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;fast_open&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;workers&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;运行&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/shadowsocksr/shadowsocks
-python server.py &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;客户端&quot;&gt;客户端&lt;/h2&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/younameit.json
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;younameit.json 设置&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#查服务器&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;ip，填上&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_ipv6&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;::&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;timeout&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;udp_timeout&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;none&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;protocol&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;auth_chain_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;obfs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;tls1.2_ticket_auth&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;obfs_param&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;同服务端单用户设置&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;保存之后。设置启动脚本&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim younameit.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;younameit.sh 只有一行代码&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#! /bin/sh&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;python ~/shadowsocksr/shadowsocks/local.py &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; /etc/younameit.json &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;至此服务端与客户端都已设置完毕。&lt;/p&gt;
-
-&lt;h2 id=&quot;启动与关闭&quot;&gt;启动与关闭&lt;/h2&gt;
-
-&lt;p&gt;开机后客户端启动&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sh younameit.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;关闭则再运行一次上述命令，得到已经在运行的报错信息，再根据信息中的 pid，关闭客户端。&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo kill &lt;/span&gt;pid
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;ssh-免密远程登陆&quot;&gt;ssh 免密远程登陆&lt;/h2&gt;
-
-&lt;p&gt;在本地使用命令：&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;scp ~/.ssh/id_rsa.pub root@ip:/root
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;输入远程主机密码之后即可将密钥传输过去。然后在 ssh 连接远程主机，再输入以下命令：&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir ~/.ssh
-&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ~/id_rsa.pub &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; ~/.ssh/authorized_keys
-rm ~/id_rsa.pub
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;至此，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh root@ip&lt;/code&gt; 将无需输入密码。但这样仍需要记住 ip，可以使用其他代号（例如 slave）来取代 ip。具体做法如下：&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/hosts
-&lt;span class=&quot;c&quot;&gt;# edit hosts&lt;/span&gt;
-ip slave
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;完成之后，&lt;code class=&quot;highlighter-rouge&quot;&gt;ping slave&lt;/code&gt; 即可得到远程主机的网络延迟，而 &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh root@slave&lt;/code&gt; 即可连接到远程主机。&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 31 Jul 2017 07:45:33 +0800</pubDate>
-        <link>http://localhost:4000/life/update/2017/07/31/shadowsockr.html</link>
-        <guid isPermaLink="true">http://localhost:4000/life/update/2017/07/31/shadowsockr.html</guid>
-        
-        
-        <category>life</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>华硕路由器端口转发无法使用</title>
-        <description>&lt;p&gt;为了能在外网使用中心的主机，需要在中心的华硕 RT AC66U 路由器上设置端口转发。它的端口转发设置很简单，但就是 &lt;strong&gt;无法使用 **。搜索了各种关于华硕路由器端口转发问题解决的方法，包括更新固件和关掉防火墙，统统没有用。有一篇英文帖子说，&lt;/strong&gt;华硕的端口转发无法实现 NAT reflection，所以不可能实现端口转发，不要白费功夫了**。&lt;/p&gt;
-
-&lt;p&gt;退而求其次，使用 DMZ。原本想这个是最容易实现的了（成本就是网络安全性下降），没成想这个也无法使用。&lt;/p&gt;
-
-&lt;p&gt;宿舍里那个用了许多年的华为低端光猫，这些功能实现起来轻轻松松。真是佩服售价高几倍的华硕－&lt;strong&gt;我不抱怨你不能实现这些普通家庭用户用不到的功能，但是实现不了的功能，拜托你行行好不要把它们写进设置里面&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;p&gt;网上这么多人为了解决你搞出来的解决不了的问题，花费了无数精力去排除其他可能的原因：网络问题、浏览器问题、端口描述问题、防火墙问题等等，这些排除起来少说也要一个小时。等都排除后确认是你路由器的问题，就到处找解决方案，好死不死你还提了好几种貌似可以解决的方案，结果尝试之后才发现全是骗人的。&lt;/p&gt;
-
-&lt;p&gt;耗费了这么多花大价钱支持你的忠实用户的许多时间，&lt;strong&gt;心情从一开始的纳闷，到排除其他原因的心塞，再到尝试你家的解决方案的抓狂，最后徒留深深的被愚弄感&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;p&gt;以后再也不会买华硕的路由器了。&lt;/p&gt;
-
-&lt;p&gt;后记：后面发现是厦大校园网对办公区域的网络安全策略进行专门的配置，从而无法实现端口转发。&lt;strong&gt;有可能&lt;/strong&gt;错怪了华硕（毕竟还没有在正常的网络环境下使用华硕路由器实现端口转发），抱歉。&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 19 Jul 2017 07:45:33 +0800</pubDate>
-        <link>http://localhost:4000/life/update/2017/07/19/%E5%8D%8E%E7%A1%95%E8%B7%AF%E7%94%B1%E5%99%A8%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8.html</link>
-        <guid isPermaLink="true">http://localhost:4000/life/update/2017/07/19/%E5%8D%8E%E7%A1%95%E8%B7%AF%E7%94%B1%E5%99%A8%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8.html</guid>
-        
-        
-        <category>life</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>noip hostname 30 天就过期</title>
-        <description>&lt;h1 id=&quot;noip-hostname-30-天就过期&quot;&gt;noip hostname 30 天就过期&lt;/h1&gt;
-
-&lt;p&gt;no-ip 家 DDNS 的 free host name 每隔 30 天就要过期，届时相关的服务都无法连接。解决办法就是登陆官网，重新添加一个 host name，然后按照 &lt;a href=&quot;https://www.noip.com/support/knowledgebase/installing-the-linux-dynamic-update-client-on-ubuntu/&quot;&gt;DUC 设置&lt;/a&gt; 重新走一遍流程（安装部分省略）。&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/usr/local/bin/noip2 &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;运行这一行代码时会报错，告知该进程已经在运行，需要使用&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo kill&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;noip2pid&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;然后继续流程，输入登陆邮箱和密码，选择好更新时间间隔即可。&lt;/p&gt;
-</description>
-        <pubDate>Wed, 19 Jul 2017 07:45:33 +0800</pubDate>
-        <link>http://localhost:4000/life/update/2017/07/19/noip.html</link>
-        <guid isPermaLink="true">http://localhost:4000/life/update/2017/07/19/noip.html</guid>
-        
-        
-        <category>life</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>VPS 的挑选和设置</title>
-        <description>&lt;h1 id=&quot;如何挑选-vps&quot;&gt;如何挑选 VPS&lt;/h1&gt;
-
-&lt;p&gt;站长工具测试延迟，挑选在本地电信（或者移动等其他运营商）延迟最低的服务器&lt;/p&gt;
-
-&lt;h1 id=&quot;ssh-连接-vps&quot;&gt;ssh 连接 VPS&lt;/h1&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh root@VPS.ip &lt;span class=&quot;c&quot;&gt;#在 VPS 的 manager 里可以看到相应的服务器 ip 和密码&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;搭建-shadowsocks-服务端&quot;&gt;搭建 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt; 服务端&lt;/h1&gt;
-
-&lt;p&gt;首先安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get install python-pip
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;其次安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;setuptools&lt;/code&gt;，再安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pip install &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; setuptools
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pip install shadowsocks
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;然后配置 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/shadowsocks.json
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;写入以下配置&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_ip&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;server_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8388&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#可变&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;local_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;timeout&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;aes-256-cfb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#可变&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;fast_open&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;注意，&lt;code class=&quot;highlighter-rouge&quot;&gt;vim&lt;/code&gt; 编辑先按 &lt;code class=&quot;highlighter-rouge&quot;&gt;insert&lt;/code&gt;（在笔记本键盘中是 &lt;code class=&quot;highlighter-rouge&quot;&gt;ins&lt;/code&gt; 键），将上述配置根据 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPS&lt;/code&gt; 的服务器 &lt;code class=&quot;highlighter-rouge&quot;&gt;ip&lt;/code&gt; 来设置；然后按两次 &lt;code class=&quot;highlighter-rouge&quot;&gt;Esc&lt;/code&gt; 键，为了进入预保存模式，最后输入 &lt;code class=&quot;highlighter-rouge&quot;&gt;:x&lt;/code&gt; 保存离开。&lt;/p&gt;
-
-&lt;p&gt;启动 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;ssserver &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; /etc/shadowsocks.json &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;配置-shadowsocks-客户端&quot;&gt;配置 &lt;code class=&quot;highlighter-rouge&quot;&gt;shadowsocks&lt;/code&gt; 客户端&lt;/h1&gt;
-
-&lt;p&gt;按照服务端的设置在客户端中手动添加即可。&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 25 Jun 2017 10:40:33 +0800</pubDate>
-        <link>http://localhost:4000/life/update/2017/06/25/vps.html</link>
-        <guid isPermaLink="true">http://localhost:4000/life/update/2017/06/25/vps.html</guid>
-        
-        
-        <category>life</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>学术论文语言规范及学习建议</title>
-        <description>&lt;p&gt;学术论文语言有自身的规范。语言要精炼，但表达的意思要精确，因此不同学科乃至不同分支内部有大量专门概念。语法要准确，主语谓语宾语定语状语表语要明确，逻辑连词要用对。语义需清楚，同一句子不应有多种解读。表述客观事物时，还需要避免各种人称视角。这些规范对于学术的良好发展不可避免，但对于学术新手而言则是需要长期锻炼方可获得的表达能力。对于大量新手而言，戴着这些种种规范的枷锁来写作，是一种非常不愉快的体验。&lt;/p&gt;
-
-&lt;p&gt;学术论文写作规范都有哪些？以下是多项研究的总结：&lt;/p&gt;
-
-&lt;p&gt;（暂略）&lt;/p&gt;
-
-&lt;p&gt;不规范的学术写作示例如下：&lt;/p&gt;
-
-&lt;p&gt;（暂略）&lt;/p&gt;
-
-&lt;p&gt;学术新手应该如何锻炼符合学术语言规范的写作能力呢？或者说，在尚未具备学术语言表达能力时，新手应该如何开始论文写作？结合自身的经历，笔者尝试提出一些不成熟的建议，以供批判。抛砖引玉，期待大家不吝赐教。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;草稿 version 0.1 可随心所欲，无需满足规范。为了快速将研究成果准确记录下来，任何语言，短语甚至符号都是可以接受的。同时应该将论文的大纲拟出来。&lt;/li&gt;
-  &lt;li&gt;草稿 version 0.2 将大纲分细，每段使用较为粗糙的中心句表达出来。&lt;/li&gt;
-  &lt;li&gt;草稿 version 0.3 填充每段的内容。需要搜索查阅资料方可确定的统计数字、事实案例、文献出处等均可以代号在此处代替，留白。&lt;/li&gt;
-  &lt;li&gt;草稿 version 0.4 填写留白处，并每处以脚注或者参考文献的形式给出相应出处。&lt;/li&gt;
-  &lt;li&gt;草稿 version 0.5 上述部分完成的主要是研究背景和文献综述。理论模型、实证以及总结部分仍是大片空白。这一阶段则需要将模型原理、模型改进、实证模型、实证假设、统计变量、数据来源、数据处理、参数估计、假设检验结果、结果解读和总结等部分完成。这个阶段也是研究主要阶段。&lt;/li&gt;
-  &lt;li&gt;初稿 version 0.6 目前仍是一篇非常粗糙的初稿，需要进行大量的文字润色使其满足学术语言规范。在没有能力的情况下如何进行文字润色？最简单的工作就是 ** 替换改写 **。首先需要将不满足学术语言的部分标记出来。然后在较为权威的参考文献中找到相同或者相近含义的句子，将其替换改写。&lt;/li&gt;
-  &lt;li&gt;初稿 version 0.7 这一阶段需要通读全文，将存在冗余的部分删去，存在逻辑缺口的部分补写。这一阶段需要结合上一阶段的替换改写来交替进行，直到整篇文章达到意思清晰逻辑完整的程度。&lt;/li&gt;
-  &lt;li&gt;初稿 version 0.8 校对检查。工作包括出处确认，避免引用理解偏差的错误出现；逻辑结构推演，避免行文出现逻辑错误。&lt;/li&gt;
-  &lt;li&gt;初稿 version 0.9 排版。字体，样式，色彩（图的配色挑选模板）；图片应尽量使用 svg 格式，表格应该满足相应投稿规范。图片大小、表格大小及其位置应根据文章内容具体设计。&lt;/li&gt;
-  &lt;li&gt;初稿 version 1.0 投稿。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;后注：本文或许应该改名为 “面向新手的学术论文写作流程设计”。&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 25 Jun 2017 10:40:33 +0800</pubDate>
-        <link>http://localhost:4000/jekyll/update/2017/06/25/Article-writing-process.html</link>
-        <guid isPermaLink="true">http://localhost:4000/jekyll/update/2017/06/25/Article-writing-process.html</guid>
-        
-        
-        <category>jekyll</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>使用 jekyll 编写 Github 博客</title>
-        <description>&lt;p&gt;前提：了解 Git 命令。
-操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6&lt;/p&gt;
-
-&lt;p&gt;要点：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll 3.5.0&lt;/code&gt; 来生成新博客模板时会报错，而 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll 3.1.6&lt;/code&gt; 则不会。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git push&lt;/code&gt; 时应该只在 &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; 下，不应该到其他的 branch。&lt;/li&gt;
-  &lt;li&gt;记得修改文件 &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 中的 url。&lt;/li&gt;
-  &lt;li&gt;每次修改后应该在本地使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt; 再 &lt;code class=&quot;highlighter-rouge&quot;&gt;commit&lt;/code&gt;，然后再上传到 Github 上。否则网页无法更新。&lt;/li&gt;
-  &lt;li&gt;最好使用 ssh 密钥来传送文件到 Github，不然每次输入密码是很麻烦的事情。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;未完成的工作：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;域名绑定&lt;/li&gt;
-  &lt;li&gt;jekyll 的默认网址问题&lt;/li&gt;
-  &lt;li&gt;主题和格式细节需要修改&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;参考资料如下：&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/88c9e72978b4&quot;&gt;用 Jekyll 搭建的 Github Pages 个人博客&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://jekyllrb.com/docs/quickstart/&quot;&gt;Quick-start guide&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/ayseeing/p/3572582.html&quot;&gt;github 设置添加 SSH&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/setting-up-an-apex-domain/&quot;&gt;域名绑定&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 23 Jun 2017 17:40:33 +0800</pubDate>
-        <link>http://localhost:4000/jekyll/update/2017/06/23/Github-%E5%8D%9A%E5%AE%A2-jekyll.html</link>
-        <guid isPermaLink="true">http://localhost:4000/jekyll/update/2017/06/23/Github-%E5%8D%9A%E5%AE%A2-jekyll.html</guid>
-        
-        
-        <category>jekyll</category>
-        
-        <category>update</category>
         
       </item>
     

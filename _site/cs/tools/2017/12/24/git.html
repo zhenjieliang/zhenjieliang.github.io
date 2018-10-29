@@ -68,7 +68,7 @@
 
 <p>回退到某个版本并且将该版本设为 master</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;commit id&gt;            <span class="c"># Checkout previous commit on master, the id is the first 7 digits, or simply Tab to select.</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;commit <span class="nb">id</span><span class="o">&gt;</span>            <span class="c"># Checkout previous commit on master, the id is the first 7 digits, or simply Tab to select.</span>
 git checkout <span class="nt">-b</span> new_master       <span class="c"># Create branch for new master</span>
 git branch <span class="nt">-D</span> master             <span class="c"># Delete old master</span>
 git branch <span class="nt">-mv</span> new_master master <span class="c"># Make new_master master</span>
@@ -76,7 +76,7 @@ git branch <span class="nt">-mv</span> new_master master <span class="c"># Make 
 
 <p>或者</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset <span class="nt">--hard</span> &lt;commit id&gt;        <span class="c"># Reset current branch to one commit ago on master</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset <span class="nt">--hard</span> &lt;commit <span class="nb">id</span><span class="o">&gt;</span>        <span class="c"># Reset current branch to one commit ago on master</span>
 </code></pre></div></div>
 
 <p>这样回退会导致损失掉某个 commit id 的版本，版本控制应该慎重使用。其实更好的办法是破除喜欢在 master 分支上修改代码的不良习惯，多使用 branch。</p>

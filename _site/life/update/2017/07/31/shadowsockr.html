@@ -66,8 +66,8 @@
 
 <p>选择 ubuntu 14.04 的镜像</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install linux-image-4.2.0-35-generic
-uname <span class="nt">-r</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>linux-image-4.2.0-35-generic
+<span class="nb">uname</span> <span class="nt">-r</span>
 update-grub
 reboot
 wget <span class="nt">-N</span> <span class="nt">--no-check-certificate</span> https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh <span class="o">&amp;&amp;</span> bash serverspeeder.sh
@@ -75,9 +75,9 @@ wget <span class="nt">-N</span> <span class="nt">--no-check-certificate</span> h
 
 <h2 id="服务端">服务端</h2>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install git
-apt-get install python
-apt-get install vim
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>git
+apt-get <span class="nb">install </span>python
+apt-get <span class="nb">install </span>vim
 git clone <span class="nt">-b</span> manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
 <span class="nb">cd </span>shadowsocksr
 bash initcfg.sh
@@ -171,9 +171,9 @@ python server.py <span class="nt">-d</span> start
 
 <p>输入远程主机密码之后即可将密钥传输过去。然后在 ssh 连接远程主机，再输入以下命令：</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/.ssh
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> ~/.ssh
 <span class="nb">cat</span> ~/id_rsa.pub <span class="o">&gt;&gt;</span> ~/.ssh/authorized_keys
-rm ~/id_rsa.pub
+<span class="nb">rm</span> ~/id_rsa.pub
 </code></pre></div></div>
 
 <p>至此，使用 <code class="highlighter-rouge">ssh root@ip</code> 将无需输入密码。但这样仍需要记住 ip，可以使用其他代号（例如 slave）来取代 ip。具体做法如下：</p>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reproducible Python</title>
+  <meta name="description" content="轻便版：python + markdown">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cs/tools/2018/01/09/reproduceble_python.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Reproducible Python</h1>
+    <p class="post-meta"><time datetime="2018-01-09T22:25:37+08:00" itemprop="datePublished">Jan 9, 2018</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>轻便版：python + markdown</p>
+
+<p>专业版：python + latex</p>
+
+<p>轻便版的实现方法有使用 <code class="highlighter-rouge">md</code>、 <code class="highlighter-rouge">rmd</code> 和 <code class="highlighter-rouge">pmd</code> 三种。其中 <code class="highlighter-rouge">rmd</code> 的设置示例如下：</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="err">​``</span><span class="n">`{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(engine.path = list(python = '/usr/bin/python2.7'))
+​`</span><span class="err">`</span><span class="n">`
+
+​`</span><span class="err">`</span><span class="n">`{python}
+print(1 &gt; 2)
+​`</span><span class="err">``</span><span class="w">
+</span></code></pre></div></div>
+
+<p><code class="highlighter-rouge">rmd</code> 可以使用 Typora 编辑，然后在 Rstudio 里运行。</p>
+
+<p><code class="highlighter-rouge">pmd</code> 则使用 pweave，在 Atom 编辑并运行。</p>
+
+<p><code class="highlighter-rouge">md</code> 则是使用 stitch 来运行并保存为 HTML 格式。命令 <code class="highlighter-rouge">stitch tidy.md -o output4.html</code>。</p>
+
+<p>专业版同样使用 Rnw 和其他版本。</p>
+
+<p>Rnw 的设置示例如下：</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;&lt;</span><span class="n">setup</span><span class="p">,</span><span class="w"> </span><span class="n">include</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">cache</span><span class="o">=</span><span class="kc">FALSE</span><span class="o">&gt;&gt;=</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">knitr</span><span class="p">)</span><span class="w">
+</span><span class="c1"># set global chunk options</span><span class="w">
+</span><span class="n">opts_chunk</span><span class="o">$</span><span class="n">set</span><span class="p">(</span><span class="n">echo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="n">message</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">options</span><span class="p">(</span><span class="n">formatR.arrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="m">90</span><span class="p">)</span><span class="w">
+</span><span class="o">@</span><span class="w">
+
+</span><span class="o">&lt;&lt;</span><span class="n">hi</span><span class="o">-</span><span class="n">python</span><span class="p">,</span><span class="w"> </span><span class="n">engine.path</span><span class="o">=</span><span class="s2">"/home/liangzhenjie/anaconda3/bin/python"</span><span class="o">&gt;&gt;=</span><span class="w">
+</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'hello, python world!'</span><span class="w">
+</span><span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">
+</span><span class="o">@</span><span class="w">
+</span></code></pre></div></div>
+
+<p>写完 Rnw，可以先在 Rstudio 里生成 pdf，这一过程将附带生成 tex 文件。再使用 latex2html 或者 htlatex 来将 tex 转化为 html。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>htlatex source.tex
+latex2html source.tex
+</code></pre></div></div>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Zhenjie Liang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

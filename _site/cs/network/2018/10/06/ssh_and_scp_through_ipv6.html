@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>使用 ipv6 地址设置 ssh 连接和 scp 传输</title>
+  <meta name="description" content="因为私人没有公网的 ipv4 ip 地址，而且家庭网络可能会因各种运营商的奇葩服务导致网络环境异常复杂，从而使得通过 noip 域名绑定动态 ip - 端口转发 这条路走不通。">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cs/network/2018/10/06/ssh_and_scp_through_ipv6.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">使用 ipv6 地址设置 ssh 连接和 scp 传输</h1>
+    <p class="post-meta"><time datetime="2018-10-06T00:00:00+08:00" itemprop="datePublished">Oct 6, 2018</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>因为私人没有公网的 ipv4 ip 地址，而且家庭网络可能会因各种运营商的奇葩服务导致网络环境异常复杂，从而使得通过 noip 域名绑定动态 ip - 端口转发 这条路走不通。</p>
+
+<p>为了解决远程连接指定电脑的问题，有两种思路：（1）构建家庭 VPN。这种方法优点是速度快，缺点是需要有特定功能的路由器（必须满足 DD-WRT）。（2）通过 ipv6 地址连接。优点是无需硬件支持，缺点则是速度较慢。</p>
+
+<p>下面在 linux 环境下介绍通过 ipv6 地址联接远程服务器的办法。</p>
+
+<p>首先，如果运营商提供了 ipv6 服务，通过 test-ipv6.com 这个网站就可以测试是否有提供，或者在命令行中输入</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ping6 ipv6.google.com
+</code></pre></div></div>
+
+<p>如果 ping 得通，说明有 ipv6 的公网地址。此时只要再输入 <code class="highlighter-rouge">ifconfig</code> 即可查看到 ipv6 的地址。注意，公网的 ipv6 的地址是以 2001 为开头的。</p>
+
+<p>在没有 ping 通时，linux 系统下可以安装 miredo 进行 ipv4 转 ipv6，进而得到 ipv6 公网地址。相关的命令如下。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>miredo
+<span class="nb">sudo </span>miredo
+systemctl status miredo.service
+<span class="nb">sudo </span>vim /etc/miredo.conf
+</code></pre></div></div>
+
+<p>安装成功即可通过 <code class="highlighter-rouge">ifconfig</code> 看到 ipv6 公网地址。注意即使 miredo 的 status 显示为 fail，只要使用 <code class="highlighter-rouge">ping6 ipv6.google.com</code> 可以发送接收包，即可。</p>
+
+<p>如若 ping 不通，则可以修改 miredo.conf 的 teredo 公共服务器地址列表。可以参考 <a href="https://wiki.klniu.com/zh-hans/Teredo">网址</a> 来修改。</p>
+
+<p>使用 ssh 和 scp 连接 ipv6 地址的命令有</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-p</span> port_num <span class="nt">-v</span> user@ipv6
+scp <span class="nt">-p</span> port_num <span class="nt">-v</span> user@ipv6:~/ ~/Downloads/files
+</code></pre></div></div>
+
+<p>注意可以在. zshrc 里修改 alias，将 <code class="highlighter-rouge">ssh -p port_num -v</code> 等缩写为 <code class="highlighter-rouge">sshr</code>。此外，ipv6 的地址很长，可以通过 <code class="highlighter-rouge">sudo vim /etc/hosts</code> 将地址加入。</p>
+
+<p>scp 时需要注意，由于 IPv6 地址中的冒号和指定路径之前的冒号有冲突，需要用中括号加转义字符的方式把 IPv6 的地址括起来。（不过在修改 /etc/hosts 以后，则使用和 ssh 中的 host 相同的代号即可。）</p>
+
+<p>https://beanocean.github.io/tech/2014/10/17/scp_ipv6/</p>
+
+<p>当远程服务器重启之后，则 miredo 不会自动重启，不再有 ipv6 地址。解决方法分为两个步骤：（1）将需要 sudo 权限才能启动的 miredo 放入 <code class="highlighter-rouge">/etc/rc.local</code> 执行，开机自启动；（2）在 <code class="highlighter-rouge">/etc/network/if-up.d/</code> 建立脚本 <code class="highlighter-rouge">iplog</code>，用 <code class="highlighter-rouge">ifconfig &gt; iplog.txt</code> 来生成 ip 记录；（3）使用定时任务，每分钟定时向中继的有公网 ip 的 vps 发送该 ip 记录文件。</p>
+
+<p><code class="highlighter-rouge">/etc/rc.local</code> 文件如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh -e</span>
+<span class="c">#</span>
+<span class="c"># rc.local</span>
+<span class="c">#</span>
+<span class="c"># This script is executed at the end of each multiuser runlevel.</span>
+<span class="c"># Make sure that the script will "exit 0" on success or any other</span>
+<span class="c"># value on error.</span>
+<span class="c">#</span>
+<span class="c"># In order to enable or disable this script just change the execution</span>
+<span class="c"># bits.</span>
+<span class="c">#</span>
+<span class="c"># By default this script does nothing.</span>
+
+sh /home/liangzhenjie/miredoAutoStart.sh &amp;
+ <span class="nb">exit </span>0
+</code></pre></div></div>
+
+<p>而其中的 <code class="highlighter-rouge">miredoAutoStart.sh</code> 如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+miredo
+
+<span class="nb">sleep </span>5
+
+ifconfig <span class="o">&gt;</span> /home/liangzhenjie/ip6.txt
+</code></pre></div></div>
+
+<p>使用 <code class="highlighter-rouge">chmod +x miredoAutoStart.sh</code> 来赋予权限。</p>
+
+<p>第一个步骤至此完成。每次重启都会启动 miredo，并将 ip 记录添加到指定文件中。</p>
+
+<p>第二个步骤是在网络环境稳定后，将 ip 记录添加到指定文件中。之所以需要这样做，是因为将这个功能整合进第一个步骤时容易造成生成的 iplog 不准确，因为第一步中的网络环境还未准备好。具体做法:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/network/if-up.d/iplog
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">/etc/network/if-up.d/iplog</code> 具体如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+ifconfig <span class="o">&gt;</span> /home/liangzhenjie/ip6.txt
+</code></pre></div></div>
+
+<p>使用 <code class="highlighter-rouge">sudo chmod +x /etc/network/if-up.d/iplog</code> 对其赋予权限。</p>
+
+<p>第三个步骤则是将指定文件发送给指定的中继 vps 添加到定时任务，每分钟发送一次。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crontab <span class="nt">-e</span>
+
+<span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> /path/to/uploadip.sh
+</code></pre></div></div>
+
+<p>uploadip.sh 如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+scp /home/liangzhenjie/ip6.txt root@ip:/root
+</code></pre></div></div>
+
+<p>使用 <code class="highlighter-rouge">chmod +x uploadip.sh</code> 来赋予权限。</p>
+
+<p>注意，远程服务器应该能够无密码 ssh 连接到中继 vps 才可。具体做法请参考 shadowsocksr 一文。</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Zhenjie Liang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

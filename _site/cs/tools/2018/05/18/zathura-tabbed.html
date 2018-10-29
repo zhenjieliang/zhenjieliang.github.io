@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>zathura tabbed</title>
+  <meta name="description" content="zathura-tabbed 分为分为两个步骤：安装、系统设置。其中主要脚本和说明可见于Github guide。">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cs/tools/2018/05/18/zathura-tabbed.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">zathura tabbed</h1>
+    <p class="post-meta"><time datetime="2018-05-18T00:00:00+08:00" itemprop="datePublished">May 18, 2018</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>zathura-tabbed 分为分为两个步骤：安装、系统设置。其中主要脚本和说明可见于<a href="https://github.com/mtikekar/zathura-tabbed">Github guide</a>。</p>
+
+<p>需要安装的程序有 zathura, zathura-pdf-mupdf, libgirara-dev, mupdf, tabbed。这些均可从 apt repository 或者源码编译安装，并不需要设置任何路径。</p>
+
+<p>需要安装的脚本是<a href="https://raw.githubusercontent.com/mtikekar/zathura-tabbed/master/zathura-tabbed">zathura-tabbed</a>，将无后缀名的该文件保存于 “/usr/bin” 文件夹，并使用 <code class="highlighter-rouge">sudo chmod 777 zathura-tabbed</code> 来赋予权限。至此，在 zsh 中使用 <code class="highlighter-rouge">zathura-tabbed 1.pdf 2.pdf 3.pdf</code> 即可同时打开三个 pdf 文件，并且都以 tabbed 的形式在一个 zathura 中。需要切换 tab 和搜索选择 tab 可以使用诸如 “ctrl+shift-H”,”ctrl+t” 或者 “ctrl+[0,1,…,9]” 的快捷键来做到。除了原有的 zathura 操作以外，更多快捷键操作可见于 <code class="highlighter-rouge">man tabbed</code>。</p>
+
+<p>设置 zathura-tabbed 为 pdf 在 xdg 下的默认打开程序的方法是，编辑出一个 zathura-tabbed 的 desktop，将其保存于 “/usr/share/applications” 路径下。注意需要使用 <code class="highlighter-rouge">sudo chmod +x zathura-tabbed</code> 命令来赋权。然后使用命令行 <code class="highlighter-rouge">xdg-mime default zathura-tabbed.desktop application/pdf</code> 来将其设置为 pdf 的默认打开文件。至此，在打开多个 pdf 的情况下，打开其他任意一个 pdf，该 pdf 文件仍将在 zathura-tabbed 中显示。</p>
+
+<p>美中不足：打开相同的 pdf 文件两次，则在 zathura-tabbed 中有两个 tab，仍不具备 filter duplicate files 的功能。根据 <a href="https://github.com/mtikekar/zathura-tabbed/issues/1">Avoid duplicate tabs</a> 的说明，改动 zathura-tabbed，但并未能如该帖子所述实现该功能。</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Zhenjie Liang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

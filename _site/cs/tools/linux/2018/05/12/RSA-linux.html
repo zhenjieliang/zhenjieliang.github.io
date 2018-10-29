@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Encrypt files with RSA algorithm in linux</title>
+  <meta name="description" content="在看完李永乐老师在 youtube 上的讲解 RSA 非对称加密算法 的原理 1 之后，对于非对称加密通信的实现非常感兴趣。根据视频以加密数字为例以及 stackexchange 上 penguin359 的 回答 可知，该算法并非设计来加密任意文件如 string 的，而是加密某个整数。因此使用该算法来加密通讯...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cs/tools/linux/2018/05/12/RSA-linux.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Encrypt files with RSA algorithm in linux</h1>
+    <p class="post-meta"><time datetime="2018-05-12T00:00:00+08:00" itemprop="datePublished">May 12, 2018</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>在看完李永乐老师在 youtube 上的讲解 <a href="https://www.youtube.com/watch?v=D_kMadCtKp8&amp;t=13s">RSA 非对称加密算法</a> 的原理 <sup id="fnref:0"><a href="#fn:0" class="footnote">1</a></sup> 之后，对于非对称加密通信的实现非常感兴趣。根据视频以加密数字为例以及 stackexchange 上 penguin359 的 <a href="https://unix.stackexchange.com/questions/12260/how-to-encrypt-messages-text-with-rsa-openssl">回答</a> 可知，该算法并非设计来加密任意文件如 string 的，而是加密某个整数。因此使用该算法来加密通讯并不合适。根据 penguin359 的推荐，使用 <a href="https://www.gnupg.org/gph/en/manual.html">GnuPG</a> 来进行加密通信是不错的选择 <sup id="fnref:1"><a href="#fn:1" class="footnote">2</a></sup>。顺着这个思路，可以搜索到 chrome 浏览器下使用<a href="https://chrome.google.com/webstore/detail/flowcrypt-encrypt-gmail-w/bnjglocicdkmhmoohhfkfkbbkejdhdgc">FlowCrypt</a> 在 Gmail 中通信，在 Firefox 浏览器下则是<a href="https://addons.mozilla.org/en-US/firefox/addon/mailvelope/">mailvelope</a>。</p>
+
+<p>关于公钥和私钥：任何人发信给甲，可以使用甲广播的自己的公钥 e1 和加密算法进行加密，然后把密文发给甲。甲通过自己的私钥 d1 和解密算法进行解密，得到明文。另外，为了确保甲能够验证收到的信息确系乙而非中间人发出的，则首先需要乙用自己的私钥 d2 加密由该信息计算而得的散列值（Message digest），并将加密后的散列值 “署名” 在信息的后面。甲使用乙广播的公钥 e2, 来解密“署名”（加密后的散列值），然后 <strong>将解密后的这个署名数据与他自己为这个信息计算的散列值相比较</strong>，若两者相符，则甲可知发信人持有乙的私钥，并且该信息在传播路径上没有被篡改过。<sup id="fnref:2"><a href="#fn:2" class="footnote">3</a></sup></p>
+
+<p>下面介绍 GnuPG 的各项命令及其用途。原文可参考<a href="https://www.gnupg.org/gph/en/manual.html">GnuPG</a></p>
+
+<p>TODO</p>
+<div class="footnotes">
+  <ol>
+    <li id="fn:0">
+      <p>极大数的质因数分解是个非常困难的问题。 <a href="#fnref:0" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:1">
+      <p>因 linux 自带的 GnuPG 版本通常比较低，如需要更新到最新版本可到 <a href="https://www.gnupg.org/download/index.html">官网</a> 下载包括 GnuPG 在内的数个源码包安装。 <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>具体可见 <a href="https://www.wikiwand.com/zh-hans/RSA%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95">RSA 加密演算法</a> 的签名信息一段。 <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Zhenjie Liang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
