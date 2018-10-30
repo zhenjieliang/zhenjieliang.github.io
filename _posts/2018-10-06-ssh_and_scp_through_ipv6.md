@@ -121,4 +121,6 @@ scp /home/liangzhenjie/ip6.txt root@ip:/root
 
 使用 `chmod +x uploadip.sh` 来赋予权限。
 
-注意，远程服务器应该能够无密码 ssh 连接到中继 vps 才可。具体做法请参考 shadowsocksr 一文。
+注意，远程服务器应该能够无密码 ssh 连接到中继 vps 才可。具体做法请参考 [shadowsocksr](https://zhenjieliang.me/network/linux/2017/07/30/shadowsockr.html) 一文。
+
+![Don't fall](/assets/cat1.gif)

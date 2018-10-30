@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Shadowsocksr</title>
+  <meta name="description" content="安装 serverspeeder">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/network/linux/2017/07/31/shadowsockr.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Shadowsocksr</h1>
+    <p class="post-meta"><time datetime="2017-07-31T07:45:33+08:00" itemprop="datePublished">Jul 31, 2017</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="安装-serverspeeder">安装 serverspeeder</h2>
+
+<p>选择 ubuntu 14.04 的镜像</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>linux-image-4.2.0-35-generic
+<span class="nb">uname</span> <span class="nt">-r</span>
+update-grub
+reboot
+wget <span class="nt">-N</span> <span class="nt">--no-check-certificate</span> https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh <span class="o">&amp;&amp;</span> bash serverspeeder.sh
+</code></pre></div></div>
+
+<h2 id="服务端">服务端</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>git
+apt-get <span class="nb">install </span>python
+apt-get <span class="nb">install </span>vim
+git clone <span class="nt">-b</span> manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
+<span class="nb">cd </span>shadowsocksr
+bash initcfg.sh
+vim ~/shadowsocksr/user-config.json
+</code></pre></div></div>
+
+<p>单用户设置</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"server_ipv6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"::"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"server_port"</span><span class="p">:</span><span class="w"> </span><span class="p">,</span><span class="err">#</span><span class="w"> </span><span class="err">修改</span><span class="w">
+    </span><span class="s2">"local_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"local_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">1080</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="err">#</span><span class="w"> </span><span class="err">修改</span><span class="w">
+    </span><span class="s2">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="s2">"method"</span><span class="p">:</span><span class="s2">"none"</span><span class="p">,</span><span class="err">#可以修改成其他加密</span><span class="w">
+    </span><span class="s2">"protocol"</span><span class="p">:</span><span class="s2">"auth_chain_a"</span><span class="p">,</span><span class="err">#</span><span class="w"> </span><span class="err">可以修改成</span><span class="w"> </span><span class="err">auth_chain_b</span><span class="w">
+    </span><span class="s2">"protocol_param"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"obfs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tls1.2_ticket_auth"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"obfs_param"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="err">#</span><span class="w"> </span><span class="err">可以修改</span><span class="w">
+    </span><span class="s2">"redirect"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dns_ipv6"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fast_open"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"workers"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>运行</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/shadowsocksr/shadowsocks
+python server.py <span class="nt">-d</span> start
+</code></pre></div></div>
+
+<h2 id="客户端">客户端</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone <span class="nt">-b</span> manyuser  https://github.com/shadowsocksrr/shadowsocksr.git
+<span class="nb">sudo </span>vim /etc/younameit.json
+</code></pre></div></div>
+
+<p>younameit.json 设置</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="s2">"server"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="err">#查服务器</span><span class="w"> </span><span class="err">ip，填上</span><span class="w">
+</span><span class="s2">"server_ipv6"</span><span class="p">:</span><span class="s2">"::"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"server_port"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="err">#</span><span class="w"> </span><span class="err">同服务端单用户设置</span><span class="w">
+</span><span class="s2">"local_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"local_port"</span><span class="p">:</span><span class="mi">1080</span><span class="p">,</span><span class="w">
+</span><span class="s2">"password"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="err">#</span><span class="w"> </span><span class="err">同服务端单用户设置</span><span class="w">
+</span><span class="s2">"timeout"</span><span class="p">:</span><span class="mi">600</span><span class="p">,</span><span class="w">
+</span><span class="s2">"udp_timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w">
+</span><span class="s2">"method"</span><span class="p">:</span><span class="s2">"none"</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
+</span><span class="s2">"protocol"</span><span class="p">:</span><span class="s2">"auth_chain_a"</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
+</span><span class="s2">"obfs"</span><span class="p">:</span><span class="s2">"tls1.2_ticket_auth"</span><span class="p">,</span><span class="err">#同服务端单用户设置</span><span class="w">
+</span><span class="s2">"obfs_param"</span><span class="p">:</span><span class="s2">""</span><span class="err">#</span><span class="w"> </span><span class="err">同服务端单用户设置</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>保存之后。设置启动脚本</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim younameit.sh
+</code></pre></div></div>
+
+<p>younameit.sh 只有一行代码</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#! /bin/sh</span>
+
+<span class="nb">sudo </span>python ~/shadowsocksr/shadowsocks/local.py <span class="se">\</span>
+<span class="nt">-c</span> /etc/younameit.json <span class="nt">-d</span> start
+</code></pre></div></div>
+
+<p>至此服务端与客户端都已设置完毕。</p>
+
+<h2 id="启动与关闭">启动与关闭</h2>
+
+<p>开机后客户端启动</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh younameit.sh
+</code></pre></div></div>
+
+<p>关闭则再运行一次上述命令，得到已经在运行的报错信息，再根据信息中的 pid，关闭客户端。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo kill </span>pid
+</code></pre></div></div>
+
+<h2 id="ssh-免密远程登陆">ssh 免密远程登陆</h2>
+
+<p>在本地使用命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp ~/.ssh/id_rsa.pub root@ip:/root
+</code></pre></div></div>
+
+<p>输入远程主机密码之后即可将密钥传输过去。然后在 ssh 连接远程主机，再输入以下命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> ~/.ssh
+<span class="nb">cat</span> ~/id_rsa.pub <span class="o">&gt;&gt;</span> ~/.ssh/authorized_keys
+<span class="nb">rm</span> ~/id_rsa.pub
+</code></pre></div></div>
+
+<p>至此，使用 <code class="highlighter-rouge">ssh root@ip</code> 将无需输入密码。但这样仍需要记住 ip，可以使用其他代号（例如 slave）来取代 ip。具体做法如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/hosts
+<span class="c"># edit hosts</span>
+ip slave
+</code></pre></div></div>
+
+<p>完成之后，<code class="highlighter-rouge">ping slave</code> 即可得到远程主机的网络延迟，而 <code class="highlighter-rouge">ssh root@slave</code> 即可连接到远程主机。</p>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+      <!-- <h2 class="footer-heading">Zhenjie Liang</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>还有无数朝霞，尚未点亮我们天空</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

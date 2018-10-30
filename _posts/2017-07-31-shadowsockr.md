@@ -2,7 +2,8 @@
 layout: post
 title:  "Shadowsocksr"
 date:   2017-07-31 07:45:33 +0800
-categories: life update
+categories: network linux
+tags: [network, linux]
 ---
 
 ## 安装 serverspeeder
