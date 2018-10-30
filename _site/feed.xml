@@ -5,8 +5,8 @@
     <description>还有无数朝霞，尚未点亮我们天空</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 29 Oct 2018 20:44:04 +0800</pubDate>
-    <lastBuildDate>Mon, 29 Oct 2018 20:44:04 +0800</lastBuildDate>
+    <pubDate>Tue, 30 Oct 2018 08:48:39 +0800</pubDate>
+    <lastBuildDate>Tue, 30 Oct 2018 08:48:39 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -256,6 +256,81 @@ yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/include&quot;&lt;/span&gt;
         <category>cs</category>
         
         <category>R</category>
+        
+      </item>
+    
+      <item>
+        <title>自动化数据分析报告环境搭建</title>
+        <description>&lt;h2 id=&quot;1-安装&quot;&gt;1. 安装&lt;/h2&gt;
+
+&lt;p&gt;首先，在 &lt;code class=&quot;highlighter-rouge&quot;&gt;bash&lt;/code&gt; 里使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;cd /path/to/auto_report&lt;/code&gt; 将当前路径设为 auto_report 文件夹；其次，在得到服务器的 &lt;code class=&quot;highlighter-rouge&quot;&gt;ip&lt;/code&gt; 以及 &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; 用户的密码之后，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;scp&lt;/code&gt; 命令将 install.sh 和 fonts 文件夹搬到远程服务器的 /root 路径下。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;scp &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; fonts/ root@ip:/root
+scp install.sh root@ip:/root
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;然后，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh root@ip&lt;/code&gt; 命令登陆远程服务器，运行 &lt;code class=&quot;highlighter-rouge&quot;&gt;bash install.sh&lt;/code&gt; 命令安装好所有需要的软件和字体。&lt;/p&gt;
+
+&lt;h3 id=&quot;11-创建用户&quot;&gt;1.1 创建用户&lt;/h3&gt;
+
+&lt;p&gt;由于 Rstudio server 不允许使用 root 用户登陆，因此，需要创建自己的用户，并赋予管理员权限。创建命令如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;adduser username
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;其中 username 是你想用的用户名。然后根据以下提示输入用户对应的密码。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Set password prompts:
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;之后的要求填 full name/room number 之类的全部按回车即可。下面的命令赋予刚创建好的用户管理员权限。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;usermod &lt;span class=&quot;nt&quot;&gt;-aG&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;username
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;2-登陆-rstudio-server&quot;&gt;2. 登陆 Rstudio server&lt;/h2&gt;
+
+&lt;h3 id=&quot;21-安装与测试&quot;&gt;2.1 安装与测试&lt;/h3&gt;
+
+&lt;p&gt;在浏览器内输入 ip:8787 即可进入 Rstudio server 的登陆页面，如下所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/rstudio_login.png&quot; alt=&quot;Rstudio_login&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;分别输入上一节创建的用户名和密码，点击 sign in 即可。为了避免重复输入的麻烦，可以勾选 stay sign in 方框。&lt;/p&gt;
+
+&lt;p&gt;登陆成功后，在 console 里运行 &lt;code class=&quot;highlighter-rouge&quot;&gt;install.package(&quot;rmarkdown&quot;)&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;install.package(&quot;showtext&quot;)&lt;/code&gt; 安装相应的包。当 console 内显示 DONE(rmarkdown) 时，代表安装成功。然后 &lt;code class=&quot;highlighter-rouge&quot;&gt;file -&amp;gt; new file -&amp;gt; rmarkdown&lt;/code&gt; 创建一个新的 rmarkdown 文件，以便测试是否安装成功。如果此处有跳出提示框要求安装其他包，点 Yes 即可。完成后跳出以下界面：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/rmarkdown.png&quot; alt=&quot;rmarkdown&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;勾选 pdf 一项点 ok，则跳出来作为测试的 rmarkdown 文件。按 &lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + s&lt;/code&gt; 保存之后，再按 &lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + shift + k&lt;/code&gt; ，则开始运行和编译，成功之后将跳出一个新的 html 页面，显示刚生成的 pdf 文件。按 &lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl +s&lt;/code&gt; 即可保存生成的 pdf 文件。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/rmarkdown2.png&quot; alt=&quot;rmarkdown2&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;22-运行-rnw-文件&quot;&gt;2.2 运行 Rnw 文件&lt;/h3&gt;
+
+&lt;p&gt;Rnw 文件才是我们自动化报告的核心文件。通过在 Rstudio server 中运行和编译该文件，即可得到期望的 pdf 或者 docx 文档。&lt;/p&gt;
+
+&lt;p&gt;首先需要将 auto_report 文件夹传输到远程服务器，使用以下命令：&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;prx scp &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; /path/to/auto_report username@ip:~/Desktop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在 Rstudio server 里勾选 file -&amp;gt; open file 打开相应的 Rnw 文件，然后在 Tools -&amp;gt; global options -&amp;gt; Sweave 的前两项分别点击选择 knitr 和 xelatex ，点击 ok 保存。再按 &lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + shift + k&lt;/code&gt; 即可运行编译出所需要的自动化报告文档。&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 23 Aug 2018 17:21:43 +0800</pubDate>
+        <link>http://localhost:4000/r/linux/rmd/2018/08/23/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/linux/rmd/2018/08/23/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html</guid>
+        
+        
+        <category>R</category>
+        
+        <category>linux</category>
+        
+        <category>Rmd</category>
         
       </item>
     
@@ -597,95 +672,6 @@ bash ~/v2ray-core-3.5/release/install-release.sh
         <pubDate>Sun, 24 Dec 2017 14:07:36 +0800</pubDate>
         <link>http://localhost:4000/cs/tools/2017/12/24/keyboard.html</link>
         <guid isPermaLink="true">http://localhost:4000/cs/tools/2017/12/24/keyboard.html</guid>
-        
-        
-        <category>CS</category>
-        
-        <category>Tools</category>
-        
-      </item>
-    
-      <item>
-        <title>Git</title>
-        <description>&lt;p&gt;Git 分为工作区，暂存区和仓库区。&lt;/p&gt;
-
-&lt;h2 id=&quot;回退和分支&quot;&gt;回退和分支&lt;/h2&gt;
-
-&lt;p&gt;回退到某个版本并且将该版本设为 master&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &amp;lt;commit &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;            &lt;span class=&quot;c&quot;&gt;# Checkout previous commit on master, the id is the first 7 digits, or simply Tab to select.&lt;/span&gt;
-git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; new_master       &lt;span class=&quot;c&quot;&gt;# Create branch for new master&lt;/span&gt;
-git branch &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; master             &lt;span class=&quot;c&quot;&gt;# Delete old master&lt;/span&gt;
-git branch &lt;span class=&quot;nt&quot;&gt;-mv&lt;/span&gt; new_master master &lt;span class=&quot;c&quot;&gt;# Make new_master master&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;或者&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset &lt;span class=&quot;nt&quot;&gt;--hard&lt;/span&gt; &amp;lt;commit &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;# Reset current branch to one commit ago on master&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;这样回退会导致损失掉某个 commit id 的版本，版本控制应该慎重使用。其实更好的办法是破除喜欢在 master 分支上修改代码的不良习惯，多使用 branch。&lt;/p&gt;
-
-&lt;p&gt;以下是使用 branch 的一些常用语句。&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; &amp;lt;new branch name&amp;gt;
-&lt;span class=&quot;c&quot;&gt;#create and switch to new branch&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#revised the code in workplace and then&lt;/span&gt;
-git commit &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;some note&quot;&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#if you want to merge the new branch to master&lt;/span&gt;
-git checkout master
-git merge &amp;lt;the new branch name before&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;为了使得不同 branch 的 log 的信息图能显示得更加美观，可以采用以下两个命令中的任意一个：&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log &lt;span class=&quot;nt&quot;&gt;--graph&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--abbrev-commit&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--decorate&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--date&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;relative &lt;span class=&quot;nt&quot;&gt;--all&lt;/span&gt;
-git log &lt;span class=&quot;nt&quot;&gt;--all&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--decorate&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--oneline&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--graph&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;长命令缩减为短命令可以使用 alias 功能：&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; alias.adog &lt;span class=&quot;s2&quot;&gt;&quot;log --all --decorate --oneline --graph&quot;&lt;/span&gt;
-git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; alias.adog2 &lt;span class=&quot;s2&quot;&gt;&quot;log --graph --abbrev-commit --decorate --date=relative --all&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;如此则只需 &lt;code class=&quot;highlighter-rouge&quot;&gt;git adog2&lt;/code&gt; 或者 &lt;code class=&quot;highlighter-rouge&quot;&gt;git adog&lt;/code&gt; 即可实现上述两个长命令。&lt;/p&gt;
-
-&lt;p&gt;使用 tag 来标注版本号，并且使用上述命令进行分支回退操作，避免了输入 commit id 的繁琐操作（虽然在 zsh 里可以使用 tab 命令来选取，但终究在意义直观上不够便捷）。&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git tag
-git tag v0.1
-git checkout v0.1
-git checkout master
-git reset &lt;span class=&quot;nt&quot;&gt;--hard&lt;/span&gt; v0.1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;其他常见&quot;&gt;其他常见&lt;/h2&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git init
-git status
-git add &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
-git branch
-git log
-git diff &amp;lt;commit id1&amp;gt; &amp;lt;commit id2&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;忽略&quot;&gt;忽略&lt;/h2&gt;
-
-&lt;p&gt;在当前工作区内新建一个名为 “.gitignore” 的文件，参考 &lt;a href=&quot;https://github.com/github/gitignore&quot;&gt;git ignore&lt;/a&gt; 和&lt;a href=&quot;https://www.jianshu.com/p/a09a9b40ad20&quot;&gt;简书&lt;/a&gt;填写需要忽略的文件。另外，如需忽略名为 “bin” 的文件夹或者名字中包含 “bin” 的文件夹，则加入 “bin/” 或者 “*bin*/”。&lt;/p&gt;
-
-&lt;p&gt;全局设定要忽略的文件：&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; core.excludesfile &lt;span class=&quot;s1&quot;&gt;'~/.gitignore'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;##&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 24 Dec 2017 14:07:36 +0800</pubDate>
-        <link>http://localhost:4000/cs/tools/2017/12/24/git.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cs/tools/2017/12/24/git.html</guid>
         
         
         <category>CS</category>

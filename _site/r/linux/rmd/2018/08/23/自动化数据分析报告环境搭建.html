@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>自动化数据分析报告环境搭建</title>
+  <meta name="description" content="1. 安装">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/r/linux/rmd/2018/08/23/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">自动化数据分析报告环境搭建</h1>
+    <p class="post-meta"><time datetime="2018-08-23T17:21:43+08:00" itemprop="datePublished">Aug 23, 2018</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="1-安装">1. 安装</h2>
+
+<p>首先，在 <code class="highlighter-rouge">bash</code> 里使用 <code class="highlighter-rouge">cd /path/to/auto_report</code> 将当前路径设为 auto_report 文件夹；其次，在得到服务器的 <code class="highlighter-rouge">ip</code> 以及 <code class="highlighter-rouge">root</code> 用户的密码之后，使用 <code class="highlighter-rouge">scp</code> 命令将 install.sh 和 fonts 文件夹搬到远程服务器的 /root 路径下。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp <span class="nt">-r</span> fonts/ root@ip:/root
+scp install.sh root@ip:/root
+</code></pre></div></div>
+
+<p>然后，使用 <code class="highlighter-rouge">ssh root@ip</code> 命令登陆远程服务器，运行 <code class="highlighter-rouge">bash install.sh</code> 命令安装好所有需要的软件和字体。</p>
+
+<h3 id="11-创建用户">1.1 创建用户</h3>
+
+<p>由于 Rstudio server 不允许使用 root 用户登陆，因此，需要创建自己的用户，并赋予管理员权限。创建命令如下：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adduser username
+</code></pre></div></div>
+
+<p>其中 username 是你想用的用户名。然后根据以下提示输入用户对应的密码。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Set password prompts:
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+</code></pre></div></div>
+
+<p>之后的要求填 full name/room number 之类的全部按回车即可。下面的命令赋予刚创建好的用户管理员权限。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usermod <span class="nt">-aG</span> <span class="nb">sudo </span>username
+</code></pre></div></div>
+
+<h2 id="2-登陆-rstudio-server">2. 登陆 Rstudio server</h2>
+
+<h3 id="21-安装与测试">2.1 安装与测试</h3>
+
+<p>在浏览器内输入 ip:8787 即可进入 Rstudio server 的登陆页面，如下所示：</p>
+
+<p><img src="/assets/rstudio_login.png" alt="Rstudio_login" /></p>
+
+<p>分别输入上一节创建的用户名和密码，点击 sign in 即可。为了避免重复输入的麻烦，可以勾选 stay sign in 方框。</p>
+
+<p>登陆成功后，在 console 里运行 <code class="highlighter-rouge">install.package("rmarkdown")</code> 和 <code class="highlighter-rouge">install.package("showtext")</code> 安装相应的包。当 console 内显示 DONE(rmarkdown) 时，代表安装成功。然后 <code class="highlighter-rouge">file -&gt; new file -&gt; rmarkdown</code> 创建一个新的 rmarkdown 文件，以便测试是否安装成功。如果此处有跳出提示框要求安装其他包，点 Yes 即可。完成后跳出以下界面：</p>
+
+<p><img src="/assets/rmarkdown.png" alt="rmarkdown" /></p>
+
+<p>勾选 pdf 一项点 ok，则跳出来作为测试的 rmarkdown 文件。按 <code class="highlighter-rouge">ctrl + s</code> 保存之后，再按 <code class="highlighter-rouge">ctrl + shift + k</code> ，则开始运行和编译，成功之后将跳出一个新的 html 页面，显示刚生成的 pdf 文件。按 <code class="highlighter-rouge">ctrl +s</code> 即可保存生成的 pdf 文件。</p>
+
+<p><img src="/assets/rmarkdown2.png" alt="rmarkdown2" /></p>
+
+<h3 id="22-运行-rnw-文件">2.2 运行 Rnw 文件</h3>
+
+<p>Rnw 文件才是我们自动化报告的核心文件。通过在 Rstudio server 中运行和编译该文件，即可得到期望的 pdf 或者 docx 文档。</p>
+
+<p>首先需要将 auto_report 文件夹传输到远程服务器，使用以下命令：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prx scp <span class="nt">-r</span> /path/to/auto_report username@ip:~/Desktop
+</code></pre></div></div>
+
+<p>在 Rstudio server 里勾选 file -&gt; open file 打开相应的 Rnw 文件，然后在 Tools -&gt; global options -&gt; Sweave 的前两项分别点击选择 knitr 和 xelatex ，点击 ok 保存。再按 <code class="highlighter-rouge">ctrl + shift + k</code> 即可运行编译出所需要的自动化报告文档。</p>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+      <!-- <h2 class="footer-heading">Zhenjie Liang</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>还有无数朝霞，尚未点亮我们天空</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

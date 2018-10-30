@@ -4,6 +4,7 @@ title:  "使用 jekyll 编写 Github 博客"
 date:   2017-06-23 17:40:33 +0800
 categories: jekyll update
 ---
+
 前提：了解 Git 命令。
 操作系统：Ubuntu 16.04 LTS, Git, jekyll 3.1.6
 
