@@ -64,7 +64,7 @@
   <div class="post-content" itemprop="articleBody">
     <h2 id="1-安装">1. 安装</h2>
 
-<p>首先，在 <code class="highlighter-rouge">bash</code> 里使用 <code class="highlighter-rouge">cd /path/to/auto_report</code> 将当前路径设为 auto_report 文件夹；其次，在得到服务器的 <code class="highlighter-rouge">ip</code> 以及 <code class="highlighter-rouge">root</code> 用户的密码之后，使用 <code class="highlighter-rouge">scp</code> 命令将 install.sh 和 fonts 文件夹搬到远程服务器的 /root 路径下。</p>
+<p>首先，在 <code class="highlighter-rouge">bash</code> 里使用 <code class="highlighter-rouge">cd /path/to/auto_report</code> 将当前路径设为 auto_report 文件夹；其次，在得到服务器的 <code class="highlighter-rouge">ip</code> 以及 <code class="highlighter-rouge">root</code> 用户的密码之后，使用 <code class="highlighter-rouge">scp</code> 命令将 <a href="/assets/install.sh">install.sh</a> 和 fonts 文件夹搬到远程服务器的 /root 路径下。</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp <span class="nt">-r</span> fonts/ root@ip:/root
 scp install.sh root@ip:/root

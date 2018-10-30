@@ -5,8 +5,8 @@
     <description>还有无数朝霞，尚未点亮我们天空</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 30 Oct 2018 08:48:39 +0800</pubDate>
-    <lastBuildDate>Tue, 30 Oct 2018 08:48:39 +0800</lastBuildDate>
+    <pubDate>Tue, 30 Oct 2018 09:17:06 +0800</pubDate>
+    <lastBuildDate>Tue, 30 Oct 2018 09:17:06 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -249,8 +249,8 @@ yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/include&quot;&lt;/span&gt;
 
 </description>
         <pubDate>Mon, 17 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/cs/r/2018/09/17/linux-config-problems.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cs/r/2018/09/17/linux-config-problems.html</guid>
+        <link>http://localhost:4000/cs/r/2018/09/17/build-R-evironment-SC.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cs/r/2018/09/17/build-R-evironment-SC.html</guid>
         
         
         <category>cs</category>
@@ -263,7 +263,7 @@ yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/include&quot;&lt;/span&gt;
         <title>自动化数据分析报告环境搭建</title>
         <description>&lt;h2 id=&quot;1-安装&quot;&gt;1. 安装&lt;/h2&gt;
 
-&lt;p&gt;首先，在 &lt;code class=&quot;highlighter-rouge&quot;&gt;bash&lt;/code&gt; 里使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;cd /path/to/auto_report&lt;/code&gt; 将当前路径设为 auto_report 文件夹；其次，在得到服务器的 &lt;code class=&quot;highlighter-rouge&quot;&gt;ip&lt;/code&gt; 以及 &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; 用户的密码之后，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;scp&lt;/code&gt; 命令将 install.sh 和 fonts 文件夹搬到远程服务器的 /root 路径下。&lt;/p&gt;
+&lt;p&gt;首先，在 &lt;code class=&quot;highlighter-rouge&quot;&gt;bash&lt;/code&gt; 里使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;cd /path/to/auto_report&lt;/code&gt; 将当前路径设为 auto_report 文件夹；其次，在得到服务器的 &lt;code class=&quot;highlighter-rouge&quot;&gt;ip&lt;/code&gt; 以及 &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; 用户的密码之后，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;scp&lt;/code&gt; 命令将 &lt;a href=&quot;/assets/install.sh&quot;&gt;install.sh&lt;/a&gt; 和 fonts 文件夹搬到远程服务器的 /root 路径下。&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;scp &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; fonts/ root@ip:/root
 scp install.sh root@ip:/root
