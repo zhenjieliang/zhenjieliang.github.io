@@ -22,3 +22,5 @@ categories: learning methods
 
 Josh Kaufman 的 [演讲](https://www.youtube.com/watch?v=EtJy69cEOtQ) 非常精彩，无论从演讲的逻辑、演讲语速、发音、举止神情，还是演讲之后现场展示自己学习 ukelele （乐器），都堪称教科书级别。在 Amazon 上搜索其 [著作](https://www.amazon.com/Josh-Kaufman/e/B003UOZ57Q)，十数本书中以 "The Personal MBA: Master the art of Business" 和 "The First 20 Hours: How to Learn Anything . . . Fast!" 两本评价最多且都在四星以上。其主业应与 MBA 教育相关。
 
+
+与 Josh Kaufman 的偏商业宣传的说法不同，AsapScience 的 [说法](https://www.youtube.com/watch?v=B9SptdjpJBQ) 则更偏向使用 受控组/测试组 等较为科学方法来说明诸如“学睡学”以及“适量运动有助学习”等方法对更好更快学习有帮助。
