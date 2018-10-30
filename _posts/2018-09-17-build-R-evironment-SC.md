@@ -6,7 +6,7 @@ categories: cs R
 ---
 
 
-在深圳超算上安装 R、R 包以及其对系统的依赖文件时，学到了一些如何在没有 sudo 权限以及没有联网的 linux 系统的安装程序和设置的经验。R 及 R 包更为具体的安装指南可见于~/Desktop/HPC 文件夹下 R 的两个 pdf 文档。
+在深圳超算上安装 R、R 包以及其对系统的依赖文件时，学到了一些如何在没有 sudo 权限以及没有联网的 linux 系统的安装程序和设置的经验。R 及 R 包更为具体的安装指南可见于~/Desktop/HPC 文件夹下 R 的 [pdf1](/assets/R+v3.1.3-compile-install-guide-szsc-v1.5.pdf) 和 [pdf2](/assets/R+v3.5.0-compile-install-guide-szsc_v1.4.pdf) 文档，另附上深圳超算的 [使用说明](/assets/szsc-hpc-tutorials.zip)。
 
 ## 安装 R
 
@@ -17,7 +17,8 @@ categories: cs R
 
 
 ```shell
-export LD_LIBRARY_PATH=/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/lib:$ LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-
+1.2.7/lib:$ LD_LIBRARY_PATH
 
 export LD_LIBRARY_PATH=/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/bzip2-
 
@@ -40,7 +41,8 @@ export LD_LIBRARY_PATH=/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-
 其次，可能有些软件需要某些系统依赖或者其他文件的依赖，例如在安装 R 时，则使用以下语句指定 R 的安装路径以及这些依赖文件的查找路径：
 
 ```shell
-./configure --prefix=/home-yw/users/nsyw231_GJY/R-3.5.0/install --enable-R-shlib 
+./configure --prefix=/home-yw/users/nsyw231_GJY/R-3.5.0/install 
+--enable-R-shlib 
 
 LDFLAGS="-L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/lib -
 
@@ -48,7 +50,9 @@ L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/bzip2-1.0.6/lib -L/home-
 
 yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/xz-5.2.2/lib -L/home-
 
-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/pcre-8.38/lib -L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/lib"CPPFLAGS="-I/home-
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/pcre-8.38/lib -L/home-
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-
+7.47.1/lib"CPPFLAGS="-I/home-
 
 yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/include -I/home-
 
@@ -86,8 +90,9 @@ export PATH=/home-yw/users/nsyw211_LZ/soft/R-3.5.0/R-3.5.0/install /bin:$PATH
 
 
 ```r
-getPackages <- function(packs){packages <- unlist(tools::package_dependencies(packs, available.packages(),
-                                which=c("Depends", "Imports"), recursive=TRUE)
+setPackages <- function(packs){packages <- 
+unlist(tools::package_dependencies(packs, available.packages(),
+which=c("Depends", "Imports"), recursive=TRUE)
   )
   packages <- union(packs, packages)
   packages

@@ -5,8 +5,8 @@
     <description>还有无数朝霞，尚未点亮我们天空</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 30 Oct 2018 09:17:06 +0800</pubDate>
-    <lastBuildDate>Tue, 30 Oct 2018 09:17:06 +0800</lastBuildDate>
+    <pubDate>Tue, 30 Oct 2018 09:33:51 +0800</pubDate>
+    <lastBuildDate>Tue, 30 Oct 2018 09:33:51 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -129,7 +129,7 @@ scp /home/liangzhenjie/ip6.txt root@ip:/root
     
       <item>
         <title>在超算上搭建 R 环境</title>
-        <description>&lt;p&gt;在深圳超算上安装 R、R 包以及其对系统的依赖文件时，学到了一些如何在没有 sudo 权限以及没有联网的 linux 系统的安装程序和设置的经验。R 及 R 包更为具体的安装指南可见于~/Desktop/HPC 文件夹下 R 的两个 pdf 文档。&lt;/p&gt;
+        <description>&lt;p&gt;在深圳超算上安装 R、R 包以及其对系统的依赖文件时，学到了一些如何在没有 sudo 权限以及没有联网的 linux 系统的安装程序和设置的经验。R 及 R 包更为具体的安装指南可见于~/Desktop/HPC 文件夹下 R 的 &lt;a href=&quot;/assets/R+v3.1.3-compile-install-guide-szsc-v1.5.pdf&quot;&gt;pdf1&lt;/a&gt; 和 &lt;a href=&quot;/assets/R+v3.5.0-compile-install-guide-szsc_v1.4.pdf&quot;&gt;pdf2&lt;/a&gt; 文档，另附上深圳超算的 &lt;a href=&quot;/assets/szsc-hpc-tutorials.zip&quot;&gt;使用说明&lt;/a&gt;。&lt;/p&gt;
 
 &lt;h2 id=&quot;安装-r&quot;&gt;安装 R&lt;/h2&gt;
 
@@ -137,7 +137,8 @@ scp /home/liangzhenjie/ip6.txt root@ip:/root
 
 &lt;p&gt;安装好之后需要在用户的 $HOME 路径下编辑 .bashrc 文件将这些指定的安装路径加入，例句如下：&lt;/p&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/lib:&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;LD_LIBRARY_PATH
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-
+1.2.7/lib:&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;LD_LIBRARY_PATH
 
 &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/bzip2-
 
@@ -158,7 +159,8 @@ scp /home/liangzhenjie/ip6.txt root@ip:/root
 
 &lt;p&gt;其次，可能有些软件需要某些系统依赖或者其他文件的依赖，例如在安装 R 时，则使用以下语句指定 R 的安装路径以及这些依赖文件的查找路径：&lt;/p&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./configure &lt;span class=&quot;nt&quot;&gt;--prefix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw231_GJY/R-3.5.0/install &lt;span class=&quot;nt&quot;&gt;--enable-R-shlib&lt;/span&gt; 
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./configure &lt;span class=&quot;nt&quot;&gt;--prefix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home-yw/users/nsyw231_GJY/R-3.5.0/install 
+&lt;span class=&quot;nt&quot;&gt;--enable-R-shlib&lt;/span&gt; 
 
 &lt;span class=&quot;nv&quot;&gt;LDFLAGS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;-L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/lib -
 
@@ -166,7 +168,9 @@ L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/bzip2-1.0.6/lib -L/home-
 
 yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/xz-5.2.2/lib -L/home-
 
-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/pcre-8.38/lib -L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/lib&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPPFLAGS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;-I/home-
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/pcre-8.38/lib -L/home-
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-
+7.47.1/lib&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPPFLAGS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;-I/home-
 
 yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/include -I/home-
 
@@ -193,8 +197,9 @@ yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/include&quot;&lt;/span&gt;
 
 &lt;p&gt;安装 R 包首先需要下载包和依赖包的源码，生成包的索引以及源码安装。在不考虑系统依赖的情况下，可以在 R 中使用以下语句安装完成。&lt;/p&gt;
 
-&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;getPackages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tools&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package_dependencies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;available.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                                &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;which&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Depends&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Imports&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recursive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;setPackages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tools&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;package_dependencies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;available.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;which&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Depends&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Imports&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recursive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;union&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;

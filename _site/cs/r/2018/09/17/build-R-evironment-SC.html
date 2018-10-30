@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>在超算上搭建 R 环境</title>
-  <meta name="description" content="在深圳超算上安装 R、R 包以及其对系统的依赖文件时，学到了一些如何在没有 sudo 权限以及没有联网的 linux 系统的安装程序和设置的经验。R 及 R 包更为具体的安装指南可见于~/Desktop/HPC 文件夹下 R 的两个 pdf 文档。">
+  <meta name="description" content="在深圳超算上安装 R、R 包以及其对系统的依赖文件时，学到了一些如何在没有 sudo 权限以及没有联网的 linux 系统的安装程序和设置的经验。R 及 R 包更为具体的安装指南可见于~/Desktop/HPC 文件夹下 R 的 pdf1 和 pdf2 文档，另附上深圳超算的 使用说明。">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://localhost:4000/cs/r/2018/09/17/build-R-evironment-SC.html">
@@ -62,7 +62,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>在深圳超算上安装 R、R 包以及其对系统的依赖文件时，学到了一些如何在没有 sudo 权限以及没有联网的 linux 系统的安装程序和设置的经验。R 及 R 包更为具体的安装指南可见于~/Desktop/HPC 文件夹下 R 的两个 pdf 文档。</p>
+    <p>在深圳超算上安装 R、R 包以及其对系统的依赖文件时，学到了一些如何在没有 sudo 权限以及没有联网的 linux 系统的安装程序和设置的经验。R 及 R 包更为具体的安装指南可见于~/Desktop/HPC 文件夹下 R 的 <a href="/assets/R+v3.1.3-compile-install-guide-szsc-v1.5.pdf">pdf1</a> 和 <a href="/assets/R+v3.5.0-compile-install-guide-szsc_v1.4.pdf">pdf2</a> 文档，另附上深圳超算的 <a href="/assets/szsc-hpc-tutorials.zip">使用说明</a>。</p>
 
 <h2 id="安装-r">安装 R</h2>
 
@@ -70,7 +70,8 @@
 
 <p>安装好之后需要在用户的 $HOME 路径下编辑 .bashrc 文件将这些指定的安装路径加入，例句如下：</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/lib:<span class="nv">$ </span>LD_LIBRARY_PATH
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-
+1.2.7/lib:<span class="nv">$ </span>LD_LIBRARY_PATH
 
 <span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/bzip2-
 
@@ -91,7 +92,8 @@
 
 <p>其次，可能有些软件需要某些系统依赖或者其他文件的依赖，例如在安装 R 时，则使用以下语句指定 R 的安装路径以及这些依赖文件的查找路径：</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure <span class="nt">--prefix</span><span class="o">=</span>/home-yw/users/nsyw231_GJY/R-3.5.0/install <span class="nt">--enable-R-shlib</span> 
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure <span class="nt">--prefix</span><span class="o">=</span>/home-yw/users/nsyw231_GJY/R-3.5.0/install 
+<span class="nt">--enable-R-shlib</span> 
 
 <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">"-L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/lib -
 
@@ -99,7 +101,9 @@ L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/bzip2-1.0.6/lib -L/home-
 
 yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/xz-5.2.2/lib -L/home-
 
-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/pcre-8.38/lib -L/home-yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/lib"</span><span class="nv">CPPFLAGS</span><span class="o">=</span><span class="s2">"-I/home-
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/pcre-8.38/lib -L/home-
+yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-
+7.47.1/lib"</span><span class="nv">CPPFLAGS</span><span class="o">=</span><span class="s2">"-I/home-
 
 yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/zlib-1.2.7/include -I/home-
 
@@ -126,8 +130,9 @@ yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/include"</span>
 
 <p>安装 R 包首先需要下载包和依赖包的源码，生成包的索引以及源码安装。在不考虑系统依赖的情况下，可以在 R 中使用以下语句安装完成。</p>
 
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">getPackages</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">packs</span><span class="p">){</span><span class="n">packages</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">unlist</span><span class="p">(</span><span class="n">tools</span><span class="o">::</span><span class="n">package_dependencies</span><span class="p">(</span><span class="n">packs</span><span class="p">,</span><span class="w"> </span><span class="n">available.packages</span><span class="p">(),</span><span class="w">
-                                </span><span class="n">which</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s2">"Depends"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Imports"</span><span class="p">),</span><span class="w"> </span><span class="n">recursive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setPackages</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">packs</span><span class="p">){</span><span class="n">packages</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> 
+</span><span class="n">unlist</span><span class="p">(</span><span class="n">tools</span><span class="o">::</span><span class="n">package_dependencies</span><span class="p">(</span><span class="n">packs</span><span class="p">,</span><span class="w"> </span><span class="n">available.packages</span><span class="p">(),</span><span class="w">
+</span><span class="n">which</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s2">"Depends"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Imports"</span><span class="p">),</span><span class="w"> </span><span class="n">recursive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
   </span><span class="p">)</span><span class="w">
   </span><span class="n">packages</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">union</span><span class="p">(</span><span class="n">packs</span><span class="p">,</span><span class="w"> </span><span class="n">packages</span><span class="p">)</span><span class="w">
   </span><span class="n">packages</span><span class="w">
