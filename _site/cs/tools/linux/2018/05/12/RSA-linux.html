@@ -62,11 +62,11 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>在看完李永乐老师在 youtube 上的讲解 <a href="https://www.youtube.com/watch?v=D_kMadCtKp8&amp;t=13s">RSA 非对称加密算法</a> 的原理 <sup id="fnref:0"><a href="#fn:0" class="footnote">1</a></sup> 之后，对于非对称加密通信的实现非常感兴趣。根据视频以加密数字为例以及 stackexchange 上 penguin359 的 <a href="https://unix.stackexchange.com/questions/12260/how-to-encrypt-messages-text-with-rsa-openssl">回答</a> 可知，该算法并非设计来加密任意文件如 string 的，而是加密某个整数。因此使用该算法来加密通讯并不合适。根据 penguin359 的推荐，使用 <a href="https://www.gnupg.org/gph/en/manual.html">GnuPG</a> 来进行加密通信是不错的选择 <sup id="fnref:1"><a href="#fn:1" class="footnote">2</a></sup>。顺着这个思路，可以搜索到 chrome 浏览器下使用<a href="https://chrome.google.com/webstore/detail/flowcrypt-encrypt-gmail-w/bnjglocicdkmhmoohhfkfkbbkejdhdgc">FlowCrypt</a> 在 Gmail 中通信，在 Firefox 浏览器下则是<a href="https://addons.mozilla.org/en-US/firefox/addon/mailvelope/">mailvelope</a>。</p>
+    <p>在看完李永乐老师在 youtube 上的讲解 <a href="https://www.youtube.com/watch?v=D_kMadCtKp8&amp;t=13s">RSA 非对称加密算法</a> 的原理 <sup id="fnref:0"><a href="#fn:0" class="footnote">1</a></sup> 之后，对于非对称加密通信的实现非常感兴趣。根据视频以加密数字为例以及 stackexchange 上 penguin359 的 <a href="https://unix.stackexchange.com/questions/12260/how-to-encrypt-messages-text-with-rsa-openssl">回答</a> 可知，该算法并非设计来加密任意文件如 string 的，而是加密某个整数。因此使用该算法来加密通讯并不合适。根据 penguin359 的推荐，使用 <a href="https://www.gnupg.org/gph/en/manual.html">GnuPG</a> 来进行加密通信是不错的选择 <sup id="fnref:1"><a href="#fn:1" class="footnote">2</a></sup>。顺着这个思路，可以搜索到 chrome 浏览器下使用 <a href="https://chrome.google.com/webstore/detail/flowcrypt-encrypt-gmail-w/bnjglocicdkmhmoohhfkfkbbkejdhdgc">FlowCrypt</a> 在 Gmail 中通信，在 Firefox 浏览器下则是 <a href="https://addons.mozilla.org/en-US/firefox/addon/mailvelope/">mailvelope</a>。</p>
 
-<p>关于公钥和私钥：任何人发信给甲，可以使用甲广播的自己的公钥 e1 和加密算法进行加密，然后把密文发给甲。甲通过自己的私钥 d1 和解密算法进行解密，得到明文。另外，为了确保甲能够验证收到的信息确系乙而非中间人发出的，则首先需要乙用自己的私钥 d2 加密由该信息计算而得的散列值（Message digest），并将加密后的散列值 “署名” 在信息的后面。甲使用乙广播的公钥 e2, 来解密“署名”（加密后的散列值），然后 <strong>将解密后的这个署名数据与他自己为这个信息计算的散列值相比较</strong>，若两者相符，则甲可知发信人持有乙的私钥，并且该信息在传播路径上没有被篡改过。<sup id="fnref:2"><a href="#fn:2" class="footnote">3</a></sup></p>
+<p>关于公钥和私钥：任何人发信给甲，可以使用甲广播的自己的公钥 e1 和加密算法进行加密，然后把密文发给甲。甲通过自己的私钥 d1 和解密算法进行解密，得到明文。另外，为了确保甲能够验证收到的信息确系乙而非中间人发出的，则首先需要乙用自己的私钥 d2 加密由该信息计算而得的散列值（Message digest），并将加密后的散列值 “署名” 在信息的后面。甲使用乙广播的公钥 e2, 来解密“署名”（加密后的散列值），然后 <strong>将解密后的这个署名数据与他自己为这个信息计算的散列值相比较</strong> ，若两者相符，则甲可知发信人持有乙的私钥，并且该信息在传播路径上没有被篡改过。<sup id="fnref:2"><a href="#fn:2" class="footnote">3</a></sup></p>
 
-<p>下面介绍 GnuPG 的各项命令及其用途。原文可参考<a href="https://www.gnupg.org/gph/en/manual.html">GnuPG</a></p>
+<p>下面介绍 GnuPG 的各项命令及其用途。原文可参考 <a href="https://www.gnupg.org/gph/en/manual.html">GnuPG</a></p>
 
 <p>TODO</p>
 <div class="footnotes">

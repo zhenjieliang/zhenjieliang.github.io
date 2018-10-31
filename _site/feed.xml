@@ -5,8 +5,8 @@
     <description>还有无数朝霞，尚未点亮我们天空</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 30 Oct 2018 22:42:00 +0800</pubDate>
-    <lastBuildDate>Tue, 30 Oct 2018 22:42:00 +0800</lastBuildDate>
+    <pubDate>Wed, 31 Oct 2018 14:11:26 +0800</pubDate>
+    <lastBuildDate>Wed, 31 Oct 2018 14:11:26 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -273,7 +273,7 @@ yw/users/nsyw211_LZ/soft/R-3.5.0/LIBRARY/curl-7.47.1/include&quot;&lt;/span&gt;
 
 &lt;p&gt;通过生成 $HOME/.R/Makevars 文件，即可修改 R 的默认查找路径。该 Makevars 文件可以加入相关的 LDFLAGS 和 CPPFLAGS 等路径信息。关于 Makevars 更详细的信息可以查阅 &lt;a href=&quot;https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Using-Makevars&quot;&gt;网页&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+&lt;h2 id=&quot;要点&quot;&gt;要点&lt;/h2&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
@@ -379,11 +379,11 @@ passwd: password updated successfully
     
       <item>
         <title>zathura tabbed</title>
-        <description>&lt;p&gt;zathura-tabbed 分为分为两个步骤：安装、系统设置。其中主要脚本和说明可见于&lt;a href=&quot;https://github.com/mtikekar/zathura-tabbed&quot;&gt;Github guide&lt;/a&gt;。&lt;/p&gt;
+        <description>&lt;p&gt;zathura-tabbed 分为分为两个步骤：安装、系统设置。其中主要脚本和说明可见于 &lt;a href=&quot;https://github.com/mtikekar/zathura-tabbed&quot;&gt;Github guide&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;需要安装的程序有 zathura, zathura-pdf-mupdf, libgirara-dev, mupdf, tabbed。这些均可从 apt repository 或者源码编译安装，并不需要设置任何路径。&lt;/p&gt;
 
-&lt;p&gt;需要安装的脚本是&lt;a href=&quot;https://raw.githubusercontent.com/mtikekar/zathura-tabbed/master/zathura-tabbed&quot;&gt;zathura-tabbed&lt;/a&gt;，将无后缀名的该文件保存于 “/usr/bin” 文件夹，并使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo chmod 777 zathura-tabbed&lt;/code&gt; 来赋予权限。至此，在 zsh 中使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;zathura-tabbed 1.pdf 2.pdf 3.pdf&lt;/code&gt; 即可同时打开三个 pdf 文件，并且都以 tabbed 的形式在一个 zathura 中。需要切换 tab 和搜索选择 tab 可以使用诸如 “ctrl+shift-H”,”ctrl+t” 或者 “ctrl+[0,1,…,9]” 的快捷键来做到。除了原有的 zathura 操作以外，更多快捷键操作可见于 &lt;code class=&quot;highlighter-rouge&quot;&gt;man tabbed&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;需要安装的脚本是 &lt;a href=&quot;https://raw.githubusercontent.com/mtikekar/zathura-tabbed/master/zathura-tabbed&quot;&gt;zathura-tabbed&lt;/a&gt; ，将无后缀名的该文件保存于 “/usr/bin” 文件夹，并使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo chmod 777 zathura-tabbed&lt;/code&gt; 来赋予权限。至此，在 zsh 中使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;zathura-tabbed 1.pdf 2.pdf 3.pdf&lt;/code&gt; 即可同时打开三个 pdf 文件，并且都以 tabbed 的形式在一个 zathura 中。需要切换 tab 和搜索选择 tab 可以使用诸如 “ctrl+shift-H”,”ctrl+t” 或者 “ctrl+[0,1,…,9]” 的快捷键来做到。除了原有的 zathura 操作以外，更多快捷键操作可见于 &lt;code class=&quot;highlighter-rouge&quot;&gt;man tabbed&lt;/code&gt;。&lt;/p&gt;
 
 &lt;p&gt;设置 zathura-tabbed 为 pdf 在 xdg 下的默认打开程序的方法是，编辑出一个 zathura-tabbed 的 desktop，将其保存于 “/usr/share/applications” 路径下。注意需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo chmod +x zathura-tabbed&lt;/code&gt; 命令来赋权。然后使用命令行 &lt;code class=&quot;highlighter-rouge&quot;&gt;xdg-mime default zathura-tabbed.desktop application/pdf&lt;/code&gt; 来将其设置为 pdf 的默认打开文件。至此，在打开多个 pdf 的情况下，打开其他任意一个 pdf，该 pdf 文件仍将在 zathura-tabbed 中显示。&lt;/p&gt;
 
@@ -402,11 +402,11 @@ passwd: password updated successfully
     
       <item>
         <title>Encrypt files with RSA algorithm in linux</title>
-        <description>&lt;p&gt;在看完李永乐老师在 youtube 上的讲解 &lt;a href=&quot;https://www.youtube.com/watch?v=D_kMadCtKp8&amp;amp;t=13s&quot;&gt;RSA 非对称加密算法&lt;/a&gt; 的原理 &lt;sup id=&quot;fnref:0&quot;&gt;&lt;a href=&quot;#fn:0&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; 之后，对于非对称加密通信的实现非常感兴趣。根据视频以加密数字为例以及 stackexchange 上 penguin359 的 &lt;a href=&quot;https://unix.stackexchange.com/questions/12260/how-to-encrypt-messages-text-with-rsa-openssl&quot;&gt;回答&lt;/a&gt; 可知，该算法并非设计来加密任意文件如 string 的，而是加密某个整数。因此使用该算法来加密通讯并不合适。根据 penguin359 的推荐，使用 &lt;a href=&quot;https://www.gnupg.org/gph/en/manual.html&quot;&gt;GnuPG&lt;/a&gt; 来进行加密通信是不错的选择 &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;。顺着这个思路，可以搜索到 chrome 浏览器下使用&lt;a href=&quot;https://chrome.google.com/webstore/detail/flowcrypt-encrypt-gmail-w/bnjglocicdkmhmoohhfkfkbbkejdhdgc&quot;&gt;FlowCrypt&lt;/a&gt; 在 Gmail 中通信，在 Firefox 浏览器下则是&lt;a href=&quot;https://addons.mozilla.org/en-US/firefox/addon/mailvelope/&quot;&gt;mailvelope&lt;/a&gt;。&lt;/p&gt;
+        <description>&lt;p&gt;在看完李永乐老师在 youtube 上的讲解 &lt;a href=&quot;https://www.youtube.com/watch?v=D_kMadCtKp8&amp;amp;t=13s&quot;&gt;RSA 非对称加密算法&lt;/a&gt; 的原理 &lt;sup id=&quot;fnref:0&quot;&gt;&lt;a href=&quot;#fn:0&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; 之后，对于非对称加密通信的实现非常感兴趣。根据视频以加密数字为例以及 stackexchange 上 penguin359 的 &lt;a href=&quot;https://unix.stackexchange.com/questions/12260/how-to-encrypt-messages-text-with-rsa-openssl&quot;&gt;回答&lt;/a&gt; 可知，该算法并非设计来加密任意文件如 string 的，而是加密某个整数。因此使用该算法来加密通讯并不合适。根据 penguin359 的推荐，使用 &lt;a href=&quot;https://www.gnupg.org/gph/en/manual.html&quot;&gt;GnuPG&lt;/a&gt; 来进行加密通信是不错的选择 &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;。顺着这个思路，可以搜索到 chrome 浏览器下使用 &lt;a href=&quot;https://chrome.google.com/webstore/detail/flowcrypt-encrypt-gmail-w/bnjglocicdkmhmoohhfkfkbbkejdhdgc&quot;&gt;FlowCrypt&lt;/a&gt; 在 Gmail 中通信，在 Firefox 浏览器下则是 &lt;a href=&quot;https://addons.mozilla.org/en-US/firefox/addon/mailvelope/&quot;&gt;mailvelope&lt;/a&gt;。&lt;/p&gt;
 
-&lt;p&gt;关于公钥和私钥：任何人发信给甲，可以使用甲广播的自己的公钥 e1 和加密算法进行加密，然后把密文发给甲。甲通过自己的私钥 d1 和解密算法进行解密，得到明文。另外，为了确保甲能够验证收到的信息确系乙而非中间人发出的，则首先需要乙用自己的私钥 d2 加密由该信息计算而得的散列值（Message digest），并将加密后的散列值 “署名” 在信息的后面。甲使用乙广播的公钥 e2, 来解密“署名”（加密后的散列值），然后 &lt;strong&gt;将解密后的这个署名数据与他自己为这个信息计算的散列值相比较&lt;/strong&gt;，若两者相符，则甲可知发信人持有乙的私钥，并且该信息在传播路径上没有被篡改过。&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;关于公钥和私钥：任何人发信给甲，可以使用甲广播的自己的公钥 e1 和加密算法进行加密，然后把密文发给甲。甲通过自己的私钥 d1 和解密算法进行解密，得到明文。另外，为了确保甲能够验证收到的信息确系乙而非中间人发出的，则首先需要乙用自己的私钥 d2 加密由该信息计算而得的散列值（Message digest），并将加密后的散列值 “署名” 在信息的后面。甲使用乙广播的公钥 e2, 来解密“署名”（加密后的散列值），然后 &lt;strong&gt;将解密后的这个署名数据与他自己为这个信息计算的散列值相比较&lt;/strong&gt; ，若两者相符，则甲可知发信人持有乙的私钥，并且该信息在传播路径上没有被篡改过。&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;下面介绍 GnuPG 的各项命令及其用途。原文可参考&lt;a href=&quot;https://www.gnupg.org/gph/en/manual.html&quot;&gt;GnuPG&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下面介绍 GnuPG 的各项命令及其用途。原文可参考 &lt;a href=&quot;https://www.gnupg.org/gph/en/manual.html&quot;&gt;GnuPG&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;TODO&lt;/p&gt;
 &lt;div class=&quot;footnotes&quot;&gt;

@@ -136,7 +136,7 @@ install.packages(raw_packages, contriburl="file:///path/to/packages/")
 通过生成 $HOME/.R/Makevars 文件，即可修改 R 的默认查找路径。该 Makevars 文件可以加入相关的 LDFLAGS 和 CPPFLAGS 等路径信息。关于 Makevars 更详细的信息可以查阅 [网页](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Using-Makevars)。
 
 
-## 总结
+## 要点
 
 1. 安装是可以通过 `configure --prefix=` 来指定安装路径
 
