@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Rcpp: R 与 C++ 的结合</title>
+  <meta name="description" content="R 语言是统计学学生的标配语言：很多统计学新方法出来之后，都是在 R 上最先实现；R 远多于其他语言的统计学算法包数量。作为动态语言，R 写起来类似于伪代码，给编程人员带来很多便利和提供了很好的可读性。但同样因为是动态类型语言，R 的计算速度非常慢：计算机需要遍历各种可能的类型中去来确定一段代码的输入和输出具体类...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cs/r/c++/2018/11/11/Rcpp.html">
+  <link rel="alternate" type="application/rss+xml" title="Zhenjie Liang" href="http://localhost:4000/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Zhenjie Liang</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/简介/">简介</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Rcpp: R 与 C++ 的结合</h1>
+    <p class="post-meta"><time datetime="2018-11-11T00:00:00+08:00" itemprop="datePublished">Nov 11, 2018</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>R 语言是统计学学生的标配语言：很多统计学新方法出来之后，都是在 R 上最先实现；R 远多于其他语言的统计学算法包数量。作为动态语言，R 写起来类似于伪代码，给编程人员带来很多便利和提供了很好的可读性。但同样因为是动态类型语言，R 的计算速度非常慢：计算机需要遍历各种可能的类型中去来确定一段代码的输入和输出具体类型，IO性能非常感人。在做大规模的模型筛选时，这是非常不利的。以波动率建模为例，使用 rugarch 包的 ugarchfit
+来对各种波动率模型进行估计，因为这个函数的源码是使用 C++ 写的，估计一个特定模型用时在 0.1-0.2 秒左右（处理器为 i7-7700HQ 2.8GHz * 8 ）。而在 R 中反复调用该函数对 324 个模型进行时，即使通过并行算法同时使用 8 个核心来估计，以及通过向量化的方法，总时间并非 0.2 * 324 = 6.48 秒，而是达到了可怕的 350-450 秒 —— 大量的时间都消耗在 R 的 IO 上了。这样的速度是非常令人郁闷的。以我的学位论文为例，需要对将近 9000
+段时间序列进行最优波动率建模，而一段时序的最优波动率模型筛选需要消耗 6-7 分钟，那么 9000 段需要的时间则差不多要 6 万分钟，也就是 42 天左右。</p>
+
+<p>R 上的包是不得不用的，如果将很多包上的重要函数使用别的语言如 C++ 或者 Julia lang 来改写，那么改写耗时会很大，而且较难保证改写后的准确性（尽管可以做各种测试，但归根到底还是会消耗大量时间）。仅仅使用并行算法和向量化运算对速度的提升也是无法令人接受的。由此，只有 Rcpp 这一条路可以选了。</p>
+
+<p>在 R 中需要使用 <code class="highlighter-rouge">install.package("")</code> 来安装 Rcpp 包。此外常见的 Rcpp 相关的包还有 RcppArmadillo, RcppEigen, RcppSMC, RcppBDT, RcppDE 等。然后使用 <code class="highlighter-rouge">library(Rcpp)</code> 来载入相应的包。使用 C++ 写好相应的 <code class="highlighter-rouge">foo_C</code> 函数和保存在 <code class="highlighter-rouge">.cpp</code> 文件里，在 R 里使用 <code class="highlighter-rouge">Rcpp::sourceCpp("cpp_file_path")</code> 来编译并导入 R 环境中，在 R 里直接调用 <code class="highlighter-rouge">foo_C</code> 函数即可。</p>
+
+<p>使用 Clion IDE 来编写 cpp 文件时，需要在相同文件路径下修改 CMakeLists.txt 文件，添加上以下文件的路径，使得在该 IDE 环境下能够自动加载 Rcpp 相关的各种数据类型如 NumericVector, NumericaMatrix 和函数等。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>include_directories(/usr/share/R/include)
+include_directories(/home/liangzhenjie/R/x86_64-pc-linux-gnu-library/3.5/Rcpp/include)
+include_directories(/home/liangzhenjie/R/x86_64-pc-linux-gnu-library/3.5/RcppArmadillo/include)
+</code></pre></div></div>
+
+<p>首先需要在 cpp 文件里加载各种 Rcpp 的头文件，即 <code class="highlighter-rouge">include &lt;Rcpp.h&gt;</code> 。在 cpp 文件中生产向量、矩阵以及相应元素操作，头文件之间的各种拓展依赖 <code class="highlighter-rouge">// [[Rcpp::depends(header_file)]]</code>， 各种分布随机数生成，调用 R 函数等相应的方法，都可在 <a href="/assets/Rcpp-quickref.pdf">Rcpp Quick Reference Guide</a> 中快速查到。</p>
+
+<p>例如，指定 S4 类型变量为 <code class="highlighter-rouge">Rcpp::S4 v1</code>，往 C++ 中调用 rugarch 包的函数 infocriteria 则使用以下语句引入：</p>
+
+<pre><code class="language-C++">#include &lt;Rcpp.h&gt;
+
+// [[Rcpp::export]]
+
+Rcpp::S4 garch_fit_C(Rcpp::NumericVector time_series, Rcpp::List model_spec_list){
+Rcpp::Environment rugarch("package:rugarch");
+Rcpp::Function infocriteria = rugarch["infocriteria"];
+Rcpp::Function ugarchfit = Rcpp::Environment::global_env()["ugarchfit_trans"];
+int n = model_spec_list.size();
+Rcpp::S4 fit;
+for (int i = 0; i &lt; n; ++i) {
+    fit = ugarchfit(time_series,model_spec_list[i]);
+}
+//aic = infocriteria(fit); error code;
+return fit;
+}
+</code></pre>
+
+<p>以上代码是和 R 代码风格很像的 C++ 源码。在 R 中 sourceCpp 之后即可使用 garch_fit_C 函数。需要注意的是，有些 R 函数是需要对一些参数做明确指定的，如 ugarchfit ，正常的使用命令是 <code class="highlighter-rouge">ugarchfit(data = data1, spec = spec1, solver = "hybrid")</code> 。如果仅仅使用 <code class="highlighter-rouge">ugarchfit(data1,spec1)</code> ，在 R 中运行通常就会报错。而在 cpp 源码中使用 <code class="highlighter-rouge">Rcpp::Function ugarchfit = rugarch["ugarchfit"]</code> 调用该函数之后，继续在 cpp 中使用该函数时则无法指定 <code class="highlighter-rouge">data = data1, spec =
+spec1</code>。解决的办法就是，在 R 的全局环境中重新定义一个 <code class="highlighter-rouge">ugarchfit_trans</code> ，该函数的具体形式如下：</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ugarchfit_trans</span><span class="o">&lt;-</span><span class="k">function</span><span class="p">(</span><span class="n">testdata</span><span class="p">,</span><span class="n">testspec</span><span class="p">){</span><span class="w">
+  </span><span class="nf">return</span><span class="p">(</span><span class="n">rugarch</span><span class="o">::</span><span class="n">ugarchfit</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testdata</span><span class="p">,</span><span class="n">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testspec</span><span class="p">,</span><span class="n">solver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'hybrid'</span><span class="p">))</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>然后在 cpp 中加载这个重新定义的函数 <code class="highlighter-rouge">ugarchfit_trans</code> 即可。</p>
+
+<p>使用 <code class="highlighter-rouge">Rcpp::Function</code> 的方法让 C++ 源码调用 R 函数的做法，其实是比直接在 R 中调用该函数运行所需的时间更长的。该 C++ 源码运行的时间为 R 函数运行的时间以及 C++ 与 R 的通信时间之和。因此，要想达到 C++ 的加速作用，就需要在 cpp 中不要调用 R 的函数，使用纯 C++ 代码。在 rugarch 这个 R 包的源码中，就有 C++ 的源码。将 C++ 源码写的函数放入 cpp 文件中，即可真正达到 C++ 的速度。</p>
+
+<p>Rcpp 的 <a href="/assets/Rcpp-introduction2.pdf">简介</a> 以及 Rcpp 的 <a href="/assets/RcppParallel.pdf">并行计算</a>。</p>
+
+<p>p.s. 有些数据类型如 S4 ， 在 Rcpp.h 中并没有，Clion 中不能识别，但是也能够正常地将该类型的数据导入到 C++ 中。其他像 List, data frame, matrix, vector 等 R 的各种类型均可正常引入。</p>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+      <!-- <h2 class="footer-heading">Zhenjie Liang</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Zhenjie Liang</li>
+          <li><a href="mailto:zjliangcn@gmail.com">zjliangcn@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>还有无数朝霞，尚未点亮我们天空</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
